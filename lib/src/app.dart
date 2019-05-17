@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_door_buzzer/src/data/blocs/account/account_bloc.dart';
 import 'package:flutter_door_buzzer/src/data/blocs/application/application.dart';
 import 'package:flutter_door_buzzer/src/data/blocs/authentication/authentication.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/buzzer/buzzer.dart';
 import 'package:flutter_door_buzzer/src/data/blocs/login/login.dart';
 import 'package:flutter_door_buzzer/src/data/blocs/register/register.dart';
 import 'package:flutter_door_buzzer/src/routes.dart';
@@ -13,8 +12,11 @@ import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dar
 import 'package:flutter_door_buzzer/src/ui/pages/main_page.dart';
 import 'package:flutter_door_buzzer/src/ui/pages/splash_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'data/blocs/configuration/configuration.dart';
+import 'data/repositories/buzzer_repository.dart';
+import 'data/repositories/preferences_repository.dart';
 
 class ConfigurationWrapperApp extends StatefulWidget {
   @override
@@ -79,7 +81,6 @@ class _ConfiguredAppState extends State<_ConfiguredApp> {
   LoginBloc _loginBloc;
   RegisterBloc _registerBloc;
   AccountBloc _accountBloc;
-  BuzzerBloc _buzzerBloc;
 
   ConfigLoaded get _state => widget.state;
 
@@ -108,11 +109,6 @@ class _ConfiguredAppState extends State<_ConfiguredApp> {
       authBloc: _authBloc,
     );
 
-    _buzzerBloc = BuzzerBloc(
-      buzzerRepository: _state.buzzerRepository,
-      preferencesRepository: _state.preferencesRepository,
-    );
-
     _authBloc.dispatch(AppStarted());
   }
 
@@ -123,33 +119,42 @@ class _ConfiguredAppState extends State<_ConfiguredApp> {
     _authBloc?.dispose();
     _loginBloc?.dispose();
     _registerBloc?.dispose();
-    _buzzerBloc?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProviderTree(
-      blocProviders: <BlocProvider>[
-        BlocProvider<ApplicationBloc>(bloc: _appBloc),
-        BlocProvider<AuthenticationBloc>(bloc: _authBloc),
-        BlocProvider<LoginBloc>(bloc: _loginBloc),
-        BlocProvider<RegisterBloc>(bloc: _registerBloc),
-        BlocProvider<AccountBloc>(bloc: _accountBloc),
-        BlocProvider<BuzzerBloc>(bloc: _buzzerBloc),
+    /// Dependency Injection of all Repositories and global Blocs
+
+    return MultiProvider(
+      providers: [
+        Provider<BuzzerRepository>.value(value: widget.state.buzzerRepository),
+        Provider<PreferencesRepository>.value(
+            value: widget.state.preferencesRepository),
       ],
-      child: BlocBuilder<ApplicationEvent, ApplicationState>(
-        bloc: _appBloc,
-        builder: (BuildContext context, ApplicationState state) {
-          if (state is AppInitialized) {
-            return _ThemedApp(state);
-          }
-          return Container();
-        },
+      child: BlocProviderTree(
+        blocProviders: <BlocProvider>[
+          BlocProvider<ApplicationBloc>(bloc: _appBloc),
+          BlocProvider<AuthenticationBloc>(bloc: _authBloc),
+          BlocProvider<LoginBloc>(bloc: _loginBloc),
+          BlocProvider<RegisterBloc>(bloc: _registerBloc),
+          BlocProvider<AccountBloc>(bloc: _accountBloc),
+        ],
+        child: BlocBuilder<ApplicationEvent, ApplicationState>(
+          bloc: _appBloc,
+          builder: (BuildContext context, ApplicationState state) {
+            if (state is AppInitialized) {
+              return _ThemedApp(state);
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }
 }
+
+class SharedPreferences {}
 
 class _ThemedApp extends StatelessWidget {
   final String _tag = '_ThemedApp';
@@ -219,7 +224,7 @@ class _ThemedApp extends StatelessWidget {
 
   TextTheme _buildCVTextTheme(TextTheme base) {
     return base.apply(
-      fontFamily: 'Google Sans',
+      fontFamily: 'Arial',
     );
   }
 }

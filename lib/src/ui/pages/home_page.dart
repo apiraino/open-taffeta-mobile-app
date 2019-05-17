@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_door_buzzer/src/data/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/data/blocs/buzzer/buzzer.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/preferences_repository.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/dimensions.dart';
 import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   final _tag = 'HomePage';
@@ -36,13 +39,40 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _AuthenticatedHome extends StatelessWidget {
+class _AuthenticatedHome extends StatefulWidget {
+  @override
+  __AuthenticatedHomeState createState() => __AuthenticatedHomeState();
+}
+
+class __AuthenticatedHomeState extends State<_AuthenticatedHome> {
+  BuzzerBloc buzzerBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// TODO: Init buzzerBloc here instead of build but we need the context
+  }
+
+  @override
+  void dispose() {
+    buzzerBloc?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    BuzzerBloc _buzzerBloc = BlocProvider.of<BuzzerBloc>(context);
+    BuzzerRepository buzzerRepository = Provider.of<BuzzerRepository>(context);
+    PreferencesRepository preferencesRepository =
+        Provider.of<PreferencesRepository>(context);
+
+    buzzerBloc = BuzzerBloc(
+      buzzerRepository: buzzerRepository,
+      preferencesRepository: preferencesRepository,
+    );
 
     return BlocListener(
-      bloc: _buzzerBloc,
+      bloc: buzzerBloc,
       listener: (BuildContext context, BuzzerState state) {
         if (state is BuzzerSucceed) {
           Scaffold.of(context).showSnackBar(
@@ -63,7 +93,7 @@ class _AuthenticatedHome extends StatelessWidget {
         }
       },
       child: BlocBuilder(
-        bloc: _buzzerBloc,
+        bloc: buzzerBloc,
         builder: (BuildContext context, BuzzerState state) {
           if (state is BuzzerLoading) {
             return Center(child: CircularProgressIndicator());
@@ -78,7 +108,7 @@ class _AuthenticatedHome extends StatelessWidget {
                 iconSize: 100,
                 icon: icon,
                 onPressed: () =>
-                    _buzzerBloc.dispatch(BuzzerDoorPressed(doorId: 1)),
+                    buzzerBloc.dispatch(BuzzerDoorPressed(doorId: 1)),
               ),
             );
           }
