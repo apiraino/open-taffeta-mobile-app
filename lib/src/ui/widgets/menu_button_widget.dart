@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/account/account.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/account/account_bloc.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/authentication/authentication.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/account/account.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/account/account_bloc.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/data/models/user_model.dart';
 import 'package:flutter_door_buzzer/src/ui/utils/navigation.dart';
 import 'package:flutter_door_buzzer/src/ui/widgets/initial_circle_avatar_widget.dart';

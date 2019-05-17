@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/register/register.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/register/register.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/dimensions.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';

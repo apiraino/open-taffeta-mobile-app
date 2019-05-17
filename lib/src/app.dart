@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/account/account_bloc.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/application/application.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/authentication/authentication.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/login/login.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/register/register.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/account/account_bloc.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/application/application.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/login/login.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/register/register.dart';
 import 'package:flutter_door_buzzer/src/routes.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
 import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dart';
@@ -14,9 +14,9 @@ import 'package:flutter_door_buzzer/src/ui/pages/splash_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-import 'data/blocs/configuration/configuration.dart';
 import 'data/repositories/buzzer_repository.dart';
 import 'data/repositories/preferences_repository.dart';
+import 'domain/blocs/configuration/configuration.dart';
 
 class ConfigurationWrapperApp extends StatefulWidget {
   @override
@@ -143,8 +143,20 @@ class _ConfiguredAppState extends State<_ConfiguredApp> {
         child: BlocBuilder<ApplicationEvent, ApplicationState>(
           bloc: _appBloc,
           builder: (BuildContext context, ApplicationState state) {
-            if (state is AppInitialized) {
+            if (state is AppLoading) {
+              return WidgetsApp(
+                home: SplashPage(),
+                color: AppColors.primaryColor,
+              );
+            } else if (state is AppInitialized) {
               return _ThemedApp(state);
+            } else if (state is AppFailure) {
+              return WidgetsApp(
+                home: Scaffold(
+                  body: Text('${state.error.runtimeType} error'),
+                ),
+                color: AppColors.primaryColor,
+              );
             }
             return Container();
           },

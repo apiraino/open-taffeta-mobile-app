@@ -6,6 +6,9 @@ import 'package:meta/meta.dart';
 
 abstract class ConfigurationState extends Equatable {
   ConfigurationState([List props = const []]) : super(props);
+
+  @override
+  String toString() => '$runtimeType{}';
 }
 
 class ConfigLoading extends ConfigurationState {}
@@ -22,5 +25,5 @@ class ConfigLoaded extends ConfigurationState {
   })  : assert(buzzerRepository != null),
         assert(preferencesRepository != null),
         assert(configRepository != null),
-        super([buzzerRepository, preferencesRepository]);
+        super([buzzerRepository, preferencesRepository, configRepository]);
 }

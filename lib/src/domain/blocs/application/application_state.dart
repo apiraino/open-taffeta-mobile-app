@@ -4,13 +4,9 @@ import 'package:meta/meta.dart';
 /// [ApplicationState] that must be dispatch to [ApplicationBloc]
 abstract class ApplicationState extends Equatable {
   ApplicationState([List props = const []]) : super(props);
-}
-
-class AppUninitialized extends ApplicationState {
-  AppUninitialized() : super();
 
   @override
-  String toString() => 'AppUninitialized';
+  String toString() => '$runtimeType{}';
 }
 
 class AppInitialized extends ApplicationState {
@@ -19,7 +15,7 @@ class AppInitialized extends ApplicationState {
   String theme;
 
   @override
-  String toString() => 'AppInitialized { theme: $theme }';
+  String toString() => '$runtimeType{ theme: $theme }';
 }
 
 class AppFailure extends ApplicationState {
@@ -28,12 +24,7 @@ class AppFailure extends ApplicationState {
   Error error;
 
   @override
-  String toString() => 'AppFailure { error: $error }';
+  String toString() => '$runtimeType{ error: $error }';
 }
 
-class AppLoading extends ApplicationState {
-  AppLoading() : super();
-
-  @override
-  String toString() => 'AppLoading';
-}
+class AppLoading extends ApplicationState {}

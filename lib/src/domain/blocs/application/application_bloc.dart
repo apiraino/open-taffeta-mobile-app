@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/application/application.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/application/application.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/preferences_repository.dart';
 
 class ThemeType {
@@ -7,15 +7,18 @@ class ThemeType {
   static const String DARK = 'THEME_DARK';
 }
 
+/// Business Logic Component for Application UI behaviors
+///
+/// Use [ApplicationEvent] for events and [ApplicationState] for states
 class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
-  final String _tag = 'ApplicationBloc';
+  final String _tag = '$ApplicationBloc';
 
   final PreferencesRepository preferencesRepository;
 
   ApplicationBloc({
     this.preferencesRepository,
   })  : assert(
-            preferencesRepository != null, 'No Preferences repository given'),
+            preferencesRepository != null, 'No $PreferencesRepository given'),
         super();
 
   @override

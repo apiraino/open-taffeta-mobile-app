@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/authentication/authentication.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/login/login.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/login/login.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:meta/meta.dart';
 

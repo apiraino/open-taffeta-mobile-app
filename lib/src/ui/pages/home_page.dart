@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/authentication/authentication.dart';
-import 'package:flutter_door_buzzer/src/data/blocs/buzzer/buzzer.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/buzzer/buzzer.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/preferences_repository.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
