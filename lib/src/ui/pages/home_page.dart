@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
-import 'package:flutter_door_buzzer/src/domain/blocs/buzzer/buzzer.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/preferences_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/buzzer/buzzer.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/dimensions.dart';
 import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dart';
@@ -50,8 +50,23 @@ class __AuthenticatedHomeState extends State<_AuthenticatedHome> {
   @override
   void initState() {
     super.initState();
+  }
 
-    /// TODO: Init buzzerBloc here instead of build but we need the context
+  @override
+  void didChangeDependencies() {
+    /// Init buzzerBloc here instead initState because we need the context to
+    /// get dependencies
+
+    BuzzerRepository buzzerRepository = Provider.of<BuzzerRepository>(context);
+    PreferencesRepository preferencesRepository =
+        Provider.of<PreferencesRepository>(context);
+
+    buzzerBloc = BuzzerBloc(
+      buzzerRepository: buzzerRepository,
+      preferencesRepository: preferencesRepository,
+    );
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -62,15 +77,6 @@ class __AuthenticatedHomeState extends State<_AuthenticatedHome> {
 
   @override
   Widget build(BuildContext context) {
-    BuzzerRepository buzzerRepository = Provider.of<BuzzerRepository>(context);
-    PreferencesRepository preferencesRepository =
-        Provider.of<PreferencesRepository>(context);
-
-    buzzerBloc = BuzzerBloc(
-      buzzerRepository: buzzerRepository,
-      preferencesRepository: preferencesRepository,
-    );
-
     return BlocListener(
       bloc: buzzerBloc,
       listener: (BuildContext context, BuzzerState state) {
