@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_door_buzzer/src/domain/blocs/buzzer/buzzer.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/door/door.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/preferences_repository.dart';
 import 'package:meta/meta.dart';
 
-class BuzzerBloc extends Bloc<BuzzerEvent, BuzzerState> {
+class BuzzerBloc extends Bloc<DoorEvent, DoorState> {
   final String _tag = 'BuzzerBloc';
   final BuzzerRepository buzzerRepository;
   final PreferencesRepository preferencesRepository;
@@ -23,31 +23,30 @@ class BuzzerBloc extends Bloc<BuzzerEvent, BuzzerState> {
   }
 
   @override
-  BuzzerState get initialState => BuzzerInitial();
+  DoorState get initialState => DoorInitial();
 
   @override
-  Stream<BuzzerState> mapEventToState(BuzzerEvent event) async* {
-    if (event is BuzzerDoorPressed) {
+  Stream<DoorState> mapEventToState(DoorEvent event) async* {
+    if (event is DoorBuzzed) {
       yield* _mapBuzzerDoorPressedEventToState(event);
     }
   }
 
-  /// Map [BuzzerDoorPressed] to [BuzzerState]
+  /// Map [DoorBuzzed] to [DoorState]
   ///
   /// ```dart
   /// yield* _mapBuzzerDoorPressedEventToState(event);
   /// ```
-  Stream<BuzzerState> _mapBuzzerDoorPressedEventToState(
-      BuzzerDoorPressed event) async* {
+  Stream<DoorState> _mapBuzzerDoorPressedEventToState(DoorBuzzed event) async* {
     try {
-      yield BuzzerLoading();
+      yield DoorLoading();
       var response = await buzzerRepository.buzzDoor(
         doorId: event.doorId,
       );
-      yield BuzzerSucceed(message: response.details);
+      yield DoorSucceed(message: response.details);
     } catch (error) {
       print('$_tag:_mapBuzzerDoorPressedEventToState -> error.runtimeType');
-      yield BuzzerFailure(error: error);
+      yield DoorFailure(error: error);
     }
   }
 }

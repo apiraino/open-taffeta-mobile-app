@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/dimensions.dart';
 import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dart';
@@ -13,7 +15,7 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final String _tag = '_AuthPageState';
+  final String _tag = '$_AuthPageState';
 
   // Variable
   double screenWidth;
@@ -28,21 +30,21 @@ class _AuthPageState extends State<AuthPage> {
   // Business
   @override
   void initState() {
-    print('$_tag:initState()');
+    print('$_tag:$initState()');
     super.initState();
     _pageController = PageController();
   }
 
   @override
   void dispose() {
-    print('$_tag:dispose()');
-    _pageController.dispose();
+    print('$_tag:$dispose()');
+    _pageController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:build');
+    print('$_tag:$build');
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
 
@@ -52,14 +54,31 @@ class _AuthPageState extends State<AuthPage> {
 
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      body: SingleChildScrollView(
-        child: Container(
-          height: screenHeight,
-          child: Stack(
-            children: <Widget>[
-              _buildHeaderSection(context),
-              _buildAuthSection(context)
-            ],
+      body: BlocListenerTree(
+        blocListeners: <BlocListener>[
+          BlocListener<AuthenticationEvent, AuthenticationState>(
+            bloc: BlocProvider.of<AuthenticationBloc>(context),
+            listener: (BuildContext context, AuthenticationState state) {
+              if (state is AuthenticationAuthenticated) {
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  backgroundColor: AppColors.successColor,
+                  content: Text(BuzzerLocalizations.of(context).loginSucceed),
+                ));
+                Future.delayed(Duration(seconds: 1))
+                    .then((_) => Navigator.of(context).pop());
+              }
+            },
+          ),
+        ],
+        child: SingleChildScrollView(
+          child: Container(
+            height: screenHeight,
+            child: Stack(
+              children: <Widget>[
+                _buildHeaderSection(context),
+                _buildAuthSection(context)
+              ],
+            ),
           ),
         ),
       ),

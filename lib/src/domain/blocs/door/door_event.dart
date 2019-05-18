@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-/// [BuzzerEvent] that must be dispatch to [BuzzerBloc]
-abstract class BuzzerEvent extends Equatable {
-  BuzzerEvent([List props = const []]) : super(props);
+/// [DoorEvent] that must be dispatch to [BuzzerBloc]
+abstract class DoorEvent extends Equatable {
+  DoorEvent([List props = const []]) : super(props);
 
   @override
   String toString() => '$runtimeType{}';
 }
 
-class BuzzerDoorPressed extends BuzzerEvent {
+class DoorBuzzed extends DoorEvent {
   final int doorId;
 
-  BuzzerDoorPressed({@required this.doorId})
+  DoorBuzzed({@required this.doorId})
       : assert(doorId != null, 'No door ID given'),
         super([doorId]);
 
