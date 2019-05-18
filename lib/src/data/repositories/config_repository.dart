@@ -1,6 +1,8 @@
-/// Interface for SecretStorage
+/// Interface for all configuration repositories
 abstract class ConfigRepository {
-  String getClientId();
+  Future<String> getServerUrl();
 
-  String getClientSecret();
+  Future<String> getClientId();
+
+  Future<String> getClientSecret();
 }

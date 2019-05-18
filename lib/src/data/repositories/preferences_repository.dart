@@ -1,4 +1,4 @@
-/// PreferencesService Logic
+/// Interface for all Preferences repositories
 abstract class PreferencesRepository {
   Future<String> getAccessToken();
 

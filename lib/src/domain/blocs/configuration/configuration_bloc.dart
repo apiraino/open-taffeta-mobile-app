@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_door_buzzer/src/data/managers/api_interceptor.dart';
+import 'package:flutter_door_buzzer/src/data/managers/asset_config_manager.dart';
 import 'package:flutter_door_buzzer/src/data/managers/buzzer_api_manager.dart';
-import 'package:flutter_door_buzzer/src/data/managers/file_config_manager.dart';
 import 'package:flutter_door_buzzer/src/data/managers/shared_preferences_manager.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/cloud_buzzer_repository.dart';
@@ -46,13 +46,18 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
         accessToken: await _preferencesRepository.getAccessToken(),
       );
 
-      /// Managers
-      _buzzerApiManager = BuzzerApiManager(apiInterceptor: _apiInterceptor);
-
       /// Repositories
-      _configRepository = FileConfigManager();
-      _buzzerRepository =
-          CloudBuzzerRepository(buzzerApiManager: _buzzerApiManager);
+      _configRepository = AssetConfigManager();
+
+      /// Managers
+      _buzzerApiManager = BuzzerApiManager(
+        baseUrl: await _configRepository.getServerUrl(),
+        apiInterceptor: _apiInterceptor,
+      );
+
+      _buzzerRepository = CloudBuzzerRepository(
+        buzzerApiManager: _buzzerApiManager,
+      );
 
       yield ConfigLoaded(
         buzzerRepository: _buzzerRepository,

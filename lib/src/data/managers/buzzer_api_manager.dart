@@ -10,11 +10,11 @@ class BuzzerApiManager {
   final String baseUrl;
 
   BuzzerApiManager({
-    this.baseUrl = 'https://door.cwrkng.de',
+    @required this.baseUrl,
     @required ApiInterceptor apiInterceptor,
     int connectTimeoutSecond = 10,
-  })  : assert(apiInterceptor != null, 'No API interceptor given'),
-        assert(baseUrl != null) {
+  })  : assert(baseUrl != null, 'No base url given'),
+        assert(apiInterceptor != null, 'No $ApiInterceptor given') {
     BaseOptions options = BaseOptions(
       baseUrl: baseUrl,
       connectTimeout: connectTimeoutSecond * 1000,

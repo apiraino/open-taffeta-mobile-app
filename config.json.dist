@@ -1,4 +1,5 @@
 {
+  "serverUrl": "<SERVER_URL>",
   "clientId": "<CLIENT_ID>",
   "clientSecret": "<CLIENT_SECRET>"
 }
