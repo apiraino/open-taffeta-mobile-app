@@ -26,33 +26,25 @@ class AuthSignupRequestModel {
 }
 
 @JsonSerializable()
-class AuthSignupResponseModel {
-  @JsonKey(name: 'user')
-  final UserModel user;
+class AuthSignUpResponseModel {
+  @JsonKey(name: 'auth')
+  final AuthModel auth;
+  @JsonKey(name: 'is_active')
+  final bool isActive;
 
-  @JsonKey(name: 'status')
-  final String status;
-
-  @JsonKey(name: 'detail')
-  final String detail;
-
-  AuthSignupResponseModel({
-    this.user,
-    this.status,
-    this.detail,
+  AuthSignUpResponseModel({
+    this.auth,
+    this.isActive,
   });
 
-  factory AuthSignupResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$AuthSignupResponseModelFromJson(json);
+  factory AuthSignUpResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$AuthSignUpResponseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AuthSignupResponseModelToJson(this);
+  Map<String, dynamic> toJson() => _$AuthSignUpResponseModelToJson(this);
 }
 
 @JsonSerializable()
 class AuthLoginRequestModel {
-  @JsonKey(name: 'username')
-  String username;
-
   @JsonKey(name: 'email')
   String email;
 
@@ -91,6 +83,33 @@ class AuthLoginResponseModel {
       _$AuthLoginResponseModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthLoginResponseModelToJson(this);
+}
+
+@JsonSerializable()
+class AuthModel {
+  @JsonKey(name: 'client_id')
+  final String clientId;
+
+  @JsonKey(name: 'exp')
+  final DateTime accessTokenExpiration;
+
+  @JsonKey(name: 'token')
+  final String accessToken;
+
+  @JsonKey(name: 'user_id')
+  final int userId;
+
+  AuthModel({
+    this.clientId,
+    this.accessTokenExpiration,
+    this.accessToken,
+    this.userId,
+  });
+
+  factory AuthModel.fromJson(Map<String, dynamic> json) =>
+      _$AuthModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AuthModelToJson(this);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

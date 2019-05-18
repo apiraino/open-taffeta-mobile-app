@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/login/login.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:meta/meta.dart';
 
 /// Business Logic Component for Login and Registration
@@ -43,9 +43,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  // -----------------------------------------------------------------------
-  //                       All Event map to State
-  // -----------------------------------------------------------------------
+  /// -----------------------------------------------------------------------
+  ///                       All Event map to State
+  /// -----------------------------------------------------------------------
 
   /// Map [LoginButtonPressedTriggered] to [LoginState]
   ///

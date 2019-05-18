@@ -44,7 +44,7 @@ class BuzzerApiManager {
   }
 
   /// Register
-  Future<AuthSignupResponseModel> register({
+  Future<AuthSignUpResponseModel> register({
     @required String email,
     @required String password,
   }) async {
@@ -55,7 +55,7 @@ class BuzzerApiManager {
 
     Response response = await _dio.post(_pathSignup, data: jsonEncode(request));
 
-    return AuthSignupResponseModel.fromJson(response.data);
+    return AuthSignUpResponseModel.fromJson(response.data);
   }
 
   Future<BuzzerResponseModel> openDoor({
