@@ -24,15 +24,17 @@ void main() async {
 
 /// Global error handler. Show stack trace
 void globalErrorHandler(details) {
-  String stackTrace;
+  StackTrace stackTrace;
 
   if (details is FlutterErrorDetails) {
     if (details.exception is Error) {
-      stackTrace = details.stack.toString();
+      stackTrace = details.stack;
     }
   } else if (details is Error) {
-    stackTrace = details.stackTrace.toString();
+    stackTrace = details.stackTrace;
   } else {
     throw details;
   }
+
+  print(stackTrace);
 }

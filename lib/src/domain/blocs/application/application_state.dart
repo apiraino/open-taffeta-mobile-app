@@ -9,22 +9,22 @@ abstract class ApplicationState extends Equatable {
   String toString() => '$runtimeType{}';
 }
 
-class AppInitialized extends ApplicationState {
-  AppInitialized({@required this.theme}) : super([theme]);
+class AppLoading extends ApplicationState {}
 
-  String theme;
+class AppInitialized extends ApplicationState {
+  final String theme;
+
+  AppInitialized({@required this.theme}) : super([theme]);
 
   @override
   String toString() => '$runtimeType{ theme: $theme }';
 }
 
 class AppFailure extends ApplicationState {
-  AppFailure({@required this.error}) : super([error]);
+  final Error error;
 
-  Error error;
+  AppFailure({@required this.error}) : super([error]);
 
   @override
   String toString() => '$runtimeType{ error: $error }';
 }
-
-class AppLoading extends ApplicationState {}

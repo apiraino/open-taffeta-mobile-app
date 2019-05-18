@@ -7,22 +7,12 @@ abstract class AccountState extends Equatable {
   AccountState([List props = const []]) : super(props);
 
   @override
-  String toString() => 'AccountState{}';
+  String toString() => '$runtimeType{}';
 }
 
-class AccountLoading extends AccountState {
-  AccountLoading();
+class AccountLoading extends AccountState {}
 
-  @override
-  String toString() => 'AccountLoading{}';
-}
-
-class AccountUninitialized extends AccountState {
-  AccountUninitialized() : super();
-
-  @override
-  String toString() => 'AccountUninitialized{}';
-}
+class AccountUninitialized extends AccountState {}
 
 class AccountInitialized extends AccountState {
   final UserModel user;
@@ -30,7 +20,7 @@ class AccountInitialized extends AccountState {
   AccountInitialized({this.user}) : super();
 
   @override
-  String toString() => 'AccountInitialized { user: $user }';
+  String toString() => '$runtimeType{ user: $user }';
 }
 
 class AccountFailure extends AccountState {
@@ -39,5 +29,5 @@ class AccountFailure extends AccountState {
   AccountFailure({@required this.error}) : super([error]);
 
   @override
-  String toString() => 'AccountFailure{}';
+  String toString() => '$runtimeType{ error: ${error.runtimeType} }';
 }

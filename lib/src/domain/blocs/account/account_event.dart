@@ -5,12 +5,7 @@ abstract class AccountEvent extends Equatable {
   AccountEvent([List props = const []]) : super(props);
 
   @override
-  String toString() => 'AccountEvent {}';
+  String toString() => '$runtimeType{}';
 }
 
-class AccountRefresh extends AccountEvent {
-  AccountRefresh() : super();
-
-  @override
-  String toString() => 'AccountRefresh {}';
-}
+class AccountRefresh extends AccountEvent {}

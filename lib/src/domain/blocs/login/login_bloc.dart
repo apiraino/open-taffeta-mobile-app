@@ -38,7 +38,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield* _mapLoginButtonPressedEventToState(event);
       }
     } catch (error) {
-      print('$_tag --> ${error.toString()}');
+      print('$_tag --> ${error.runtimeType}');
       yield LoginFailure(error: error);
     }
   }

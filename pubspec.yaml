@@ -83,7 +83,7 @@ flutter:
     - assets/
     - assets/icons/
     - assets/icons/android/
-    - config.json # secrets data
+    - config.json # Config data
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

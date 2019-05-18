@@ -5,29 +5,14 @@ abstract class RegisterState extends Equatable {
   RegisterState([List props = const []]) : super(props);
 
   @override
-  String toString() => 'RegisterState{}';
+  String toString() => '$runtimeType{}';
 }
 
-class RegisterInitial extends RegisterState {
-  RegisterInitial() : super();
+class RegisterInitial extends RegisterState {}
 
-  @override
-  String toString() => 'RegisterInitial {}';
-}
+class RegisterLoading extends RegisterState {}
 
-class RegisterLoading extends RegisterState {
-  RegisterLoading() : super();
-
-  @override
-  String toString() => 'RegisterLoading {}';
-}
-
-class RegisterSucceed extends RegisterState {
-  RegisterSucceed() : super();
-
-  @override
-  String toString() => 'RegisterSucceed {}';
-}
+class RegisterSucceed extends RegisterState {}
 
 class RegisterFailure extends RegisterState {
   final Error error;
@@ -35,5 +20,5 @@ class RegisterFailure extends RegisterState {
   RegisterFailure({@required this.error}) : super([error]);
 
   @override
-  String toString() => 'RegisterFailure { error: $error }';
+  String toString() => '$runtimeType{ error: ${error.runtimeType} }';
 }

@@ -70,7 +70,7 @@ class AuthenticationBloc
         yield AuthenticationUnauthenticated();
       }
     } catch (error) {
-      print('$_tag:_mapAppStartedToState -> error.toString()');
+      print('$_tag:_mapAppStartedToState -> error.runtimeType');
       yield AuthenticationFailed(error: error);
     }
   }
@@ -86,7 +86,7 @@ class AuthenticationBloc
       preferencesRepository.setAccessToken(event.token);
       yield AuthenticationAuthenticated();
     } catch (error) {
-      print('$_tag:_mapLoggedInEventToState -> error.toString()');
+      print('$_tag:_mapLoggedInEventToState -> error.runtimeType');
       yield AuthenticationFailed(error: error);
     }
   }
@@ -111,7 +111,7 @@ class AuthenticationBloc
 
       yield AuthenticationUnauthenticated();
     } catch (error) {
-      print('$_tag:_mapLoggedOutEventToState -> error.toString()');
+      print('$_tag:_mapLoggedOutEventToState -> error.runtimeType');
       yield AuthenticationFailed(error: error);
     }
   }

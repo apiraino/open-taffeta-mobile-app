@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_door_buzzer/src/domain/blocs/account/account.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/account/account.dart';
 import 'package:meta/meta.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
@@ -27,7 +27,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     if (event is AccountRefresh) {
       yield AccountLoading();
 
-      /// TODO: Implements Account data fetch (wait API)
+      /// TODO: Implements Account data fetch (wait repository)
       yield AccountUninitialized();
     }
   }

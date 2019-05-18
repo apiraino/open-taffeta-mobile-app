@@ -6,7 +6,7 @@ abstract class RegisterEvent extends Equatable {
   RegisterEvent([List props = const []]) : super(props);
 
   @override
-  String toString() => 'RegisterEvent{}';
+  String toString() => '$runtimeType{}';
 }
 
 class RegisterButtonPressed extends RegisterEvent {
@@ -19,6 +19,5 @@ class RegisterButtonPressed extends RegisterEvent {
   final String password;
 
   @override
-  String toString() =>
-      'RegisterButtonPressed { email: $email, password: HIDDEN }';
+  String toString() => '$runtimeType{ email: $email, password: HIDDEN }';
 }

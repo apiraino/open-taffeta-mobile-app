@@ -6,15 +6,10 @@ abstract class ApplicationEvent extends Equatable {
   ApplicationEvent([List props = const []]) : super(props);
 
   @override
-  String toString() => 'ApplicationEvent{}';
+  String toString() => '$runtimeType{}';
 }
 
-class AppInitialization extends ApplicationEvent {
-  AppInitialization() : super();
-
-  @override
-  String toString() => 'AppInitialization {}';
-}
+class AppInitialization extends ApplicationEvent {}
 
 class AppThemeToggled extends ApplicationEvent {
   final String theme;
@@ -24,5 +19,5 @@ class AppThemeToggled extends ApplicationEvent {
         super();
 
   @override
-  String toString() => 'AppThemeToggled{}';
+  String toString() => '$runtimeType{ theme: $theme }';
 }

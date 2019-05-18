@@ -5,22 +5,12 @@ abstract class BuzzerState extends Equatable {
   BuzzerState([List props = const []]) : super(props);
 
   @override
-  String toString() => 'BuzzerState{}';
+  String toString() => '$runtimeType{}';
 }
 
-class BuzzerInitial extends BuzzerState {
-  BuzzerInitial() : super();
+class BuzzerInitial extends BuzzerState {}
 
-  @override
-  String toString() => 'BuzzerInitial {}';
-}
-
-class BuzzerLoading extends BuzzerState {
-  BuzzerLoading() : super();
-
-  @override
-  String toString() => 'BuzzerLoading {}';
-}
+class BuzzerLoading extends BuzzerState {}
 
 class BuzzerSucceed extends BuzzerState {
   final String message;
@@ -30,7 +20,7 @@ class BuzzerSucceed extends BuzzerState {
         super();
 
   @override
-  String toString() => 'BuzzerSucceed { message: $message }';
+  String toString() => '$runtimeType{ message: $message }';
 }
 
 class BuzzerFailure extends BuzzerState {
@@ -39,5 +29,5 @@ class BuzzerFailure extends BuzzerState {
   BuzzerFailure({@required this.error}) : super([error]);
 
   @override
-  String toString() => 'BuzzerFailure { error: $error }';
+  String toString() => '$runtimeType{ error: $error }';
 }

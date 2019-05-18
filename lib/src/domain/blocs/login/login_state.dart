@@ -5,25 +5,14 @@ abstract class LoginState extends Equatable {
   LoginState([List props = const []]) : super(props);
 
   @override
-  String toString() => 'LoginState{}';
+  String toString() => '$runtimeType{}';
 }
 
-class LoginInitial extends LoginState {
-  @override
-  String toString() => 'LoginInitial';
-}
+class LoginInitial extends LoginState {}
 
-class LoginLoading extends LoginState {
-  @override
-  String toString() => 'LoginLoading';
-}
+class LoginLoading extends LoginState {}
 
-class LoginSucceed extends LoginState {
-  LoginSucceed() : super();
-
-  @override
-  String toString() => 'LoginSucceed {}';
-}
+class LoginSucceed extends LoginState {}
 
 class LoginFailure extends LoginState {
   final Error error;
@@ -31,5 +20,5 @@ class LoginFailure extends LoginState {
   LoginFailure({@required this.error}) : super([error]);
 
   @override
-  String toString() => 'LoginFailure { error: $error }';
+  String toString() => '$runtimeType{ error: ${error.runtimeType} }';
 }

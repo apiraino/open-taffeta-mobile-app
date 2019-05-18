@@ -2,41 +2,24 @@ import 'package:equatable/equatable.dart';
 
 abstract class AuthenticationState extends Equatable {
   AuthenticationState([List props = const []]) : super(props);
-}
-
-class AuthenticationUninitialized extends AuthenticationState {
-  AuthenticationUninitialized() : super();
 
   @override
-  String toString() => 'AuthenticationUninitialized';
+  String toString() => '$runtimeType{}';
 }
 
-class AuthenticationAuthenticated extends AuthenticationState {
-  AuthenticationAuthenticated() : super();
+class AuthenticationUninitialized extends AuthenticationState {}
 
-  @override
-  String toString() => 'AuthenticationAuthenticated';
-}
+class AuthenticationAuthenticated extends AuthenticationState {}
 
-class AuthenticationUnauthenticated extends AuthenticationState {
-  AuthenticationUnauthenticated() : super();
+class AuthenticationUnauthenticated extends AuthenticationState {}
 
-  @override
-  String toString() => 'AuthenticationUnauthenticated';
-}
-
-class AuthenticationLoading extends AuthenticationState {
-  AuthenticationLoading() : super();
-
-  @override
-  String toString() => 'AuthenticationLoading';
-}
+class AuthenticationLoading extends AuthenticationState {}
 
 class AuthenticationFailed extends AuthenticationState {
-  AuthenticationFailed({this.error}) : super();
-
   final Error error;
 
+  AuthenticationFailed({this.error}) : super();
+
   @override
-  String toString() => 'AuthenticationFailed';
+  String toString() => '$runtimeType{ error: ${error.runtimeType} }';
 }

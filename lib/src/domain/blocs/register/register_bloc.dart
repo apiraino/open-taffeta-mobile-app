@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/register/register.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:meta/meta.dart';
 
 /// Business Logic Component for Login and Registration
@@ -31,15 +31,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   @override
   Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
-    print('$_tag:mapEventToState($event)');
+    print('$_tag:$mapEventToState($event)');
 
-    try {
-      if (event is RegisterButtonPressed) {
-        yield* _mapRegisterButtonPressedEventToState(event);
-      }
-    } catch (error) {
-      print('$_tag:mapEventToState -> ${error.toString()}');
-      yield RegisterFailure(error: error);
+    if (event is RegisterButtonPressed) {
+      yield* _mapRegisterButtonPressedEventToState(event);
     }
   }
 
@@ -69,7 +64,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       }
     } catch (error) {
       print(
-          '$_tag:_mapRegisterButtonPressedEventToState -> ${error.toString()}');
+          '$_tag:_mapRegisterButtonPressedEventToState -> ${error.runtimeType}');
       yield RegisterFailure(error: error);
     }
   }

@@ -46,7 +46,7 @@ class BuzzerBloc extends Bloc<BuzzerEvent, BuzzerState> {
       );
       yield BuzzerSucceed(message: response.details);
     } catch (error) {
-      print('$_tag:_mapBuzzerDoorPressedEventToState -> error.toString()');
+      print('$_tag:_mapBuzzerDoorPressedEventToState -> error.runtimeType');
       yield BuzzerFailure(error: error);
     }
   }

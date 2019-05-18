@@ -4,6 +4,9 @@ import 'package:meta/meta.dart';
 /// [LoginEvent] that must be dispatch to [LoginBloc]
 abstract class LoginEvent extends Equatable {
   LoginEvent([List props = const []]) : super(props);
+
+  @override
+  String toString() => '$runtimeType{}';
 }
 
 class LoginButtonPressed extends LoginEvent {

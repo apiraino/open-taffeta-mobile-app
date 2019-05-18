@@ -65,7 +65,7 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
         configRepository: _configRepository,
       );
     } catch (error) {
-      print(error.toString());
+      print(error.runtimeType);
     }
   }
 }

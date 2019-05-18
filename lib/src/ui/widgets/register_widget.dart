@@ -61,7 +61,7 @@ class _RegisterWidget extends State<RegisterWidget> {
           Scaffold.of(context).showSnackBar(
             SnackBar(
               backgroundColor: AppColors.errorColor,
-              content: Text(state.error.toString()),
+              content: Text('${state.error.runtimeType}'),
             ),
           );
         }

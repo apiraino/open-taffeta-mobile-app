@@ -331,7 +331,7 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
         const BuzzerLocalizationsDE());
   }
 
-  /// A [LocalizationsDelegate] that uses [BuzzerLocalizationsFR.load]
+  /// A [LocalizationsDelegate] that uses [BuzzerLocalizationsFR._load]
   /// to create an instance of this class.
   ///
   /// [MaterialApp] automatically adds this value to [MaterialApp.localizationsDelegates].

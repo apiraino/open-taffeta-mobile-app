@@ -18,6 +18,7 @@ import 'data/repositories/buzzer_repository.dart';
 import 'data/repositories/preferences_repository.dart';
 import 'domain/blocs/configuration/configuration.dart';
 
+/// This App wrap all the configuration logic with [ConfigurationBloc]
 class ConfigurationWrapperApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ConfigurationWrapperAppState();
@@ -49,6 +50,7 @@ class _ConfigurationWrapperAppState extends State<ConfigurationWrapperApp> {
       builder: (BuildContext context, ConfigurationState state) {
         if (state is ConfigLoading) {
           return WidgetsApp(
+            initialRoute: '/',
             home: SplashPage(),
             color: AppColors.primaryColor,
           );
@@ -64,6 +66,12 @@ class _ConfigurationWrapperAppState extends State<ConfigurationWrapperApp> {
   }
 }
 
+/// This is the wrapper of the App with all configurations
+///
+/// It injects :
+/// - managers
+/// - repositories
+/// - blocs
 class _ConfiguredApp extends StatefulWidget {
   final ConfigLoaded state;
 
@@ -166,10 +174,9 @@ class _ConfiguredAppState extends State<_ConfiguredApp> {
   }
 }
 
-class SharedPreferences {}
-
+/// This is the final app with all UI preferences
 class _ThemedApp extends StatelessWidget {
-  final String _tag = '_ThemedApp';
+  final String _tag = '$_ThemedApp';
 
   final AppInitialized appState;
 
@@ -177,7 +184,7 @@ class _ThemedApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:build');
+    print('$_tag:$build');
 
     /// Routes
     Routes routes = Routes();
