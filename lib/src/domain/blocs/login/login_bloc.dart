@@ -55,9 +55,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> _mapLoginButtonPressedEventToState(
       LoginButtonPressed event) async* {
     yield LoginLoading();
-//    var reponse = await buzzerRepository.login(
-//        email: event.email, password: event.password);
-//    yield LoginSucceed();
-//    authBloc.dispatch(LoggedIn());
+    final response = await buzzerRepository.login(
+        email: event.email, password: event.password);
+
+    if (response.auth?.accessToken != null) {
+      final token = response.auth.accessToken;
+      authBloc.dispatch(LoggedIn(token: token));
+      yield LoginSucceed();
+    } else {
+      yield LoginFailure();
+    }
   }
 }

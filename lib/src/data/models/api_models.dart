@@ -7,22 +7,22 @@ part 'api_models.g.dart';
 //                              Auth                                          //
 ////////////////////////////////////////////////////////////////////////////////
 @JsonSerializable()
-class AuthSignupRequestModel {
+class AuthSignUpRequestModel {
   @JsonKey(name: 'email')
   String email;
 
   @JsonKey(name: 'password')
   String password;
 
-  AuthSignupRequestModel({
+  AuthSignUpRequestModel({
     this.email,
     this.password,
   });
 
-  factory AuthSignupRequestModel.fromJson(Map<String, dynamic> json) =>
-      _$AuthSignupRequestModelFromJson(json);
+  factory AuthSignUpRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$AuthSignUpRequestModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AuthSignupRequestModelToJson(this);
+  Map<String, dynamic> toJson() => _$AuthSignUpRequestModelToJson(this);
 }
 
 @JsonSerializable()
@@ -64,19 +64,14 @@ class AuthLoginRequestModel {
 
 @JsonSerializable()
 class AuthLoginResponseModel {
-  @JsonKey(name: 'user')
-  final UserModel user;
-
-  @JsonKey(name: 'status')
-  final String status;
-
-  @JsonKey(name: 'detail')
-  final String detail;
+  @JsonKey(name: 'auth')
+  final AuthModel auth;
+  @JsonKey(name: 'is_active')
+  final bool isActive;
 
   AuthLoginResponseModel({
-    this.user,
-    this.status,
-    this.detail,
+    this.auth,
+    this.isActive,
   });
 
   factory AuthLoginResponseModel.fromJson(Map<String, dynamic> json) =>

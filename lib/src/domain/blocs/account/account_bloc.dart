@@ -27,7 +27,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     if (event is AccountRefresh) {
       yield AccountLoading();
 
-      /// TODO: Implements Account data fetch (wait repository)
+      /// TODO: Implements Account data fetch (wait backend feature)
       yield AccountUninitialized();
     }
   }

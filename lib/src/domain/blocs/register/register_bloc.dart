@@ -56,7 +56,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         password: event.password,
       );
       if (response.auth?.accessToken != null) {
-        var token = response.auth.accessToken;
+        final token = response.auth?.accessToken;
         authBloc.dispatch(LoggedIn(token: token));
         yield RegisterSucceed();
       } else {

@@ -28,7 +28,7 @@ class BuzzerApiManager {
 
   Dio _dio;
 
-  final String _pathSignup = '/signup';
+  final String _pathSignUp = '/signup';
   final String _pathLogin = '/login';
   final String _pathDoors = '/door';
 
@@ -37,9 +37,13 @@ class BuzzerApiManager {
     @required String email,
     @required String password,
   }) async {
-    AuthLoginRequestModel request = AuthLoginRequestModel();
+    final request = AuthLoginRequestModel(
+      email: email,
+      password: password,
+    );
 
-    Response response = await _dio.post(_pathLogin, data: jsonEncode(request));
+    final response = await _dio.post(_pathLogin, data: jsonEncode(request));
+
     return AuthLoginResponseModel.fromJson(response.data);
   }
 
@@ -48,12 +52,12 @@ class BuzzerApiManager {
     @required String email,
     @required String password,
   }) async {
-    AuthSignupRequestModel request = AuthSignupRequestModel(
+    final request = AuthSignUpRequestModel(
       email: email,
       password: password,
     );
 
-    Response response = await _dio.post(_pathSignup, data: jsonEncode(request));
+    final response = await _dio.post(_pathSignUp, data: jsonEncode(request));
 
     return AuthSignUpResponseModel.fromJson(response.data);
   }
@@ -64,7 +68,7 @@ class BuzzerApiManager {
     Response response = await _dio.post(
       '$_pathDoors/$doorId',
 
-      /// Needed if content-type header must be added to the request
+      /// Needed if content-type header is specified
       data: {},
     );
     return BuzzerResponseModel.fromJson(response.data);
