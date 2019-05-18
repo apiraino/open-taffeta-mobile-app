@@ -71,7 +71,7 @@ class _AccountPageConnected extends StatelessWidget {
             ],
           );
         } else if (state is AccountFailure) {
-          return ErrorCard(message: state.error.runtimeType);
+          return ErrorCard(message: '${state.error.runtimeType}');
         }
         return Container();
       },

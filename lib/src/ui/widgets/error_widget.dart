@@ -73,7 +73,7 @@ class ErrorList extends StatelessWidget {
       shrinkWrap: this.shrinkWrap,
       physics: this.physics,
       children: <Widget>[
-        ErrorCard(message: error),
+        ErrorCard(message: '${error.runtimeType}'),
       ],
     );
   }
