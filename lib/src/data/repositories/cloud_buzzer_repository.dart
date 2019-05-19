@@ -19,11 +19,15 @@ class CloudBuzzerRepository extends BuzzerRepository {
   }
 
   @override
-  Future<AuthSignupResponseModel> register({
+  Future<AuthSignUpResponseModel> register({
     @required String email,
     @required String password,
   }) async {
     return await buzzerApiManager.register(email: email, password: password);
+  }
+
+  Future<void> logout() async {
+    await buzzerApiManager.logout();
   }
 
   @override

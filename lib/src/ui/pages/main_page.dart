@@ -36,7 +36,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:build');
+    print('$_tag:$build');
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +46,7 @@ class _MainPageState extends State<MainPage> {
           MenuButton(),
         ],
       ),
-      body: BlocListener(
+      body: BlocListener<AuthenticationEvent, AuthenticationState>(
         bloc: BlocProvider.of<AuthenticationBloc>(context),
         listener: (BuildContext context, AuthenticationState state) {
           if (state is AuthenticationAuthenticated) {

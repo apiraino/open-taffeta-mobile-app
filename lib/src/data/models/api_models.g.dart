@@ -6,65 +6,66 @@ part of 'api_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AuthSignupRequestModel _$AuthSignupRequestModelFromJson(
+AuthSignUpRequestModel _$AuthSignUpRequestModelFromJson(
     Map<String, dynamic> json) {
-  return AuthSignupRequestModel(
+  return AuthSignUpRequestModel(
       email: json['email'] as String, password: json['password'] as String);
 }
 
-Map<String, dynamic> _$AuthSignupRequestModelToJson(
-        AuthSignupRequestModel instance) =>
+Map<String, dynamic> _$AuthSignUpRequestModelToJson(
+        AuthSignUpRequestModel instance) =>
     <String, dynamic>{'email': instance.email, 'password': instance.password};
 
-AuthSignupResponseModel _$AuthSignupResponseModelFromJson(
+AuthSignUpResponseModel _$AuthSignUpResponseModelFromJson(
     Map<String, dynamic> json) {
-  return AuthSignupResponseModel(
-      user: json['user'] == null
+  return AuthSignUpResponseModel(
+      auth: json['auth'] == null
           ? null
-          : UserModel.fromJson(json['user'] as Map<String, dynamic>),
-      status: json['status'] as String,
-      detail: json['detail'] as String);
+          : AuthModel.fromJson(json['auth'] as Map<String, dynamic>),
+      isActive: json['is_active'] as bool);
 }
 
-Map<String, dynamic> _$AuthSignupResponseModelToJson(
-        AuthSignupResponseModel instance) =>
-    <String, dynamic>{
-      'user': instance.user,
-      'status': instance.status,
-      'detail': instance.detail
-    };
+Map<String, dynamic> _$AuthSignUpResponseModelToJson(
+        AuthSignUpResponseModel instance) =>
+    <String, dynamic>{'auth': instance.auth, 'is_active': instance.isActive};
 
 AuthLoginRequestModel _$AuthLoginRequestModelFromJson(
     Map<String, dynamic> json) {
   return AuthLoginRequestModel(
-      email: json['email'] as String, password: json['password'] as String)
-    ..username = json['username'] as String;
+      email: json['email'] as String, password: json['password'] as String);
 }
 
 Map<String, dynamic> _$AuthLoginRequestModelToJson(
         AuthLoginRequestModel instance) =>
-    <String, dynamic>{
-      'username': instance.username,
-      'email': instance.email,
-      'password': instance.password
-    };
+    <String, dynamic>{'email': instance.email, 'password': instance.password};
 
 AuthLoginResponseModel _$AuthLoginResponseModelFromJson(
     Map<String, dynamic> json) {
   return AuthLoginResponseModel(
-      user: json['user'] == null
+      auth: json['auth'] == null
           ? null
-          : UserModel.fromJson(json['user'] as Map<String, dynamic>),
-      status: json['status'] as String,
-      detail: json['detail'] as String);
+          : AuthModel.fromJson(json['auth'] as Map<String, dynamic>),
+      isActive: json['is_active'] as bool);
 }
 
 Map<String, dynamic> _$AuthLoginResponseModelToJson(
         AuthLoginResponseModel instance) =>
-    <String, dynamic>{
-      'user': instance.user,
-      'status': instance.status,
-      'detail': instance.detail
+    <String, dynamic>{'auth': instance.auth, 'is_active': instance.isActive};
+
+AuthModel _$AuthModelFromJson(Map<String, dynamic> json) {
+  return AuthModel(
+      clientId: json['client_id'] as String,
+      accessTokenExpiration:
+          json['exp'] == null ? null : DateTime.parse(json['exp'] as String),
+      accessToken: json['token'] as String,
+      userId: json['user_id'] as int);
+}
+
+Map<String, dynamic> _$AuthModelToJson(AuthModel instance) => <String, dynamic>{
+      'client_id': instance.clientId,
+      'exp': instance.accessTokenExpiration?.toIso8601String(),
+      'token': instance.accessToken,
+      'user_id': instance.userId
     };
 
 BuzzerRequestModel _$BuzzerRequestModelFromJson(Map<String, dynamic> json) {

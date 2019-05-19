@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/auth_preferences_repository.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/account/account.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/preferences_repository.dart';
 import 'package:meta/meta.dart';
 
 /// Business Logic Component for Authentication
@@ -12,24 +12,33 @@ import 'package:meta/meta.dart';
 /// Use [AuthenticationEvent] for events and [AuthenticationState] for states
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final String _tag = 'AuthenticationBloc';
+  final String _tag = '$AuthenticationBloc';
+
+  final BuzzerRepository buzzerRepository;
+  final AuthPreferencesRepository authPreferencesRepository;
+  final AccountBloc accountBloc;
 
   AuthenticationBloc({
     @required this.buzzerRepository,
-    @required this.preferencesRepository,
+    @required this.authPreferencesRepository,
     @required this.accountBloc,
-  })  : assert(buzzerRepository != null),
-        assert(preferencesRepository != null),
-        assert(accountBloc != null),
+  })  : assert(
+          buzzerRepository != null,
+          'No $BuzzerRepository given',
+        ),
+        assert(
+          authPreferencesRepository != null,
+          'No $AuthPreferencesRepository given',
+        ),
+        assert(
+          accountBloc != null,
+          'No $AccountBloc given',
+        ),
         super();
-
-  final BuzzerRepository buzzerRepository;
-  final PreferencesRepository preferencesRepository;
-  final AccountBloc accountBloc;
 
   @override
   void dispose() {
-    print('$_tag:dispose()');
+    print('$_tag:$dispose()');
     super.dispose();
   }
 
@@ -39,7 +48,7 @@ class AuthenticationBloc
   @override
   Stream<AuthenticationState> mapEventToState(
       AuthenticationEvent event) async* {
-    print('$_tag:mapEventToState($event)');
+    print('$_tag:$mapEventToState($event)');
     if (event is AppStarted) {
       yield* _mapAppStartedToState(event);
     } else if (event is LoggedIn) {
@@ -62,7 +71,7 @@ class AuthenticationBloc
     try {
       yield AuthenticationLoading();
 
-      String token = await preferencesRepository.getAccessToken();
+      String token = await authPreferencesRepository.getAccessToken();
       if (token != null) {
         yield AuthenticationAuthenticated();
         accountBloc.dispatch(AccountRefresh());
@@ -70,7 +79,7 @@ class AuthenticationBloc
         yield AuthenticationUnauthenticated();
       }
     } catch (error) {
-      print('$_tag:_mapAppStartedToState -> error.runtimeType');
+      print('$_tag:$_mapAppStartedToState -> ${error.runtimeType}');
       yield AuthenticationFailed(error: error);
     }
   }
@@ -83,10 +92,10 @@ class AuthenticationBloc
   Stream<AuthenticationState> _mapLoggedInEventToState(LoggedIn event) async* {
     try {
       yield AuthenticationLoading();
-      preferencesRepository.setAccessToken(event.token);
+      authPreferencesRepository.setAccessToken(event.token);
       yield AuthenticationAuthenticated();
     } catch (error) {
-      print('$_tag:_mapLoggedInEventToState -> error.runtimeType');
+      print('$_tag:$_mapLoggedInEventToState -> ${error.runtimeType}');
       yield AuthenticationFailed(error: error);
     }
   }
@@ -101,17 +110,16 @@ class AuthenticationBloc
     try {
       yield AuthenticationLoading();
 
-      await preferencesRepository.deleteAuthConnected();
-      await preferencesRepository.deleteAccessToken();
-      await preferencesRepository.deleteAccessTokenExpiration();
-      await preferencesRepository.deleteRefreshToken();
-      await preferencesRepository.deleteRefreshTokenExpiration();
-      await preferencesRepository.deleteUserId();
-      await preferencesRepository.deleteUserEmail();
+      await authPreferencesRepository.deleteAccessToken();
+      await authPreferencesRepository.deleteAccessTokenExpiration();
+      await authPreferencesRepository.deleteRefreshToken();
+      await authPreferencesRepository.deleteRefreshTokenExpiration();
+
+      await buzzerRepository.logout();
 
       yield AuthenticationUnauthenticated();
     } catch (error) {
-      print('$_tag:_mapLoggedOutEventToState -> error.runtimeType');
+      print('$_tag:$_mapLoggedOutEventToState -> ${error.runtimeType}');
       yield AuthenticationFailed(error: error);
     }
   }

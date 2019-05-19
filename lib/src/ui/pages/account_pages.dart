@@ -9,11 +9,13 @@ import 'package:flutter_door_buzzer/src/ui/widgets/error_widget.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AccountPage extends StatelessWidget {
-  const AccountPage({Key key}) : super(key: key);
+  final String _tag = '$AccountPage';
+
+  AccountPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print('Building AccountPage');
+    print('$_tag:$build');
 
     AuthenticationBloc _authBloc = BlocProvider.of<AuthenticationBloc>(context);
 

@@ -8,10 +8,12 @@ abstract class BuzzerRepository {
     @required String password,
   });
 
-  Future<AuthSignupResponseModel> register({
+  Future<AuthSignUpResponseModel> register({
     @required String email,
     @required String password,
   });
+
+  Future<void> logout();
 
   Future<BuzzerResponseModel> buzzDoor({
     @required int doorId,

@@ -1,21 +1,21 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-abstract class BuzzerState extends Equatable {
-  BuzzerState([List props = const []]) : super(props);
+abstract class DoorState extends Equatable {
+  DoorState([List props = const []]) : super(props);
 
   @override
   String toString() => '$runtimeType{}';
 }
 
-class BuzzerInitial extends BuzzerState {}
+class DoorInitial extends DoorState {}
 
-class BuzzerLoading extends BuzzerState {}
+class DoorLoading extends DoorState {}
 
-class BuzzerSucceed extends BuzzerState {
+class DoorSucceed extends DoorState {
   final String message;
 
-  BuzzerSucceed({@required this.message})
+  DoorSucceed({@required this.message})
       : assert(message != null),
         super();
 
@@ -23,10 +23,10 @@ class BuzzerSucceed extends BuzzerState {
   String toString() => '$runtimeType{ message: $message }';
 }
 
-class BuzzerFailure extends BuzzerState {
+class DoorFailure extends DoorState {
   final Error error;
 
-  BuzzerFailure({@required this.error}) : super([error]);
+  DoorFailure({@required this.error}) : super([error]);
 
   @override
   String toString() => '$runtimeType{ error: $error }';

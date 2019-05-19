@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/login/login.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:meta/meta.dart';
 
 /// Business Logic Component for Login and Registration
@@ -22,7 +22,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   void dispose() {
-    print('$_tag:dispose()');
+    print('$_tag:$dispose()');
     super.dispose();
   }
 
@@ -31,21 +31,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    print('$_tag:mapEventToState($event)');
+    print('$_tag:$mapEventToState($event)');
 
-    try {
-      if (event is LoginButtonPressed) {
-        yield* _mapLoginButtonPressedEventToState(event);
-      }
-    } catch (error) {
-      print('$_tag --> ${error.runtimeType}');
-      yield LoginFailure(error: error);
+    if (event is LoginButtonPressed) {
+      yield* _mapLoginButtonPressedEventToState(event);
     }
   }
 
-  // -----------------------------------------------------------------------
-  //                       All Event map to State
-  // -----------------------------------------------------------------------
+  /// -----------------------------------------------------------------------
+  ///                       All Event map to State
+  /// -----------------------------------------------------------------------
 
   /// Map [LoginButtonPressedTriggered] to [LoginState]
   ///
@@ -54,10 +49,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   /// ```
   Stream<LoginState> _mapLoginButtonPressedEventToState(
       LoginButtonPressed event) async* {
-    yield LoginLoading();
-//    var reponse = await buzzerRepository.login(
-//        email: event.email, password: event.password);
-//    yield LoginSucceed();
-//    authBloc.dispatch(LoggedIn());
+    try {
+      yield LoginLoading();
+      final response = await buzzerRepository.login(
+          email: event.email, password: event.password);
+
+      if (response.auth?.accessToken != null) {
+        final token = response.auth.accessToken;
+        authBloc.dispatch(LoggedIn(token: token));
+        yield LoginSucceed();
+      } else {
+        yield LoginFailure();
+      }
+    } catch (error) {
+      print(
+          '$_tag:$_mapLoginButtonPressedEventToState -> ${error.runtimeType}');
+      yield LoginFailure(error: error);
+    }
   }
 }

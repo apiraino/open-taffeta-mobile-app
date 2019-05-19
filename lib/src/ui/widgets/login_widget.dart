@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/login/login.dart';
+import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/dimensions.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -11,7 +12,7 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  final String _tag = '_LoginWidgetState';
+  final String _tag = '$_LoginWidgetState';
 
   final FocusNode myFocusNodeEmailLogin = FocusNode();
   final FocusNode myFocusNodePasswordLogin = FocusNode();
@@ -21,11 +22,9 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   bool _obscureTextLogin = true;
 
-  _LoginWidgetState();
-
   @override
   void dispose() {
-    print('$_tag:dispose');
+    print('$_tag:$dispose()');
     loginEmailController.dispose();
     loginPasswordController.dispose();
     myFocusNodeEmailLogin.dispose();
@@ -35,7 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:build');
+    print('$_tag:$build');
     LoginBloc _loginBloc = BlocProvider.of<LoginBloc>(context);
 
     void _loginPressed() {
@@ -45,58 +44,71 @@ class _LoginWidgetState extends State<LoginWidget> {
       ));
     }
 
-    return BlocBuilder<LoginEvent, LoginState>(
+    return BlocListener<LoginEvent, LoginState>(
       bloc: _loginBloc,
-      builder: (BuildContext context, LoginState state) {
-        return Card(
-          elevation: AppDimensions.defaultCardElevation,
-          child: Padding(
-            padding: EdgeInsets.all(AppDimensions.defaultCardPadding),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(child: Text('Login')),
-                Padding(
-                  padding: const EdgeInsets.all(
-                      AppDimensions.defaultFormInputPadding),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    controller: loginEmailController,
-                    decoration: InputDecoration(
-                      hintText: 'someone@email.com',
-                      labelText: 'Email',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(
-                      AppDimensions.defaultFormInputPadding),
-                  child: TextFormField(
-                    controller: loginPasswordController,
-                    obscureText: _obscureTextLogin,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: Icon(_obscureTextLogin
-                            ? MdiIcons.eyeOffOutline
-                            : MdiIcons.eyeOutline),
-                        onPressed: _toggleLoginPassword,
-                      ),
-                      labelText: 'Password',
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  child: Text('LOGIN'),
-                  onPressed: state is! LoginLoading ? _loginPressed : null,
-                ),
-              ],
+      listener: (BuildContext context, LoginState state) {
+        if (state is LoginFailure) {
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: AppColors.errorColor,
+              content: Text('${state.error.runtimeType}'),
             ),
-          ),
-        );
+          );
+        }
       },
+      child: BlocBuilder<LoginEvent, LoginState>(
+        bloc: _loginBloc,
+        builder: (BuildContext context, LoginState state) {
+          return Card(
+            elevation: AppDimensions.defaultCardElevation,
+            child: Padding(
+              padding: EdgeInsets.all(AppDimensions.defaultCardPadding),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(child: Text('Login')),
+                  Padding(
+                    padding: const EdgeInsets.all(
+                        AppDimensions.defaultFormInputPadding),
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      controller: loginEmailController,
+                      decoration: InputDecoration(
+                        hintText: 'someone@email.com',
+                        labelText: 'Email',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(
+                        AppDimensions.defaultFormInputPadding),
+                    child: TextFormField(
+                      controller: loginPasswordController,
+                      obscureText: _obscureTextLogin,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(_obscureTextLogin
+                              ? MdiIcons.eyeOffOutline
+                              : MdiIcons.eyeOutline),
+                          onPressed: _toggleLoginPassword,
+                        ),
+                        labelText: 'Password',
+                      ),
+                    ),
+                  ),
+                  MaterialButton(
+                    child: Text('LOGIN'),
+                    onPressed: state is! LoginLoading ? _loginPressed : null,
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 

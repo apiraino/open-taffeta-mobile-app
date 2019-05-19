@@ -11,10 +11,10 @@ class ApiInterceptor {
   ApiInterceptor({String accessToken}) {
     _accessToken = accessToken;
     _interceptorWrapper =
-        InterceptorsWrapper(onRequest: onRequest, onResponse: onResponse);
+        InterceptorsWrapper(onRequest: _onRequest, onResponse: _onResponse);
   }
 
-  RequestOptions onRequest(RequestOptions options) {
+  RequestOptions _onRequest(RequestOptions options) {
     if (_accessToken != null) {
       options.headers.addAll({
         HttpHeaders.authorizationHeader: '$_accessToken',
@@ -23,14 +23,15 @@ class ApiInterceptor {
     return options;
   }
 
-  Response onResponse(Response<dynamic> response) {
+  Response _onResponse(Response<dynamic> response) {
     var data = response.data;
-    if (data['user'] != null) {
-      var token = data['user']['token'];
-      if (token != null) {
-        _accessToken = token;
-      }
+    if (data['auth'] != null && data['auth']['token'] != null) {
+      _accessToken = data['auth']['token'];
     }
     return response;
+  }
+
+  Future<void> deleteAuthData() async {
+    _accessToken = null;
   }
 }

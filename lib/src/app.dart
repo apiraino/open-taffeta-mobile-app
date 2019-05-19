@@ -14,8 +14,8 @@ import 'package:flutter_door_buzzer/src/ui/pages/splash_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'data/repositories/app_preferences_repository.dart';
 import 'data/repositories/buzzer_repository.dart';
-import 'data/repositories/preferences_repository.dart';
 import 'domain/blocs/configuration/configuration.dart';
 
 /// This App wrap all the configuration logic with [ConfigurationBloc]
@@ -49,7 +49,7 @@ class _ConfigurationWrapperAppState extends State<ConfigurationWrapperApp> {
       bloc: _configBloc,
       builder: (BuildContext context, ConfigurationState state) {
         if (state is ConfigLoading) {
-          return WidgetsApp(
+          return MaterialApp(
             initialRoute: '/',
             home: SplashPage(),
             color: AppColors.primaryColor,
@@ -96,13 +96,14 @@ class _ConfiguredAppState extends State<_ConfiguredApp> {
   void initState() {
     super.initState();
 
-    _appBloc =
-        ApplicationBloc(preferencesRepository: _state.preferencesRepository);
+    _appBloc = ApplicationBloc(
+      appPreferencesRepository: _state.appPreferencesRepository,
+    );
 
     _accountBloc = AccountBloc(buzzerRepository: _state.buzzerRepository);
 
     _authBloc = AuthenticationBloc(
-      preferencesRepository: _state.preferencesRepository,
+      authPreferencesRepository: _state.authPreferencesRepository,
       buzzerRepository: _state.buzzerRepository,
       accountBloc: _accountBloc,
     );
@@ -137,8 +138,8 @@ class _ConfiguredAppState extends State<_ConfiguredApp> {
     return MultiProvider(
       providers: [
         Provider<BuzzerRepository>.value(value: widget.state.buzzerRepository),
-        Provider<PreferencesRepository>.value(
-            value: widget.state.preferencesRepository),
+        Provider<AppPreferencesRepository>.value(
+            value: widget.state.appPreferencesRepository),
       ],
       child: BlocProviderTree(
         blocProviders: <BlocProvider>[

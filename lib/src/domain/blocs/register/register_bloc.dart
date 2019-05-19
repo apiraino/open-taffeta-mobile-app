@@ -22,7 +22,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   @override
   void dispose() {
-    print('$_tag:dispose()');
+    print('$_tag:$dispose()');
     super.dispose();
   }
 
@@ -38,9 +38,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     }
   }
 
-  // -----------------------------------------------------------------------
-  //                       All Event map to State
-  // -----------------------------------------------------------------------
+  /// -----------------------------------------------------------------------
+  ///                       All Event map to State
+  /// -----------------------------------------------------------------------
 
   /// Map [RegisterButtonPressed] to [RegisterState]
   ///
@@ -55,8 +55,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         email: event.email,
         password: event.password,
       );
-      if (response.user != null && response.user.token != null) {
-        var token = response.user.token;
+      if (response.auth?.accessToken != null) {
+        final token = response.auth?.accessToken;
         authBloc.dispatch(LoggedIn(token: token));
         yield RegisterSucceed();
       } else {
@@ -64,7 +64,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       }
     } catch (error) {
       print(
-          '$_tag:_mapRegisterButtonPressedEventToState -> ${error.runtimeType}');
+          '$_tag:$_mapRegisterButtonPressedEventToState -> ${error.runtimeType}');
       yield RegisterFailure(error: error);
     }
   }

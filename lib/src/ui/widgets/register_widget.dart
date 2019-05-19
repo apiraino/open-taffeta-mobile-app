@@ -33,7 +33,7 @@ class _RegisterWidget extends State<RegisterWidget> {
 
   @override
   void dispose() {
-    print('$_tag:dispose');
+    print('$_tag:$dispose()');
 
 //    myFocusNodeFirstName.dispose();
 //    myFocusNodeLastName.dispose();
@@ -44,7 +44,7 @@ class _RegisterWidget extends State<RegisterWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:build');
+    print('$_tag:$build');
     RegisterBloc _registerBloc = BlocProvider.of<RegisterBloc>(context);
 
     void _registerPressed() {

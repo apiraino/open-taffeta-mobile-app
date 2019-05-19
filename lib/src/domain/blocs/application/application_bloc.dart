@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/app_preferences_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/application/application.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/preferences_repository.dart';
 
 class ThemeType {
   static const String LIGHT = 'THEME_LIGHT';
@@ -13,12 +13,12 @@ class ThemeType {
 class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   final String _tag = '$ApplicationBloc';
 
-  final PreferencesRepository preferencesRepository;
+  final AppPreferencesRepository appPreferencesRepository;
 
   ApplicationBloc({
-    this.preferencesRepository,
-  })  : assert(
-            preferencesRepository != null, 'No $PreferencesRepository given'),
+    this.appPreferencesRepository,
+  })  : assert(appPreferencesRepository != null,
+            'No $AppPreferencesRepository given'),
         super();
 
   @override
@@ -31,14 +31,14 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
 
   @override
   Stream<ApplicationState> mapEventToState(ApplicationEvent event) async* {
-    print('$_tag:mapEventToState($event)');
+    print('$_tag:$mapEventToState($event)');
     if (event is AppInitialization) {
-      String theme = await preferencesRepository.getAppTheme();
+      String theme = await appPreferencesRepository.getAppTheme();
       yield AppInitialized(theme: theme);
     }
     if (event is AppThemeToggled) {
       String _theme = event.theme;
-      preferencesRepository.setAppTheme(_theme);
+      appPreferencesRepository.setAppTheme(_theme);
       yield AppInitialized(theme: _theme);
     }
   }
