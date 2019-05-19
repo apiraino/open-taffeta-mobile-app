@@ -1,17 +1,22 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_door_buzzer/src/data/managers/api_interceptor.dart';
-import 'package:flutter_door_buzzer/src/data/managers/asset_config_manager.dart';
+import 'package:flutter_door_buzzer/src/data/interceptors/api_interceptor.dart';
+import 'package:flutter_door_buzzer/src/data/managers/app_shared_preferences_manager.dart';
+import 'package:flutter_door_buzzer/src/data/managers/auth_shared_preferences_manager.dart';
 import 'package:flutter_door_buzzer/src/data/managers/buzzer_api_manager.dart';
-import 'package:flutter_door_buzzer/src/data/managers/shared_preferences_manager.dart';
+import 'package:flutter_door_buzzer/src/data/managers/config_assets_manager.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/app_preferences_repository.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/auth_preferences_repository.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/cloud_buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/config_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/preferences_repository.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/local_app_preferences_repository.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/local_auth_preferences_repository.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/local_config_repository.dart';
 
 import 'configuration.dart';
 
 class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
-  final String _tag = 'ConfigurationBloc';
+  final String _tag = '$ConfigurationBloc';
 
   ConfigurationBloc() : super();
 
@@ -23,7 +28,8 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
 
   /// Repositories
   BuzzerRepository _buzzerRepository;
-  PreferencesRepository _preferencesRepository;
+  AuthPreferencesRepository _authPreferencesRepository;
+  AppPreferencesRepository _appPreferencesRepository;
   ConfigRepository _configRepository;
 
   @override
@@ -39,20 +45,34 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
   Stream<ConfigurationState> _mapAppLaunchedEventToState() async* {
     try {
       yield ConfigLoading();
-      _preferencesRepository = SharedPreferencesManager();
+
+      final _authSharedPreferencesManager = AuthSharedPreferencesManager();
 
       /// Interceptors
       _apiInterceptor = ApiInterceptor(
-        accessToken: await _preferencesRepository.getAccessToken(),
+        accessToken: await _authSharedPreferencesManager.getAccessToken(),
+      );
+
+      /// Managers
+      final _localConfigManager = ConfigAssetsManager();
+      final _appSharedPreferencesManager = AppSharedPreferencesManager();
+
+      _configRepository = LocalConfigRepository(
+        localConfigManager: _localConfigManager,
+      );
+
+      _buzzerApiManager = BuzzerApiManager(
+        baseUrl: await _configRepository.getApiServerUrl(),
+        apiInterceptor: _apiInterceptor,
       );
 
       /// Repositories
-      _configRepository = AssetConfigManager();
+      _authPreferencesRepository = LocalAuthPreferencesRepository(
+        authSharedPreferencesManager: _authSharedPreferencesManager,
+      );
 
-      /// Managers
-      _buzzerApiManager = BuzzerApiManager(
-        baseUrl: await _configRepository.getServerUrl(),
-        apiInterceptor: _apiInterceptor,
+      _appPreferencesRepository = LocalAppPreferencesRepository(
+        appSharedPreferencesManager: _appSharedPreferencesManager,
       );
 
       _buzzerRepository = CloudBuzzerRepository(
@@ -61,11 +81,13 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
 
       yield ConfigLoaded(
         buzzerRepository: _buzzerRepository,
-        preferencesRepository: _preferencesRepository,
+        authPreferencesRepository: _authPreferencesRepository,
+        appPreferencesRepository: _appPreferencesRepository,
         configRepository: _configRepository,
       );
     } catch (error) {
-      print(error.runtimeType);
+      print('$_tag:$_mapAppLaunchedEventToState -> ${error.runtimeType}');
+      throw error;
     }
   }
 }

@@ -1,5 +1,6 @@
-/// Interface for all Preferences repositories
-abstract class PreferencesRepository {
+/// Interface for all AuthPreferences repositories
+/// Mostly only one local repository
+abstract class AuthPreferencesRepository {
   Future<String> getAccessToken();
 
   Future<void> setAccessToken(String accessToken);
@@ -23,30 +24,6 @@ abstract class PreferencesRepository {
   Future<void> setRefreshTokenExpiration(String refreshTokenExpiration);
 
   Future<void> deleteRefreshTokenExpiration();
-
-  Future<bool> isAuthConnected();
-
-  Future<void> setAuthConnected(bool connected);
-
-  Future<void> deleteAuthConnected();
-
-  Future<void> setUserId(String userId);
-
-  Future<String> getUserId();
-
-  Future<void> deleteUserId();
-
-  Future<void> setUserEmail(String userEmail);
-
-  Future<String> getUserEmail();
-
-  Future<void> deleteUserEmail();
-
-  Future<String> getAppTheme();
-
-  Future<void> setAppTheme(String theme);
-
-  Future<void> deleteAppTheme();
 
   Future deleteAll();
 }

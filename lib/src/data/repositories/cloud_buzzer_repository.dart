@@ -26,6 +26,10 @@ class CloudBuzzerRepository extends BuzzerRepository {
     return await buzzerApiManager.register(email: email, password: password);
   }
 
+  Future<void> logout() async {
+    await buzzerApiManager.logout();
+  }
+
   @override
   Future<BuzzerResponseModel> buzzDoor({@required int doorId}) async {
     return await buzzerApiManager.openDoor(doorId: doorId);

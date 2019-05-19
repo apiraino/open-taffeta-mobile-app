@@ -13,6 +13,8 @@ abstract class BuzzerRepository {
     @required String password,
   });
 
+  Future<void> logout();
+
   Future<BuzzerResponseModel> buzzDoor({
     @required int doorId,
   });

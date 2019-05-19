@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/preferences_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/door/door.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
@@ -17,7 +16,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:build');
+    print('$_tag:$build');
     AuthenticationBloc _authBloc = BlocProvider.of<AuthenticationBloc>(context);
 
     return BlocBuilder<AuthenticationEvent, AuthenticationState>(
@@ -58,13 +57,8 @@ class __AuthenticatedHomeState extends State<_AuthenticatedHome> {
     /// get dependencies
 
     BuzzerRepository buzzerRepository = Provider.of<BuzzerRepository>(context);
-    PreferencesRepository preferencesRepository =
-        Provider.of<PreferencesRepository>(context);
 
-    buzzerBloc = BuzzerBloc(
-      buzzerRepository: buzzerRepository,
-      preferencesRepository: preferencesRepository,
-    );
+    buzzerBloc = BuzzerBloc(buzzerRepository: buzzerRepository);
 
     super.didChangeDependencies();
   }

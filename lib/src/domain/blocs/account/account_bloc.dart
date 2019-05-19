@@ -23,7 +23,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
   @override
   Stream<AccountState> mapEventToState(AccountEvent event) async* {
-    print('$_tag:mapEventToState($event)');
+    print('$_tag:$mapEventToState($event)');
     if (event is AccountRefresh) {
       yield AccountLoading();
 

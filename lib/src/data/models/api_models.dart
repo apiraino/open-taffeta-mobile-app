@@ -1,4 +1,3 @@
-import 'package:flutter_door_buzzer/src/data/models/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'api_models.g.dart';

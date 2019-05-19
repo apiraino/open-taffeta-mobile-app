@@ -38,7 +38,7 @@ class _AccountTileConnected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:build');
+    print('$_tag:$build');
 
     AuthenticationBloc _authBloc = BlocProvider.of<AuthenticationBloc>(context);
     AccountBloc _accountBloc = BlocProvider.of<AccountBloc>(context);

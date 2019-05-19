@@ -22,7 +22,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   void dispose() {
-    print('$_tag:dispose()');
+    print('$_tag:$dispose()');
     super.dispose();
   }
 
@@ -31,15 +31,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    print('$_tag:mapEventToState($event)');
+    print('$_tag:$mapEventToState($event)');
 
-    try {
-      if (event is LoginButtonPressed) {
-        yield* _mapLoginButtonPressedEventToState(event);
-      }
-    } catch (error) {
-      print('$_tag --> ${error.runtimeType}');
-      yield LoginFailure(error: error);
+    if (event is LoginButtonPressed) {
+      yield* _mapLoginButtonPressedEventToState(event);
     }
   }
 
@@ -54,16 +49,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   /// ```
   Stream<LoginState> _mapLoginButtonPressedEventToState(
       LoginButtonPressed event) async* {
-    yield LoginLoading();
-    final response = await buzzerRepository.login(
-        email: event.email, password: event.password);
+    try {
+      yield LoginLoading();
+      final response = await buzzerRepository.login(
+          email: event.email, password: event.password);
 
-    if (response.auth?.accessToken != null) {
-      final token = response.auth.accessToken;
-      authBloc.dispatch(LoggedIn(token: token));
-      yield LoginSucceed();
-    } else {
-      yield LoginFailure();
+      if (response.auth?.accessToken != null) {
+        final token = response.auth.accessToken;
+        authBloc.dispatch(LoggedIn(token: token));
+        yield LoginSucceed();
+      } else {
+        yield LoginFailure();
+      }
+    } catch (error) {
+      print(
+          '$_tag:$_mapLoginButtonPressedEventToState -> ${error.runtimeType}');
+      yield LoginFailure(error: error);
     }
   }
 }

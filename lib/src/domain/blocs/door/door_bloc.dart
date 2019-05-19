@@ -1,24 +1,20 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_door_buzzer/src/domain/blocs/door/door.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/preferences_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/door/door.dart';
 import 'package:meta/meta.dart';
 
 class BuzzerBloc extends Bloc<DoorEvent, DoorState> {
-  final String _tag = 'BuzzerBloc';
+  final String _tag = '$BuzzerBloc';
   final BuzzerRepository buzzerRepository;
-  final PreferencesRepository preferencesRepository;
 
   BuzzerBloc({
     @required this.buzzerRepository,
-    @required this.preferencesRepository,
   })  : assert(buzzerRepository != null),
-        assert(preferencesRepository != null),
         super();
 
   @override
   void dispose() {
-    print('$_tag:dispose()');
+    print('$_tag:$dispose()');
     super.dispose();
   }
 
@@ -45,7 +41,7 @@ class BuzzerBloc extends Bloc<DoorEvent, DoorState> {
       );
       yield DoorSucceed(message: response.details);
     } catch (error) {
-      print('$_tag:_mapBuzzerDoorPressedEventToState -> error.runtimeType');
+      print('$_tag:$_mapBuzzerDoorPressedEventToState -> ${error.runtimeType}');
       yield DoorFailure(error: error);
     }
   }

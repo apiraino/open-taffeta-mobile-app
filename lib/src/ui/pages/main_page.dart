@@ -36,7 +36,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:build');
+    print('$_tag:$build');
 
     return Scaffold(
       appBar: AppBar(

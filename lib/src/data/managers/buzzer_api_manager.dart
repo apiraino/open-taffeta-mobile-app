@@ -2,16 +2,17 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_door_buzzer/src/data/managers/api_interceptor.dart';
+import 'package:flutter_door_buzzer/src/data/interceptors/api_interceptor.dart';
 import 'package:flutter_door_buzzer/src/data/models/api_models.dart';
 import 'package:meta/meta.dart';
 
 class BuzzerApiManager {
   final String baseUrl;
+  final ApiInterceptor apiInterceptor;
 
   BuzzerApiManager({
     @required this.baseUrl,
-    @required ApiInterceptor apiInterceptor,
+    @required this.apiInterceptor,
     int connectTimeoutSecond = 10,
   })  : assert(baseUrl != null, 'No base url given'),
         assert(apiInterceptor != null, 'No $ApiInterceptor given') {
@@ -60,6 +61,10 @@ class BuzzerApiManager {
     final response = await _dio.post(_pathSignUp, data: jsonEncode(request));
 
     return AuthSignUpResponseModel.fromJson(response.data);
+  }
+
+  Future<void> logout() async {
+    await apiInterceptor.deleteAuthData();
   }
 
   Future<BuzzerResponseModel> openDoor({
