@@ -1,3 +1,5 @@
+#!/bin/bash
+
 APKNAME=app-release.apk
 APKPATH=build/app/outputs/apk/release/$APKNAME
 
