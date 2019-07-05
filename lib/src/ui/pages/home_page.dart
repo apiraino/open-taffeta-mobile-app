@@ -86,7 +86,7 @@ class __AuthenticatedHomeState extends State<_AuthenticatedHome> {
           Scaffold.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                  '${BuzzerLocalizations.of(context).buzzerDoorFailed} : ${state.error.runtimeType}'),
+                  '${BuzzerLocalizations.of(context).buzzerDoorFailed} : ${ state.message }'),
               backgroundColor: AppColors.errorColor,
             ),
           );
