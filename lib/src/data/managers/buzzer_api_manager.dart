@@ -63,10 +63,12 @@ class BuzzerApiManager {
     return AuthSignUpResponseModel.fromJson(response.data);
   }
 
+  /// Logout
   Future<void> logout() async {
     await apiInterceptor.deleteAuthData();
   }
 
+  /// Open door
   Future<BuzzerResponseModel> openDoor({
     @required int doorId,
   }) async {

@@ -11,11 +11,14 @@ class ConfigDataModel {
   String clientId;
   @JsonKey(name: 'clientSecret')
   String clientSecret;
+  @JsonKey(name: 'doorId')
+  int doorId;
 
   ConfigDataModel({
     @required this.apiServerUrl,
     @required this.clientId,
     @required this.clientSecret,
+    @required this.doorId,
   }) : super();
 
   factory ConfigDataModel.fromJson(Map<String, dynamic> json) =>
@@ -25,5 +28,5 @@ class ConfigDataModel {
 
   @override
   String toString() =>
-      '$runtimeType{ apiServerUrl: $apiServerUrl, clientId: $clientId, clientSecret: $clientSecret }';
+      '$runtimeType{ apiServerUrl: $apiServerUrl, clientId: $clientId, clientSecret: $clientSecret, doorId: $doorId }';
 }

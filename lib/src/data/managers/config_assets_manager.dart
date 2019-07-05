@@ -34,4 +34,10 @@ class ConfigAssetsManager {
     if (_config == null) await _load();
     return Future.value(_config.clientSecret);
   }
+
+  Future<int> getDoorId() async {
+    if (_config == null) await _load();
+    return Future.value(_config.doorId);
+  }
+
 }

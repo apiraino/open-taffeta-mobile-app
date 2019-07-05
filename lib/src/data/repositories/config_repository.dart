@@ -6,4 +6,6 @@ abstract class ConfigRepository {
   Future<String> getClientId();
 
   Future<String> getClientSecret();
+
+  Future<int> getDoorId();
 }
