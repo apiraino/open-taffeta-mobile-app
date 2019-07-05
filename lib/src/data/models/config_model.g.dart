@@ -10,12 +10,14 @@ ConfigDataModel _$ConfigDataModelFromJson(Map<String, dynamic> json) {
   return ConfigDataModel(
       apiServerUrl: json['apiServerUrl'] as String,
       clientId: json['clientId'] as String,
-      clientSecret: json['clientSecret'] as String);
+      clientSecret: json['clientSecret'] as String,
+      doorId: json['doorId'] as int);
 }
 
 Map<String, dynamic> _$ConfigDataModelToJson(ConfigDataModel instance) =>
     <String, dynamic>{
       'apiServerUrl': instance.apiServerUrl,
       'clientId': instance.clientId,
-      'clientSecret': instance.clientSecret
+      'clientSecret': instance.clientSecret,
+      'doorId': instance.doorId
     };

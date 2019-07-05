@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 
 import 'data/repositories/app_preferences_repository.dart';
 import 'data/repositories/buzzer_repository.dart';
+import 'data/repositories/config_repository.dart';
 import 'domain/blocs/configuration/configuration.dart';
 
 /// This App wrap all the configuration logic with [ConfigurationBloc]
@@ -138,6 +139,7 @@ class _ConfiguredAppState extends State<_ConfiguredApp> {
     return MultiProvider(
       providers: [
         Provider<BuzzerRepository>.value(value: widget.state.buzzerRepository),
+        Provider<ConfigRepository>.value(value: widget.state.configRepository),
         Provider<AppPreferencesRepository>.value(
             value: widget.state.appPreferencesRepository),
       ],

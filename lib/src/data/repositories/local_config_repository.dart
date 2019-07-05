@@ -25,4 +25,10 @@ class LocalConfigRepository implements ConfigRepository {
   Future<String> getClientSecret() async {
     return await localConfigManager.getClientSecret();
   }
+
+  @override
+  Future<int> getDoorId() async {
+    return await localConfigManager.getDoorId();
+  }
+
 }

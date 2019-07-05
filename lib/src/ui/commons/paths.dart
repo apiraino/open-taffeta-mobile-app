@@ -7,7 +7,4 @@ class AppPaths {
   static String pathAccount = '/account';
   static String pathSettings = '/settings';
   static String pathDoors = '/doors';
-
-  /// Params ID
-  static String paramDoorId = 'doorId';
 }
