@@ -24,11 +24,15 @@ class DoorSucceed extends DoorState {
 }
 
 class DoorFailure extends DoorState {
-  final Error error;
-  final String message;
+  final error;
 
-  DoorFailure({@required this.error, @required this.message}) : super([error]);
+  DoorFailure({
+    @required this.error,
+  })  : assert(error != null),
+        super([error]);
 
   @override
-  String toString() => '$runtimeType{ error: $error }: $message ';
+  String toString() => '$runtimeType{ '
+      'error: $error'
+      ' }';
 }

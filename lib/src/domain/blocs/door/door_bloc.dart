@@ -49,7 +49,7 @@ class BuzzerBloc extends Bloc<DoorEvent, DoorState> {
       yield DoorSucceed(message: response.details);
     } catch (error) {
       print('$_tag:$_mapBuzzerDoorPressedEventToState -> ${error.runtimeType}');
-      yield DoorFailure(error: error, message: error.message );
+      yield DoorFailure(error: error);
     }
   }
 }

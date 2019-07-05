@@ -60,7 +60,8 @@ class __AuthenticatedHomeState extends State<_AuthenticatedHome> {
     BuzzerRepository buzzerRepository = Provider.of<BuzzerRepository>(context);
     ConfigRepository configRepository = Provider.of<ConfigRepository>(context);
 
-    buzzerBloc = BuzzerBloc(buzzerRepository: buzzerRepository,configRepository:configRepository);
+    buzzerBloc = BuzzerBloc(
+        buzzerRepository: buzzerRepository, configRepository: configRepository);
 
     super.didChangeDependencies();
   }
@@ -88,7 +89,7 @@ class __AuthenticatedHomeState extends State<_AuthenticatedHome> {
           Scaffold.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                  '${BuzzerLocalizations.of(context).buzzerDoorFailed} : ${ state.message }'),
+                  '${BuzzerLocalizations.of(context).buzzerDoorFailed} : ${state.error?.message ?? state.error?.runtimeType}'),
               backgroundColor: AppColors.errorColor,
             ),
           );
