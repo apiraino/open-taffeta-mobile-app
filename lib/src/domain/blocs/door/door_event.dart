@@ -12,9 +12,7 @@ abstract class DoorEvent extends Equatable {
 class DoorBuzzed extends DoorEvent {
   final int doorId;
 
-  DoorBuzzed({@required this.doorId})
-      : assert(doorId != null, 'No door ID given'),
-        super([doorId]);
+  DoorBuzzed({this.doorId}) : super([doorId]);
 
   @override
   String toString() => '$runtimeType{ doorId: $doorId }';

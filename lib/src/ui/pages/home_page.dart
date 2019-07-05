@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/config_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/door/door.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
@@ -57,8 +58,9 @@ class __AuthenticatedHomeState extends State<_AuthenticatedHome> {
     /// get dependencies
 
     BuzzerRepository buzzerRepository = Provider.of<BuzzerRepository>(context);
+    ConfigRepository configRepository = Provider.of<ConfigRepository>(context);
 
-    buzzerBloc = BuzzerBloc(buzzerRepository: buzzerRepository);
+    buzzerBloc = BuzzerBloc(buzzerRepository: buzzerRepository,configRepository:configRepository);
 
     super.didChangeDependencies();
   }
@@ -106,7 +108,7 @@ class __AuthenticatedHomeState extends State<_AuthenticatedHome> {
                 tooltip: BuzzerLocalizations.of(context).buzzerDoorCTA,
                 iconSize: 100,
                 icon: icon,
-                onPressed: () => buzzerBloc.dispatch(DoorBuzzed(doorId: 1)),
+                onPressed: () => buzzerBloc.dispatch(DoorBuzzed()),
               ),
             );
           }
