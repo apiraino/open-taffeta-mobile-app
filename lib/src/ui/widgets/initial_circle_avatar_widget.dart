@@ -32,7 +32,7 @@ class _InitialCircleAvatarState extends State<InitialCircleAvatar> {
     super.initState();
     widget.backgroundImage
         .resolve(new ImageConfiguration())
-        .addListener((_, __) {
+        .addListener(ImageStreamListener((_, __) {
       if (mounted) {
         setState(() {
           _checkLoading = false;
