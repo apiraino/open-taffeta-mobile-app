@@ -38,7 +38,7 @@ class _InitialCircleAvatarState extends State<InitialCircleAvatar> {
           _checkLoading = false;
         });
       }
-    });
+    }));
   }
 
   @override
