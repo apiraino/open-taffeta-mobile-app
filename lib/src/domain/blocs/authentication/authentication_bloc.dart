@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/auth_preferences_repository.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
-import 'package:flutter_door_buzzer/src/domain/blocs/account/account.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/login/login.dart';
+import 'package:flutter_door_buzzer/src/domain/blocs/register/register.dart';
 import 'package:meta/meta.dart';
 
 /// Business Logic Component for Authentication
@@ -16,12 +17,18 @@ class AuthenticationBloc
 
   final BuzzerRepository buzzerRepository;
   final AuthPreferencesRepository authPreferencesRepository;
-  final AccountBloc accountBloc;
+
+  final LoginBloc loginBloc;
+  final RegisterBloc registerBloc;
+
+  StreamSubscription registerBlocSubscription;
+  StreamSubscription loginBlocSubscription;
 
   AuthenticationBloc({
     @required this.buzzerRepository,
     @required this.authPreferencesRepository,
-    @required this.accountBloc,
+    @required this.loginBloc,
+    @required this.registerBloc,
   })  : assert(
           buzzerRepository != null,
           'No $BuzzerRepository given',
@@ -31,14 +38,32 @@ class AuthenticationBloc
           'No $AuthPreferencesRepository given',
         ),
         assert(
-          accountBloc != null,
-          'No $AccountBloc given',
+          loginBloc != null,
+          'No $LoginBloc given',
         ),
-        super();
+        assert(
+          registerBloc != null,
+          'No $RegisterBloc given',
+        ),
+        super() {
+    loginBlocSubscription = loginBloc.state.listen((state) {
+      if (state is LoginSucceed) {
+        dispatch(Authenticated(auth: state.auth, user: state.user));
+      }
+    });
+
+    registerBlocSubscription = registerBloc.state.listen((state) {
+      if (state is RegisterSucceed) {
+        dispatch(Authenticated(auth: state.auth, user: state.user));
+      }
+    });
+  }
 
   @override
   void dispose() {
     print('$_tag:$dispose()');
+    loginBlocSubscription?.cancel();
+    registerBlocSubscription?.cancel();
     super.dispose();
   }
 
@@ -51,16 +76,16 @@ class AuthenticationBloc
     print('$_tag:$mapEventToState($event)');
     if (event is AppStarted) {
       yield* _mapAppStartedToState(event);
-    } else if (event is LoggedIn) {
-      yield* _mapLoggedInEventToState(event);
+    } else if (event is Authenticated) {
+      yield* _mapAuthenticatedEventToState(event);
     } else if (event is LoggedOut) {
       yield* _mapLoggedOutEventToState(event);
     }
   }
 
-  // -----------------------------------------------------------------------
-  //                       All Event map to State
-  // -----------------------------------------------------------------------
+  /// -----------------------------------------------------------------------
+  ///                       All Event map to State
+  /// -----------------------------------------------------------------------
 
   /// Map [AppStarted] to [AuthenticationState]
   ///
@@ -71,10 +96,10 @@ class AuthenticationBloc
     try {
       yield AuthenticationLoading();
 
-      String token = await authPreferencesRepository.getAccessToken();
+      final String token = await authPreferencesRepository.getAccessToken();
+
       if (token != null) {
         yield AuthenticationAuthenticated();
-        accountBloc.dispatch(AccountRefresh());
       } else {
         yield AuthenticationUnauthenticated();
       }
@@ -84,18 +109,20 @@ class AuthenticationBloc
     }
   }
 
-  /// Map [LoggedIn] to [AuthenticationState]
+  /// Map [Authenticated] to [AuthenticationState]
   ///
   /// ```dart
-  /// yield* _mapLoggedInEventToState(event);
+  /// yield* _mapAuthenticatedEventToState(event);
   /// ```
-  Stream<AuthenticationState> _mapLoggedInEventToState(LoggedIn event) async* {
+  Stream<AuthenticationState> _mapAuthenticatedEventToState(
+      Authenticated event) async* {
     try {
       yield AuthenticationLoading();
-      authPreferencesRepository.setAccessToken(event.token);
+      await authPreferencesRepository.setAccessToken(event.auth.accessToken);
+      await authPreferencesRepository.setUserId(event.auth.userId);
       yield AuthenticationAuthenticated();
     } catch (error) {
-      print('$_tag:$_mapLoggedInEventToState -> ${error.runtimeType}');
+      print('$_tag:$_mapAuthenticatedEventToState -> ${error.runtimeType}');
       yield AuthenticationFailed(error: error);
     }
   }
@@ -114,6 +141,7 @@ class AuthenticationBloc
       await authPreferencesRepository.deleteAccessTokenExpiration();
       await authPreferencesRepository.deleteRefreshToken();
       await authPreferencesRepository.deleteRefreshTokenExpiration();
+      await authPreferencesRepository.deleteUserId();
 
       await buzzerRepository.logout();
 

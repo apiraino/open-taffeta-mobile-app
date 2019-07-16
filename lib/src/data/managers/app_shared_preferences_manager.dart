@@ -67,7 +67,7 @@ class AppSharedPreferencesManager {
   /// -------------------------- All ---------------------------
   /// ----------------------------------------------------------
 
-  Future deleteAll() async {
-    storage.deleteAll();
+  Future<void> deleteAll() async {
+    await storage.deleteAll();
   }
 }

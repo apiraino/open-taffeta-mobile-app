@@ -7,67 +7,16 @@ import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dar
 class BuzzerLocalizationsDE implements BuzzerLocalizations {
   const BuzzerLocalizationsDE();
 
-  /// App
+  /// --------------------------------------------------------------------------
+  ///                                   App
+  /// --------------------------------------------------------------------------
+
   @override
   String get appName => 'Door Buzzer';
 
-  /// Login Page
-  @override
-  String get authTitle => 'Connection';
-
-  @override
-  String get authNoEmailTitle => 'Empty email';
-
-  @override
-  String get authNotEmailExplain => 'Please enter a real e-mail.';
-
-  @override
-  String get authNoEmailExplain => 'Please provide an email';
-
-  @override
-  String get authNoPasswordTitle => 'Empty password';
-
-  @override
-  String get authNoPasswordExplain => 'Please provide a password';
-
-  @override
-  String get authCreateYourAccount => 'Create your account';
-
-  @override
-  String get authRegisterCTA => 'Sign-up';
-
-  @override
-  String get authPrivacyExplain =>
-      'Like privacy? We feel you. We don’t use or sell your data.';
-
-  @override
-  String get authPrivacyReadCTA => 'Touch to read our privacy policy.';
-
-  @override
-  String get authLoginGoogleCTA => 'Sign-in with Google';
-
-  @override
-  String get authLoginFacebookCTA => 'Sign-in with Facebook';
-
-  @override
-  String get authAlreadyHaveAccountCTA => 'Already have an account? Sign-in';
-
-  @override
-  String get authLogin => 'Sign-in with your account';
-
-  @override
-  String get authLoginCTA => 'Sign-in';
-
-  @override
-  String get authForgotPasswordCTA => 'Forgot password?';
-
-  @override
-  String get authNoAccountCTA => 'Don\'t have an account yet? Sign-up';
-
-  @override
-  String get authOr => 'OR';
-
-  /// Home Page
+  /// --------------------------------------------------------------------------
+  ///                               Home Page
+  /// --------------------------------------------------------------------------
 
   @override
   String get homeTitle => 'Door Buzzer';
@@ -78,15 +27,88 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   @override
   String get homeWelcome => 'Welcome on our $appName app!';
 
-  /// Account Page
+  /// --------------------------------------------------------------------------
+  ///                 Authentication Page - Register - Login
+  /// --------------------------------------------------------------------------
 
   @override
-  String get accountTitle => 'Account';
+  String get authTitle => 'Connection';
 
   @override
-  String get accountCTA => 'Account';
+  String get authBubbleLoginCTA=>'Existant';
 
-  /// Buzzer Page
+  @override
+  String get authBubbleRegisterCTA=>'New';
+
+  @override
+  String get authRegisterTitle => 'Create an new account';
+
+  @override
+  String get authRegisterCTA => 'Sign-up';
+
+  @override
+  String get authRegisterFailed => 'Registration failed!';
+
+  @override
+  String get authLoginTitle => 'Login';
+
+  @override
+  String get authLoginCTA => 'Login';
+
+  @override
+  String get authForgotPasswordCTA => 'Forgot password?';
+
+  @override
+  String get authLoginSucceed => 'Logged';
+
+  @override
+  String get authPrivacyExplain =>
+      'Like privacy? We feel you. We don’t use or sell your data.';
+
+  @override
+  String get authPrivacyReadCTA => 'Touch to read our privacy policy.';
+
+  @override
+  String get authLogoutLabel => 'Logout';
+
+  @override
+  String get authLogoutCTA => 'Logout';
+
+  /// --------------------------------------------------------------------------
+  ///                                Forms
+  /// --------------------------------------------------------------------------
+
+  @override
+  String get formEmailLabel => 'Empty email';
+
+  @override
+  String get formEmailHint => 'someone@email.com';
+
+  @override
+  String get formNotEmailExplain => 'Please enter a real e-mail.';
+
+  @override
+  String get formNoEmailExplain => 'Please provide an email';
+
+  @override
+  String get formPasswordLabel => 'Empty password';
+
+  @override
+  String get formNoPasswordExplain => 'Please provide a password';
+
+  @override
+  String get formPassword2Label => 'Password';
+
+  /// --------------------------------------------------------------------------
+  ///                              Account Page
+  /// --------------------------------------------------------------------------
+
+  @override
+  String get accountActiveStatusLabel => 'Active';
+
+  /// --------------------------------------------------------------------------
+  ///                              Buzzer Page
+  /// --------------------------------------------------------------------------
 
   @override
   String get buzzerTitle => 'Buzzer';
@@ -100,7 +122,9 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   @override
   String get buzzerDoorSucceed => 'Door opening succeed!';
 
-  /// Settings Page
+  /// --------------------------------------------------------------------------
+  ///                             Settings Page
+  /// --------------------------------------------------------------------------
 
   @override
   String get settingsTitle => 'Settings';
@@ -117,15 +141,9 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   @override
   String get settingsThemeDark => 'Dark';
 
-  /// Search Page
-
-  @override
-  String get searchTitle => 'Search';
-
-  @override
-  String get searchSearchBarHint => 'Search resume...';
-
-  /// Menu Widget
+  /// --------------------------------------------------------------------------
+  ///                             Menu Widget
+  /// --------------------------------------------------------------------------
 
   @override
   String get menuPPCTA => 'Privacy Policy';
@@ -133,21 +151,79 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   @override
   String get menuToSCTA => 'Terms of Service';
 
-  /// Exception Error
+  /// --------------------------------------------------------------------------
+  ///                              Commons
+  /// --------------------------------------------------------------------------
+
+  @override
+  String get middleDot => '·';
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get token => 'Token';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get settingsCTA => 'Settings';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get loadMore => 'Load more';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get errorOccurred => 'An error occurred';
+
+  @override
+  String get notYetImplemented => 'Not yet implemented';
+
+  @override
+  String get notSupported => 'Not supported';
+
+  /// --------------------------------------------------------------------------
+  ///                            Exception Error
+  /// --------------------------------------------------------------------------
+
   @override
   String get exceptionFormatException => 'Exception : Wrong Format';
 
   @override
   String get exceptionTimeoutException => 'Exception : Request Timeout';
 
-  /// Api Error
+  /// --------------------------------------------------------------------------
+  ///                            Api Error
+  /// --------------------------------------------------------------------------
+
   @override
   String get apiErrorWrongPasswordError => 'Wrong password';
 
   @override
   String get apiErrorUserNotFoundError => 'User not found';
 
-  /// Server Error : HTTP 400
+  /// --------------------------------------------------------------------------
+  ///                       HTTP Client Error (4XX)
+  /// --------------------------------------------------------------------------
+
   @override
   String get httpClientErrorBadRequest => 'Bad request';
 
@@ -193,7 +269,10 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   @override
   String get httpClientErrorUpgradeRequired => 'Upgrade required';
 
-  /// Server Error : HTTP 500
+  /// --------------------------------------------------------------------------
+  ///                       HTTP Server Error (5XX)
+  /// --------------------------------------------------------------------------
+
   @override
   String get httpServerErrorInternalServerError => 'Internal Server Error';
 
@@ -212,112 +291,6 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   @override
   String get httpServerErrorHttpVersionNotSupported =>
       'HTTP Version Not Supported';
-
-  /// Others
-  @override
-  String get middleDot => '·';
-
-  @override
-  String get username => 'Username';
-
-  @override
-  String get email => 'Email';
-
-  @override
-  String get password => 'Passwort';
-
-  @override
-  String get token => 'Token';
-
-  @override
-  String get cancel => 'Cancel';
-
-  @override
-  String get settingsCTA => 'Settings';
-
-  @override
-  String get account => 'Account';
-
-  @override
-  String get login => 'Login';
-
-  @override
-  String get loginCTA => 'Login';
-
-  @override
-  String get loginSucceed => 'Logged';
-
-  @override
-  String get signupFailed => 'Signup failed!';
-
-  @override
-  String get logout => 'Logout';
-
-  @override
-  String get logoutCTA => 'Logout';
-
-  @override
-  String get home => 'Home';
-
-  @override
-  String get resume => 'Resume';
-
-  @override
-  String get profile => 'Profile';
-
-  @override
-  String get search => 'Search';
-
-  @override
-  String get history => 'History';
-
-  @override
-  String get loadMore => 'Load more';
-
-  @override
-  String get errorOccurred => 'An error occurred';
-
-  @override
-  String get retry => 'Retry';
-
-  @override
-  String get yes => 'Yes';
-
-  @override
-  String get no => 'No';
-
-  @override
-  String get more => 'More';
-
-  @override
-  String get notYetImplemented => 'Not yet implemented';
-
-  @override
-  String get notSupported => 'Not supported';
-
-  @override
-  String get forgotPasswordTitle => 'Retrieve password';
-
-  @override
-  String get forgotPasswordExplain =>
-      'Enter your login email and we\'ll send you instructions to reset your password';
-
-  @override
-  String get forgotPasswordResetCTA => 'Reset password';
-
-  @override
-  String get forgotPasswordNoEmailTitle => 'Empty email';
-
-  @override
-  String get forgotPasswordNoEmailExplain => 'Please provide an email';
-
-  @override
-  String get forgotPasswordSuccessMessage =>
-      'Email with instructions has been send.';
-
-  @override
-  String get forgotPasswordErrorMessage =>
-      'An error occurred while sending the email with instructions';
 
   /// Creates an object that provides US English resource values for the
   /// application.

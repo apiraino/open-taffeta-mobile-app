@@ -16,7 +16,7 @@ class BuzzerApiManager {
     int connectTimeoutSecond = 10,
   })  : assert(baseUrl != null, 'No base url given'),
         assert(apiInterceptor != null, 'No $ApiInterceptor given') {
-    BaseOptions options = BaseOptions(
+    final BaseOptions options = BaseOptions(
       baseUrl: baseUrl,
       connectTimeout: connectTimeoutSecond * 1000,
       contentType: ContentType.json,
@@ -32,9 +32,10 @@ class BuzzerApiManager {
   final String _pathSignUp = '/signup';
   final String _pathLogin = '/login';
   final String _pathDoors = '/door';
+  final String _pathUsers = '/users';
 
   /// Login
-  Future<AuthLoginResponseModel> login({
+  Future<AuthResponseModel> login({
     @required String email,
     @required String password,
   }) async {
@@ -43,13 +44,14 @@ class BuzzerApiManager {
       password: password,
     );
 
-    final response = await _dio.post(_pathLogin, data: jsonEncode(request));
+    final Response<Map<String, dynamic>> response =
+        await _dio.post(_pathLogin, data: jsonEncode(request));
 
-    return AuthLoginResponseModel.fromJson(response.data);
+    return AuthResponseModel.fromJson(response.data);
   }
 
   /// Register
-  Future<AuthSignUpResponseModel> register({
+  Future<AuthResponseModel> register({
     @required String email,
     @required String password,
   }) async {
@@ -58,9 +60,10 @@ class BuzzerApiManager {
       password: password,
     );
 
-    final response = await _dio.post(_pathSignUp, data: jsonEncode(request));
+    final Response<Map<String, dynamic>> response =
+        await _dio.post(_pathSignUp, data: jsonEncode(request));
 
-    return AuthSignUpResponseModel.fromJson(response.data);
+    return AuthResponseModel.fromJson(response.data);
   }
 
   /// Logout
@@ -72,12 +75,20 @@ class BuzzerApiManager {
   Future<BuzzerResponseModel> openDoor({
     @required int doorId,
   }) async {
-    Response response = await _dio.post(
+    final Response<Map<String, dynamic>> response = await _dio.post(
       '$_pathDoors/$doorId',
 
-      /// Needed if content-type header is specified
+      // Needed if content-type header is specified
       data: {},
     );
     return BuzzerResponseModel.fromJson(response.data);
   }
+
+  /// Fetch User details
+ Future<UserResponseModel> getUser({@required int userId})async{
+   final Response<Map<String, dynamic>> response = await _dio.get(
+     '$_pathUsers/$userId',
+   );
+   return UserResponseModel.fromJson(response.data);
+ }
 }

@@ -43,7 +43,7 @@ class BuzzerBloc extends Bloc<DoorEvent, DoorState> {
 
       final int doorId = event?.doorId ?? await configRepository.getDoorId();
 
-      var response = await buzzerRepository.buzzDoor(
+      final response = await buzzerRepository.buzzDoor(
         doorId: doorId,
       );
       yield DoorSucceed(message: response.details);

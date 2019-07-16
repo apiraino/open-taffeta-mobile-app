@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
+import 'package:flutter_door_buzzer/src/ui/commons/styles.dart';
 
 class SplashPage extends StatelessWidget {
-  final String _tag = 'SplashPage';
+  final String _tag = '$SplashPage';
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:$build');
+    print('$_tag:build');
 
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppStyles.primaryColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: const <Widget>[
             CircularProgressIndicator(),
-            Text("BUZZER DOOR"),
+            Text('BUZZER DOOR'),
           ],
         ),
       ),

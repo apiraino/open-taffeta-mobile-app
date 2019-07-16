@@ -20,11 +20,13 @@ class DoorSucceed extends DoorState {
         super();
 
   @override
-  String toString() => '$runtimeType{ message: $message }';
+  String toString() => '$runtimeType{ '
+      'message: $message'
+      ' }';
 }
 
 class DoorFailure extends DoorState {
-  final error;
+  final dynamic error;
 
   DoorFailure({
     @required this.error,

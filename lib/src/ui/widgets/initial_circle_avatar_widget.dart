@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_door_buzzer/src/ui/utils/utils.dart';
 
 class InitialCircleAvatar extends StatefulWidget {
-  InitialCircleAvatar({
+  const InitialCircleAvatar({
     Key key,
     this.text = '',
     this.elevation = 0.0,
@@ -21,7 +21,7 @@ class InitialCircleAvatar extends StatefulWidget {
   final double maxRadius;
 
   @override
-  _InitialCircleAvatarState createState() => new _InitialCircleAvatarState();
+  _InitialCircleAvatarState createState() => _InitialCircleAvatarState();
 }
 
 class _InitialCircleAvatarState extends State<InitialCircleAvatar> {
@@ -31,8 +31,8 @@ class _InitialCircleAvatarState extends State<InitialCircleAvatar> {
   void initState() {
     super.initState();
     widget.backgroundImage
-        .resolve(new ImageConfiguration())
-        .addListener(ImageStreamListener((_, __) {
+        ?.resolve(const ImageConfiguration())
+        ?.addListener(ImageStreamListener((_, __) {
       if (mounted) {
         setState(() {
           _checkLoading = false;
@@ -51,7 +51,10 @@ class _InitialCircleAvatarState extends State<InitialCircleAvatar> {
               minRadius: widget.minRadius,
               maxRadius: widget.maxRadius,
               radius: widget.radius,
-              child: Text(getInitials(widget.text)),
+              child: Text(
+                getInitials(widget.text),
+                textAlign: TextAlign.center,
+              ),
             ),
           )
         : Material(

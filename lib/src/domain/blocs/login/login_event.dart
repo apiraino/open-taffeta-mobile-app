@@ -16,8 +16,13 @@ class LoginButtonPressed extends LoginEvent {
   LoginButtonPressed({
     @required this.email,
     @required this.password,
-  }) : super([email, password]);
+  })  : assert(email != null),
+        assert(password != null),
+        super([email, password]);
 
   @override
-  String toString() => '$runtimeType{ username: $email, password: HIDDEN }';
+  String toString() => '$runtimeType{ '
+      'email: $email, '
+      'password: HIDDEN'
+      ' }';
 }

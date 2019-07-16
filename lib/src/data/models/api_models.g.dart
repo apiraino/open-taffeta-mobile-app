@@ -16,19 +16,6 @@ Map<String, dynamic> _$AuthSignUpRequestModelToJson(
         AuthSignUpRequestModel instance) =>
     <String, dynamic>{'email': instance.email, 'password': instance.password};
 
-AuthSignUpResponseModel _$AuthSignUpResponseModelFromJson(
-    Map<String, dynamic> json) {
-  return AuthSignUpResponseModel(
-      auth: json['auth'] == null
-          ? null
-          : AuthModel.fromJson(json['auth'] as Map<String, dynamic>),
-      isActive: json['is_active'] as bool);
-}
-
-Map<String, dynamic> _$AuthSignUpResponseModelToJson(
-        AuthSignUpResponseModel instance) =>
-    <String, dynamic>{'auth': instance.auth, 'is_active': instance.isActive};
-
 AuthLoginRequestModel _$AuthLoginRequestModelFromJson(
     Map<String, dynamic> json) {
   return AuthLoginRequestModel(
@@ -39,18 +26,18 @@ Map<String, dynamic> _$AuthLoginRequestModelToJson(
         AuthLoginRequestModel instance) =>
     <String, dynamic>{'email': instance.email, 'password': instance.password};
 
-AuthLoginResponseModel _$AuthLoginResponseModelFromJson(
-    Map<String, dynamic> json) {
-  return AuthLoginResponseModel(
+AuthResponseModel _$AuthResponseModelFromJson(Map<String, dynamic> json) {
+  return AuthResponseModel(
       auth: json['auth'] == null
           ? null
           : AuthModel.fromJson(json['auth'] as Map<String, dynamic>),
-      isActive: json['is_active'] as bool);
+      user: json['user'] == null
+          ? null
+          : UserModel.fromJson(json['user'] as Map<String, dynamic>));
 }
 
-Map<String, dynamic> _$AuthLoginResponseModelToJson(
-        AuthLoginResponseModel instance) =>
-    <String, dynamic>{'auth': instance.auth, 'is_active': instance.isActive};
+Map<String, dynamic> _$AuthResponseModelToJson(AuthResponseModel instance) =>
+    <String, dynamic>{'auth': instance.auth, 'user': instance.user};
 
 AuthModel _$AuthModelFromJson(Map<String, dynamic> json) {
   return AuthModel(
@@ -83,3 +70,13 @@ BuzzerResponseModel _$BuzzerResponseModelFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$BuzzerResponseModelToJson(
         BuzzerResponseModel instance) =>
     <String, dynamic>{'status': instance.status, 'detail': instance.details};
+
+UserResponseModel _$UserResponseModelFromJson(Map<String, dynamic> json) {
+  return UserResponseModel(
+      user: json['user'] == null
+          ? null
+          : UserModel.fromJson(json['user'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$UserResponseModelToJson(UserResponseModel instance) =>
+    <String, dynamic>{'user': instance.user};

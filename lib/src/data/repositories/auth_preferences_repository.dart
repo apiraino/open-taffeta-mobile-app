@@ -25,5 +25,11 @@ abstract class AuthPreferencesRepository {
 
   Future<void> deleteRefreshTokenExpiration();
 
+  Future<int> getUserId();
+
+  Future<void> setUserId(int userId);
+
+  Future<void> deleteUserId();
+
   Future deleteAll();
 }

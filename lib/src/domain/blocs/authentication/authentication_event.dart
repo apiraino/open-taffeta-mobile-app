@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_door_buzzer/src/data/models/api_models.dart';
+import 'package:flutter_door_buzzer/src/data/models/user_model.dart';
 import 'package:meta/meta.dart';
 
 /// [AuthenticationEvent] that must be dispatch to [AuthenticationBloc]
@@ -11,28 +13,28 @@ abstract class AuthenticationEvent extends Equatable {
 
 class AppStarted extends AuthenticationEvent {}
 
-class LoggedIn extends AuthenticationEvent {
-  final String token;
+class Authenticated extends AuthenticationEvent {
+  final AuthModel auth;
+  final UserModel user;
 
-  LoggedIn({@required this.token})
-      : assert(token != null, 'No token given'),
-        super([token]);
+  Authenticated({
+    @required this.auth,
+    @required this.user,
+  })  : assert(
+          auth != null,
+          'No $AuthModel given',
+        ),
+        assert(
+          user != null,
+          'No $UserModel given',
+        ),
+        super([auth, user]);
 
   @override
-  String toString() => '$runtimeType{ token: $token }';
+  String toString() => '$runtimeType{ '
+      'auth: $auth, '
+      'user: $user'
+      ' }';
 }
 
 class LoggedOut extends AuthenticationEvent {}
-
-class RegisterIn extends AuthenticationEvent {
-  RegisterIn({@required this.username, @required this.password})
-      : super([username, password]);
-
-  String username;
-  String password;
-
-  @override
-  String toString() => '$runtimeType{ username: $username, password: HIDDEN }';
-}
-
-class RegisterOut extends AuthenticationEvent {}

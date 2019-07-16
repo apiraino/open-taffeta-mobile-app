@@ -10,7 +10,7 @@ const DEBUG_PAINT_SIZE = false;
 
 void main() async {
   void run() async {
-    runApp(ConfigurationWrapperApp());
+    runApp(ConfigurationWrapper());
   }
 
   if (DEBUG_MODE) {

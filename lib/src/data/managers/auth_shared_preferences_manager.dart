@@ -7,7 +7,7 @@ class AuthSharedPreferencesManager {
   final String _keyOAuthRefreshToken = 'OAUTH_REFRESH_TOKEN';
   final String _keyOAuthRefreshTokenExpiration =
       'OAUTH_REFRESH_TOKEN_EXPIRATION';
-  final String _keyAuthConnected = 'AUTH_CONNECTED';
+  final String _keyAuthUserId = 'AUTH_USER_ID';
 
   FlutterSecureStorage storage;
 
@@ -35,7 +35,8 @@ class AuthSharedPreferencesManager {
   }
 
   Future<int> getAccessTokenExpiration() async {
-    return (await storage.read(key: _keyOAuthAccessTokenExpiration)) ?? 0;
+    return int.parse(await storage.read(key: _keyOAuthAccessTokenExpiration)) ??
+        0;
   }
 
   Future<void> setAccessTokenExpiration(int accessTokenExpiration) async {
@@ -65,44 +66,44 @@ class AuthSharedPreferencesManager {
   }
 
   Future<String> getRefreshTokenExpiration() async {
-    return storage.read(key: _keyOAuthRefreshTokenExpiration) ?? '';
+    return await storage.read(key: _keyOAuthRefreshTokenExpiration) ?? '';
   }
 
   Future<void> setRefreshTokenExpiration(String refreshTokenExpiration) async {
-    return storage.write(
+    return await storage.write(
       key: _keyOAuthRefreshTokenExpiration,
       value: refreshTokenExpiration,
     );
   }
 
   Future<void> deleteRefreshTokenExpiration() async {
-    return storage.delete(key: _keyOAuthRefreshTokenExpiration);
+    return await storage.delete(key: _keyOAuthRefreshTokenExpiration);
   }
 
   /// ----------------------------------------------------------
   /// ----------------------- Connected ------------------------
   /// ----------------------------------------------------------
 
-  Future<bool> isAuthConnected() async {
-    return storage.read(key: _keyAuthConnected) as bool;
+  Future<int> getUserId() async {
+    return int.parse(await storage.read(key: _keyAuthUserId));
   }
 
-  Future<void> setAuthConnected(bool connected) async {
-    return storage.write(
-      key: _keyAuthConnected,
-      value: connected as String,
+  Future<void> setUserId(int userId) async {
+    return await storage.write(
+      key: _keyAuthUserId,
+      value: userId.toString(),
     );
   }
 
-  Future<void> deleteAuthConnected() async {
-    return storage.delete(key: _keyAuthConnected);
+  Future<void> deleteUserId() async {
+    return await storage.delete(key: _keyAuthUserId);
   }
 
   /// ----------------------------------------------------------
   /// -------------------------- All ---------------------------
   /// ----------------------------------------------------------
 
-  Future deleteAll() async {
-    storage.deleteAll();
+  Future<void> deleteAll() async {
+    await storage.deleteAll();
   }
 }

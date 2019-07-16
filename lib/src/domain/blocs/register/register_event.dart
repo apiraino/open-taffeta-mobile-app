@@ -10,14 +10,19 @@ abstract class RegisterEvent extends Equatable {
 }
 
 class RegisterButtonPressed extends RegisterEvent {
-  RegisterButtonPressed({@required this.email, @required this.password})
-      : assert(email != null),
-        assert(password != null),
-        super([email, password]);
-
   final String email;
   final String password;
 
+  RegisterButtonPressed({
+    @required this.email,
+    @required this.password,
+  })  : assert(email != null),
+        assert(password != null),
+        super([email, password]);
+
   @override
-  String toString() => '$runtimeType{ email: $email, password: HIDDEN }';
+  String toString() => '$runtimeType{ '
+      'email: $email, '
+      'password: HIDDEN'
+      ' }';
 }

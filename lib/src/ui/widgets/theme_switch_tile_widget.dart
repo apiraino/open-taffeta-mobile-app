@@ -12,26 +12,26 @@ class ThemeSwitchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ApplicationBloc _appBloc = BlocProvider.of<ApplicationBloc>(context);
+    final ApplicationBloc _appBloc = BlocProvider.of<ApplicationBloc>(context);
 
     return BlocBuilder<ApplicationEvent, ApplicationState>(
       bloc: _appBloc,
       builder: (BuildContext context, ApplicationState state) {
         if (state is AppInitialized) {
-          String theme = state.theme;
+          final ThemeType theme = state.theme;
           return SwitchListTile(
             secondary: Icon(
-              theme == ThemeType.DARK
+              theme == ThemeType.dark
                   ? MdiIcons.weatherSunny
                   : MdiIcons.whiteBalanceSunny,
             ),
             title: Text(BuzzerLocalizations.of(context).settingsThemeCTA),
-            value: theme == ThemeType.DARK ? true : false,
+            value: theme == ThemeType.dark ? true : false,
             onChanged: (bool enable) {
               if (enable)
-                _appBloc.dispatch(AppThemeToggled(theme: ThemeType.DARK));
+                _appBloc.dispatch(AppThemeToggled(theme: ThemeType.dark));
               else
-                _appBloc.dispatch(AppThemeToggled(theme: ThemeType.LIGHT));
+                _appBloc.dispatch(AppThemeToggled(theme: ThemeType.light));
             },
           );
         }

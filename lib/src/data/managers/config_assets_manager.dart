@@ -11,10 +11,10 @@ class ConfigAssetsManager {
   ConfigAssetsManager();
 
   Future<void> _load() async {
-    await rootBundle.loadStructuredData<String>(
+    await rootBundle.loadStructuredData(
       _configPath,
       (jsonStr) {
-        Map<String, dynamic> jsonMap = json.decode(jsonStr);
+        Map<String, dynamic> jsonMap = json.decode(jsonStr) as Map<String, dynamic>;
         _config = ConfigDataModel.fromJson(jsonMap);
       },
     );

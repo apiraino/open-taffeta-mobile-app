@@ -27,16 +27,6 @@ class Routes {
     );
 
     router.define(
-      AppPaths.pathAccount,
-      handler: Handler(
-        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-          print('Navigate to ${AppPaths.pathAccount}');
-          return HomePage();
-        },
-      ),
-    );
-
-    router.define(
       AppPaths.pathAuth,
       handler: Handler(
         handlerFunc: (BuildContext context, Map<String, dynamic> params) {

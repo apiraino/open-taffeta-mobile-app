@@ -14,13 +14,17 @@ class AccountLoading extends AccountState {}
 
 class AccountUninitialized extends AccountState {}
 
-class AccountInitialized extends AccountState {
+class AccountLoaded extends AccountState {
   final UserModel user;
 
-  AccountInitialized({this.user}) : super();
+  AccountLoaded({@required this.user})
+      : assert(user != null),
+        super([user]);
 
   @override
-  String toString() => '$runtimeType{ user: $user }';
+  String toString() => '$runtimeType{ '
+      'user: $user'
+      ' }';
 }
 
 class AccountFailure extends AccountState {
@@ -29,5 +33,7 @@ class AccountFailure extends AccountState {
   AccountFailure({@required this.error}) : super([error]);
 
   @override
-  String toString() => '$runtimeType{ error: ${error.runtimeType} }';
+  String toString() => '$runtimeType{ '
+      'error: $error'
+      ' }';
 }

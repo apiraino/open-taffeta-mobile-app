@@ -16,10 +16,12 @@ class AuthenticationUnauthenticated extends AuthenticationState {}
 class AuthenticationLoading extends AuthenticationState {}
 
 class AuthenticationFailed extends AuthenticationState {
-  final Error error;
+  final dynamic error;
 
   AuthenticationFailed({this.error}) : super();
 
   @override
-  String toString() => '$runtimeType{ error: ${error.runtimeType} }';
+  String toString() => '$runtimeType{ '
+      'error: $error'
+      ' }';
 }

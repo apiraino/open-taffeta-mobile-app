@@ -7,36 +7,52 @@ import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dar
 class BuzzerLocalizationsFR implements BuzzerLocalizations {
   const BuzzerLocalizationsFR();
 
-  /// App
+  /// --------------------------------------------------------------------------
+  ///                                   App
+  /// --------------------------------------------------------------------------
 
   @override
   String get appName => 'Door Buzzer';
 
-  /// Login Page
+  /// --------------------------------------------------------------------------
+  ///                 Authentication Page - Login - SignUp
+  /// --------------------------------------------------------------------------
 
   @override
   String get authTitle => 'Connexion';
 
   @override
-  String get authNoEmailTitle => 'E-mail vide';
+  String get authBubbleLoginCTA => 'Existant';
 
   @override
-  String get authNotEmailExplain => 'Merci de renseigner un e-mail existant.';
+  String get authBubbleRegisterCTA => 'New';
 
   @override
-  String get authNoEmailExplain => 'Merci de renseigner un e-mail';
-
-  @override
-  String get authNoPasswordTitle => 'Mot de passe vide';
-
-  @override
-  String get authNoPasswordExplain => 'Merci de renseigner un mot de passe';
-
-  @override
-  String get authCreateYourAccount => 'Créez votre compte';
+  String get authRegisterTitle => 'Create un nouveau compte';
 
   @override
   String get authRegisterCTA => 'S\'inscrire';
+
+  @override
+  String get authForgotPasswordCTA => 'Mot de passe oublié ?';
+
+  @override
+  String get authRegisterFailed => 'Inscripiton échoué !';
+
+  @override
+  String get authLoginTitle => 'Connectez vous avec votre compte';
+
+  @override
+  String get authLoginCTA => 'Se connecter';
+
+  @override
+  String get authLoginSucceed => 'Logged';
+
+  @override
+  String get authLogoutLabel => 'Se déconnecter';
+
+  @override
+  String get authLogoutCTA => 'Se déconnecter';
 
   @override
   String get authPrivacyExplain =>
@@ -46,32 +62,34 @@ class BuzzerLocalizationsFR implements BuzzerLocalizations {
   String get authPrivacyReadCTA =>
       'Touchez ici pour lire notre politique de confidentialité.';
 
-  @override
-  String get authLoginGoogleCTA => 'Se connecter avec Google';
+  /// --------------------------------------------------------------------------
+  ///                                Forms
+  /// --------------------------------------------------------------------------
 
   @override
-  String get authLoginFacebookCTA => 'Se connecter avec Facebook';
+  String get formEmailLabel => 'E-mail';
 
   @override
-  String get authAlreadyHaveAccountCTA =>
-      'Vous avez déjà un compte ? Connectez-vous';
+  String get formEmailHint => 'email@exemple.fr';
 
   @override
-  String get authLogin => 'Connectez vous avec votre compte';
+  String get formNoEmailExplain => 'Merci de renseigner un e-mail';
 
   @override
-  String get authLoginCTA => 'Se connecter';
+  String get formNotEmailExplain => 'Merci de renseigner un e-mail existant.';
 
   @override
-  String get authForgotPasswordCTA => 'Mot de passe oublié ?';
+  String get formPasswordLabel => 'Mot de passe vide';
 
   @override
-  String get authNoAccountCTA => 'Vous n\'avez pas de compte ? Inscrivez-vous';
+  String get formNoPasswordExplain => 'Merci de renseigner un mot de passe';
 
   @override
-  String get authOr => 'OU';
+  String get formPassword2Label => 'Mot de passe';
 
-  /// Home Page
+  /// --------------------------------------------------------------------------
+  ///                               Home Page
+  /// --------------------------------------------------------------------------
 
   @override
   String get homeTitle => 'Home';
@@ -82,15 +100,17 @@ class BuzzerLocalizationsFR implements BuzzerLocalizations {
   @override
   String get homeWelcome => 'Bienvenue sur notre application $appName !';
 
-  /// Account Page
+  /// --------------------------------------------------------------------------
+  ///                              Account Page
+  /// --------------------------------------------------------------------------
 
   @override
-  String get accountTitle => 'Compte';
+  String get accountActiveStatusLabel => 'Actif';
 
-  @override
-  String get accountCTA => 'Compte';
+  /// --------------------------------------------------------------------------
+  ///                              Buzzer Page
+  /// --------------------------------------------------------------------------
 
-  /// Buzzer Page
   @override
   String get buzzerTitle => 'Buzzer';
 
@@ -103,7 +123,10 @@ class BuzzerLocalizationsFR implements BuzzerLocalizations {
   @override
   String get buzzerDoorSucceed => 'L\'ouverture de la porte à réussi !';
 
-  /// Settings Pages
+  /// --------------------------------------------------------------------------
+  ///                             Settings Page
+  /// --------------------------------------------------------------------------
+
   @override
   String get settingsTitle => 'Paramètres';
 
@@ -122,14 +145,20 @@ class BuzzerLocalizationsFR implements BuzzerLocalizations {
   @override
   String get settingsThemeDark => 'Sombre';
 
-  /// Search Page
-  @override
-  String get searchTitle => 'Recherche';
+  /// --------------------------------------------------------------------------
+  ///                             Menu Widget
+  /// --------------------------------------------------------------------------
 
   @override
-  String get searchSearchBarHint => 'Rechercher un profil ...';
+  String get menuPPCTA => 'Politique de confidentialité';
 
-  /// Exception Error
+  @override
+  String get menuToSCTA => 'Termes de Service';
+
+  /// --------------------------------------------------------------------------
+  ///                            Exception Error
+  /// --------------------------------------------------------------------------
+
   @override
   String get exceptionFormatException => 'Exception : Mauvais Format';
 
@@ -143,7 +172,10 @@ class BuzzerLocalizationsFR implements BuzzerLocalizations {
   @override
   String get apiErrorUserNotFoundError => 'Utilisateur introuvable';
 
-  /// Server Error : HTTP 400
+  /// --------------------------------------------------------------------------
+  ///                       HTTP Client Error (4XX)
+  /// --------------------------------------------------------------------------
+
   @override
   String get httpClientErrorBadRequest => 'Mauvaise requete';
 
@@ -190,7 +222,10 @@ class BuzzerLocalizationsFR implements BuzzerLocalizations {
   @override
   String get httpClientErrorUpgradeRequired => 'Mise à jour requise';
 
-  /// Server Error : HTTP 500
+  /// --------------------------------------------------------------------------
+  ///                       HTTP Server Error (5XX)
+  /// --------------------------------------------------------------------------
+
   @override
   String get httpServerErrorInternalServerError => 'Erreur Serveur interne';
 
@@ -210,26 +245,15 @@ class BuzzerLocalizationsFR implements BuzzerLocalizations {
   String get httpServerErrorHttpVersionNotSupported =>
       'Version HTTP non supporté';
 
-  /// Menu Widget
+  /// --------------------------------------------------------------------------
+  ///                              Commons
+  /// --------------------------------------------------------------------------
 
-  @override
-  String get menuPPCTA => 'Politique de confidentialité';
-
-  @override
-  String get menuToSCTA => 'Termes de Service';
-
-  /// Others
   @override
   String get middleDot => '·';
 
   @override
   String get username => 'Nom d\'utilisateur';
-
-  @override
-  String get email => 'Email';
-
-  @override
-  String get password => 'Mot de passe';
 
   @override
   String get token => 'Jeton';
@@ -241,43 +265,10 @@ class BuzzerLocalizationsFR implements BuzzerLocalizations {
   String get account => 'Compte';
 
   @override
-  String get login => 'Se connecter';
-
-  @override
-  String get loginCTA => 'Se connecter';
-
-  @override
-  String get loginSucceed => 'Logged';
-
-  @override
-  String get signupFailed => 'Signup failed!';
-
-  @override
-  String get logout => 'Se déconnecter';
-
-  @override
-  String get logoutCTA => 'Se déconnecter';
-
-  @override
-  String get home => 'Accueil';
-
-  @override
-  String get resume => 'CV';
-
-  @override
-  String get profile => 'Profil';
-
-  @override
-  String get search => 'Rechercher';
-
-  @override
   String get history => 'Historique';
 
   @override
   String get loadMore => 'Charger plus';
-
-  @override
-  String get errorOccurred => 'Une erreur s\'est produite';
 
   @override
   String get retry => 'Re-éssayer';
@@ -292,35 +283,13 @@ class BuzzerLocalizationsFR implements BuzzerLocalizations {
   String get more => 'Plus';
 
   @override
+  String get errorOccurred => 'An error occurred';
+
+  @override
   String get notYetImplemented => 'Pas encore implémenté';
 
   @override
   String get notSupported => 'Non supporté';
-
-  @override
-  String get forgotPasswordTitle => 'Retrouvez votre mot de passe';
-
-  @override
-  String get forgotPasswordExplain =>
-      'Renseignez votre e-mail et nous vous enverrons les instructions pour réinitialiser votre mote de passe';
-
-  @override
-  String get forgotPasswordResetCTA => 'Réinitialiser mon mot de passe';
-
-  @override
-  String get forgotPasswordNoEmailTitle => 'Email non renseigné';
-
-  @override
-  String get forgotPasswordNoEmailExplain =>
-      'Mercie de renseigner votre e-mail';
-
-  @override
-  String get forgotPasswordSuccessMessage =>
-      'Email with instructions has been send.';
-
-  @override
-  String get forgotPasswordErrorMessage =>
-      'Une érreur c\'est produite pendant l\'envoie de l\'e-mail avec les instructions';
 
   //// Creates an object that provides US English resource values for the
   //// application.

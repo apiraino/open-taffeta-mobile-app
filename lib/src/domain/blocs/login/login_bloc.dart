@@ -1,23 +1,19 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
-import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/login/login.dart';
 import 'package:meta/meta.dart';
 
-/// Business Logic Component for Login and Registration
+/// Business Logic Component for Login
 ///
 /// Use [LoginEvent] for events and [LoginState] for states
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final String _tag = 'LoginBloc';
+  final String _tag = '$LoginBloc';
 
   final BuzzerRepository buzzerRepository;
-  final AuthenticationBloc authBloc;
 
   LoginBloc({
     @required this.buzzerRepository,
-    @required this.authBloc,
   })  : assert(buzzerRepository != null),
-        assert(authBloc != null),
         super();
 
   @override
@@ -56,9 +52,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (response.auth?.accessToken != null) {
         final token = response.auth.accessToken;
-        authBloc.dispatch(LoggedIn(token: token));
-        yield LoginSucceed();
+        yield LoginSucceed(auth: response.auth, user: response.user);
       } else {
+        // TODO: Add no login exception
         yield LoginFailure();
       }
     } catch (error) {

@@ -1,80 +1,228 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
+import 'package:flutter_door_buzzer/src/ui/commons/styles.dart';
+import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class ErrorContent extends StatelessWidget {
-  ErrorContent({
-    @required this.message,
-  }) : assert(message != null);
+/// [CustomErrorWidget] is a based widget for [Error]
+///
+/// Must be initialized with an [error]
+abstract class CustomErrorWidget extends StatelessWidget {
+  final Error error;
 
-  final String message;
+  const CustomErrorWidget({Key key, @required this.error})
+      : assert(error != null, 'No $Error given'),
+        super(key: key);
+}
+
+/// [ErrorIcon] is a [Icon] like widget to display [Error]
+///
+/// See [Icon] widget for more documentation
+class ErrorIcon extends StatelessWidget {
+  final IconData icon;
+  final double size;
+  final Color color;
+  final String semanticLabel;
+  final TextDirection textDirection;
+
+  const ErrorIcon({
+    Key key,
+    this.icon = MdiIcons.alertCircleOutline,
+    this.size,
+    this.color = AppStyles.errorColor,
+    this.semanticLabel,
+    this.textDirection,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(
+      icon,
+      size: size,
+      color: color,
+      semanticLabel: semanticLabel,
+      textDirection: textDirection,
+    );
+  }
+}
+
+/// [ErrorText] is a [Text] like widget like to display [Error]
+///
+/// See [Text] widget for more documentation
+class ErrorText extends CustomErrorWidget {
+  final TextStyle style;
+  final StrutStyle strutStyle;
+
+  final TextAlign textAlign;
+  final TextDirection textDirection;
+  final Locale locale;
+  final bool softWrap;
+  final TextOverflow overflow;
+  final double textScaleFactor;
+  final int maxLines;
+  final String semanticsLabel;
+
+  const ErrorText({
+    Key key,
+    @required Error error,
+    this.style,
+    this.strutStyle,
+    this.textAlign = TextAlign.center,
+    this.textDirection,
+    this.locale,
+    this.softWrap,
+    this.overflow,
+    this.textScaleFactor,
+    this.maxLines,
+    this.semanticsLabel,
+  }) : super(key: key, error: error);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '${error.runtimeType}',
+      style: style as TextStyle,
+      strutStyle: strutStyle as StrutStyle,
+      textAlign: textAlign,
+      textDirection: textDirection,
+      locale: locale,
+      softWrap: softWrap,
+      overflow: overflow,
+      textScaleFactor: textScaleFactor,
+      maxLines: maxLines,
+      semanticsLabel: semanticsLabel,
+    );
+  }
+}
+
+/// [ErrorRow] is a [Row] like widget to display [Error]
+///
+/// See [Row] widget for more documentation
+class ErrorRow extends CustomErrorWidget {
+  const ErrorRow({Key key, @required Error error})
+      : super(key: key, error: error);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Icon(
-          Icons.error,
-          color: AppColors.errorColor,
-        ),
-        Expanded(
-          child: Text(message, textAlign: TextAlign.center),
-        )
+        const ErrorIcon(),
+        Expanded(child: ErrorText(error: error)),
       ],
     );
   }
 }
 
-class ErrorCard extends StatelessWidget {
-  const ErrorCard({
-    Key key,
-    @required this.message,
-    this.height,
-    this.width,
-  })  : assert(message != null),
-        super(key: key);
-
-  final String message;
-  final double height;
-  final double width;
+/// [ErrorTile] is a [ListTile] like widget to display [Error]
+///
+/// See [ListTile] widget for more documentation
+class ErrorTile extends CustomErrorWidget {
+  const ErrorTile({Key key, @required Error error})
+      : super(key: key, error: error);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        height: height,
-        width: width,
-        padding: EdgeInsets.all(10.0),
-        child: ErrorContent(message: message),
+    return ListTile(
+      leading: const ErrorIcon(),
+      title: Text(BuzzerLocalizations.of(context).errorOccurred),
+      subtitle: ErrorText(
+        error: error,
+        textAlign: TextAlign.left,
       ),
     );
   }
 }
 
-class ErrorList extends StatelessWidget {
-  ErrorList({
-    @required this.error,
-    this.scrollDirection = Axis.vertical,
-    this.shrinkWrap = false,
-    this.physics,
-  }) : assert(error != null);
+/// [ErrorCard] is a [Card] like widget to display [Error]
+///
+/// See [Card] widget for more documentation
+class ErrorCard extends CustomErrorWidget {
+  final double height;
+  final double width;
 
-  final Object error;
+  const ErrorCard({
+    Key key,
+    @required Error error,
+    this.height,
+    this.width,
+  }) : super(key: key, error: error);
 
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: AppStyles.cardDefaultElevation,
+      child: Container(
+        height: height,
+        width: width,
+        padding: AppStyles.cardDefaultPadding,
+        child: ErrorRow(error: error),
+      ),
+    );
+  }
+}
+
+/// [ErrorList] is a [ListView] like widget to display [Error]
+///
+/// See [ListView] widget for more documentation
+class ErrorList extends CustomErrorWidget {
+  /// List behaviors
   final Axis scrollDirection;
   final bool shrinkWrap;
   final ScrollPhysics physics;
 
+  const ErrorList({
+    Key key,
+    @required Error error,
+
+    /// List behaviors
+    this.scrollDirection = Axis.vertical,
+    this.shrinkWrap = false,
+    this.physics,
+  }) : super(key: key, error: error);
+
   @override
   Widget build(BuildContext context) {
     return ListView(
-      scrollDirection: this.scrollDirection,
-      shrinkWrap: this.shrinkWrap,
-      physics: this.physics,
+      scrollDirection: scrollDirection,
+      shrinkWrap: shrinkWrap,
+      physics: physics,
       children: <Widget>[
-        ErrorCard(message: '${error.runtimeType}'),
+        ErrorTile(error: error),
       ],
+    );
+  }
+}
+
+/// [ErrorPage] is a [Scaffold] like widget to display [Error]
+///
+/// See [Scaffold] widget for more documentation
+class ErrorPage extends CustomErrorWidget {
+  const ErrorPage({Key key, @required Error error})
+      : super(key: key, error: error);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: ErrorCard(error: error)),
+    );
+  }
+}
+
+/// [ErrorApp] is a [MaterialApp] like widget to display [Error]
+///
+/// See [MaterialApp] widget for more documentation
+class ErrorApp extends CustomErrorWidget {
+  const ErrorApp({Key key, @required Error error})
+      : super(key: key, error: error);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: ErrorPage(error: error),
+      color: AppStyles.primaryColor,
     );
   }
 }

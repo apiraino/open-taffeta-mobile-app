@@ -11,49 +11,15 @@ abstract class BuzzerLocalizations {
     return Localizations.of<BuzzerLocalizations>(context, BuzzerLocalizations);
   }
 
-  /// App
+  /// --------------------------------------------------------------------------
+  ///                                   App
+  /// --------------------------------------------------------------------------
 
   String get appName;
 
-  /// Auth Page
-
-  String get authTitle;
-
-  String get authNoEmailTitle;
-
-  String get authNotEmailExplain;
-
-  String get authNoEmailExplain;
-
-  String get authNoPasswordTitle;
-
-  String get authNoPasswordExplain;
-
-  String get authCreateYourAccount;
-
-  String get authRegisterCTA;
-
-  String get authPrivacyExplain;
-
-  String get authPrivacyReadCTA;
-
-  String get authLoginGoogleCTA;
-
-  String get authLoginFacebookCTA;
-
-  String get authAlreadyHaveAccountCTA;
-
-  String get authLogin;
-
-  String get authLoginCTA;
-
-  String get authForgotPasswordCTA;
-
-  String get authNoAccountCTA;
-
-  String get authOr;
-
-  /// Home Page
+  /// --------------------------------------------------------------------------
+  ///                               Home Page
+  /// --------------------------------------------------------------------------
 
   String get homeTitle;
 
@@ -61,13 +27,65 @@ abstract class BuzzerLocalizations {
 
   String get homeWelcome;
 
-  /// Account Page
+  /// --------------------------------------------------------------------------
+  ///                 Authentication Page - Login - SignUp
+  /// --------------------------------------------------------------------------
 
-  String get accountTitle;
+  String get authTitle;
 
-  String get accountCTA;
+  String get authBubbleLoginCTA;
 
-  /// Buzzer Page
+  String get authBubbleRegisterCTA;
+
+  String get authForgotPasswordCTA;
+
+  String get authRegisterFailed;
+
+  String get authRegisterTitle;
+
+  String get authRegisterCTA;
+
+  String get authPrivacyExplain;
+
+  String get authPrivacyReadCTA;
+
+  String get authLoginTitle;
+
+  String get authLoginCTA;
+
+  String get authLoginSucceed;
+
+  String get authLogoutLabel;
+
+  String get authLogoutCTA;
+
+  /// --------------------------------------------------------------------------
+  ///                                Forms
+  /// --------------------------------------------------------------------------
+
+  String get formEmailLabel;
+
+  String get formEmailHint;
+
+  String get formNoEmailExplain;
+
+  String get formNotEmailExplain;
+
+  String get formPasswordLabel;
+
+  String get formNoPasswordExplain;
+
+  String get formPassword2Label;
+
+  /// --------------------------------------------------------------------------
+  ///                              Account
+  /// --------------------------------------------------------------------------
+
+  String get accountActiveStatusLabel;
+
+  /// --------------------------------------------------------------------------
+  ///                              Buzzer Page
+  /// --------------------------------------------------------------------------
 
   String get buzzerTitle;
 
@@ -77,7 +95,9 @@ abstract class BuzzerLocalizations {
 
   String get buzzerDoorSucceed;
 
-  ///Settings Page
+  /// --------------------------------------------------------------------------
+  ///                             Settings Page
+  /// --------------------------------------------------------------------------
 
   String get settingsTitle;
 
@@ -91,19 +111,17 @@ abstract class BuzzerLocalizations {
 
   String get settingsThemeDark;
 
-  /// Search Page
-
-  String get searchTitle;
-
-  String get searchSearchBarHint;
-
-  /// Menu Widget
+  /// --------------------------------------------------------------------------
+  ///                             Menu Widget
+  /// --------------------------------------------------------------------------
 
   String get menuPPCTA;
 
   String get menuToSCTA;
 
-  /// Commons
+  /// --------------------------------------------------------------------------
+  ///                              Commons
+  /// --------------------------------------------------------------------------
 
   String get account;
 
@@ -111,39 +129,13 @@ abstract class BuzzerLocalizations {
 
   String get username;
 
-  String get email;
-
-  String get password;
-
   String get token;
 
   String get cancel;
 
-  String get login;
-
-  String get loginCTA;
-
-  String get loginSucceed;
-
-  String get signupFailed;
-
-  String get logout;
-
-  String get logoutCTA;
-
-  String get home;
-
-  String get resume;
-
-  String get profile;
-
-  String get search;
-
   String get history;
 
   String get loadMore;
-
-  String get errorOccurred;
 
   String get retry;
 
@@ -153,37 +145,31 @@ abstract class BuzzerLocalizations {
 
   String get more;
 
+  String get errorOccurred;
+
   String get notYetImplemented;
 
   String get notSupported;
 
-  String get forgotPasswordTitle;
-
-  String get forgotPasswordExplain;
-
-  String get forgotPasswordResetCTA;
-
-  String get forgotPasswordNoEmailTitle;
-
-  String get forgotPasswordNoEmailExplain;
-
-  String get forgotPasswordSuccessMessage;
-
-  String get forgotPasswordErrorMessage;
-
-  /// Exception Error
+  /// --------------------------------------------------------------------------
+  ///                            Exception Error
+  /// --------------------------------------------------------------------------
 
   String get exceptionFormatException;
 
   String get exceptionTimeoutException;
 
-  /// Api Error
+  /// --------------------------------------------------------------------------
+  ///                            Api Error
+  /// --------------------------------------------------------------------------
 
   String get apiErrorWrongPasswordError;
 
   String get apiErrorUserNotFoundError;
 
-  /// Server Error : HTTP 400
+  /// --------------------------------------------------------------------------
+  ///                       HTTP Request Error (4XX)
+  /// --------------------------------------------------------------------------
 
   String get httpClientErrorBadRequest;
 
@@ -215,7 +201,9 @@ abstract class BuzzerLocalizations {
 
   String get httpClientErrorUpgradeRequired;
 
-  /// Server Error : HTTP 500
+  /// --------------------------------------------------------------------------
+  ///                       HTTP Server Error (5XX)
+  /// --------------------------------------------------------------------------
 
   String get httpServerErrorInternalServerError;
 

@@ -42,6 +42,10 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
     }
   }
 
+  /// -----------------------------------------------------------------------
+  ///                       All Event map to State
+  /// -----------------------------------------------------------------------
+
   Stream<ConfigurationState> _mapAppLaunchedEventToState() async* {
     try {
       yield ConfigLoading();
@@ -87,7 +91,7 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
       );
     } catch (error) {
       print('$_tag:$_mapAppLaunchedEventToState -> ${error.runtimeType}');
-      throw error;
+      yield ConfigFailure(error:error);
     }
   }
 }

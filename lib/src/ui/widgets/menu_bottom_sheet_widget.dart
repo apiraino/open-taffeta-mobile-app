@@ -9,8 +9,9 @@ class MenuBottomSheet extends StatelessWidget {
     Key key,
     this.backgroundColor,
     this.borderRadius = const BorderRadius.only(
-        topLeft: const Radius.circular(10.0),
-        topRight: const Radius.circular(10.0)),
+      topLeft: Radius.circular(10.0),
+      topRight: Radius.circular(10.0),
+    ),
   }) : super(key: key);
 
   final Color backgroundColor;
@@ -23,9 +24,9 @@ class MenuBottomSheet extends StatelessWidget {
       right: false,
       child: Wrap(
         children: <Widget>[
-          AccountTile(),
+          const AccountTile(),
           Divider(),
-          ThemeSwitchTile(),
+          const ThemeSwitchTile(),
           ListTile(
             leading: Icon(Icons.settings),
             title: Text(BuzzerLocalizations.of(context).settingsCTA),

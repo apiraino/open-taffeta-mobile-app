@@ -24,9 +24,9 @@ class ApiInterceptor {
   }
 
   Response _onResponse(Response<dynamic> response) {
-    var data = response.data;
+    final data = response.data;
     if (data['auth'] != null && data['auth']['token'] != null) {
-      _accessToken = data['auth']['token'];
+      _accessToken = data['auth']['token'] as String;
     }
     return response;
   }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/login/login.dart';
-import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
-import 'package:flutter_door_buzzer/src/ui/commons/dimensions.dart';
+import 'package:flutter_door_buzzer/src/ui/commons/styles.dart';
+import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -17,8 +17,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   final FocusNode myFocusNodeEmailLogin = FocusNode();
   final FocusNode myFocusNodePasswordLogin = FocusNode();
 
-  TextEditingController loginEmailController = new TextEditingController();
-  TextEditingController loginPasswordController = new TextEditingController();
+  TextEditingController loginEmailController = TextEditingController();
+  TextEditingController loginPasswordController = TextEditingController();
 
   bool _obscureTextLogin = true;
 
@@ -35,7 +35,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   @override
   Widget build(BuildContext context) {
     print('$_tag:$build');
-    LoginBloc _loginBloc = BlocProvider.of<LoginBloc>(context);
+    final LoginBloc _loginBloc = BlocProvider.of<LoginBloc>(context);
 
     void _loginPressed() {
       _loginBloc.dispatch(LoginButtonPressed(
@@ -50,7 +50,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         if (state is LoginFailure) {
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              backgroundColor: AppColors.errorColor,
+              backgroundColor: AppStyles.errorColor,
               content: Text('${state.error.runtimeType}'),
             ),
           );
@@ -60,31 +60,34 @@ class _LoginWidgetState extends State<LoginWidget> {
         bloc: _loginBloc,
         builder: (BuildContext context, LoginState state) {
           return Card(
-            elevation: AppDimensions.defaultCardElevation,
+            elevation: AppStyles.cardDefaultElevation,
             child: Padding(
-              padding: EdgeInsets.all(AppDimensions.defaultCardPadding),
+              padding: AppStyles.cardDefaultPadding,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(child: Text('Login')),
+//                  Center(
+//                    child: Text(BuzzerLocalizations.of(context)
+//                        .authLoginTitle
+//                        .toUpperCase()),
+//                  ),
                   Padding(
-                    padding: const EdgeInsets.all(
-                        AppDimensions.defaultFormInputPadding),
+                    padding: AppStyles.formDefaultInputPadding,
                     child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       controller: loginEmailController,
                       decoration: InputDecoration(
-                        hintText: 'someone@email.com',
-                        labelText: 'Email',
+                        hintText: BuzzerLocalizations.of(context).formEmailHint,
+                        labelText:
+                            BuzzerLocalizations.of(context).formEmailLabel,
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(
-                        AppDimensions.defaultFormInputPadding),
+                    padding: AppStyles.formDefaultInputPadding,
                     child: TextFormField(
                       controller: loginPasswordController,
                       obscureText: _obscureTextLogin,
@@ -95,12 +98,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                               : MdiIcons.eyeOutline),
                           onPressed: _toggleLoginPassword,
                         ),
-                        labelText: 'Password',
+                        labelText:
+                            BuzzerLocalizations.of(context).formPasswordLabel,
                       ),
                     ),
                   ),
-                  MaterialButton(
-                    child: Text('LOGIN'),
+                  RaisedButton(
+                    child: Text(BuzzerLocalizations.of(context).authLoginCTA),
                     onPressed: state is! LoginLoading ? _loginPressed : null,
                   ),
                 ],

@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 /// [DoorEvent] that must be dispatch to [BuzzerBloc]
 abstract class DoorEvent extends Equatable {

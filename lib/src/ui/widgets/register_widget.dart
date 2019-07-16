@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/register/register.dart';
-import 'package:flutter_door_buzzer/src/ui/commons/colors.dart';
-import 'package:flutter_door_buzzer/src/ui/commons/dimensions.dart';
+import 'package:flutter_door_buzzer/src/ui/commons/styles.dart';
+import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class RegisterWidget extends StatefulWidget {
@@ -23,13 +23,13 @@ class _RegisterWidget extends State<RegisterWidget> {
   bool _obscureTextSignup = true;
   bool _obscureTextSignupConfirm = true;
 
-  TextEditingController signupEmailController = new TextEditingController();
+  TextEditingController signupEmailController = TextEditingController();
 
 //  TextEditingController signupFisrtNameController = new TextEditingController();
 //  TextEditingController signupLastNameController = new TextEditingController();
-  TextEditingController signupPasswordController = new TextEditingController();
+  TextEditingController signupPasswordController = TextEditingController();
   TextEditingController signupConfirmPasswordController =
-      new TextEditingController();
+      TextEditingController();
 
   @override
   void dispose() {
@@ -45,7 +45,7 @@ class _RegisterWidget extends State<RegisterWidget> {
   @override
   Widget build(BuildContext context) {
     print('$_tag:$build');
-    RegisterBloc _registerBloc = BlocProvider.of<RegisterBloc>(context);
+    final RegisterBloc _registerBloc = BlocProvider.of<RegisterBloc>(context);
 
     void _registerPressed() {
       _registerBloc.dispatch(RegisterButtonPressed(
@@ -60,7 +60,7 @@ class _RegisterWidget extends State<RegisterWidget> {
         if (state is RegisterFailure) {
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              backgroundColor: AppColors.errorColor,
+              backgroundColor: AppStyles.errorColor,
               content: Text('${state.error.runtimeType}'),
             ),
           );
@@ -70,48 +70,36 @@ class _RegisterWidget extends State<RegisterWidget> {
         bloc: _registerBloc,
         builder: (BuildContext context, RegisterState state) {
           return Card(
-            elevation: AppDimensions.defaultCardElevation,
+            elevation: AppStyles.cardDefaultElevation,
             child: Padding(
-              padding: EdgeInsets.all(AppDimensions.defaultCardPadding),
+              padding: AppStyles.formDefaultInputPadding,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(child: Text('Register')),
-//                  Padding(
-//                    padding:
-//                        const EdgeInsets.all( AppDimensions.defaultFormInputPadding),
-//                    child: TextFormField(
-//                      decoration: InputDecoration(
-//                        labelText: 'Firstname',
-//                      ),
-//                    ),
-////                  ),
-//                  Padding(
-//                    padding:
-//                        const EdgeInsets.all( AppDimensions.defaultFormInputPadding),
-//                    child: TextFormField(
-//                      decoration: InputDecoration(
-//                        labelText: 'Lastname',
-//                      ),
+//                  Center(
+//                    child: Text(
+//                      BuzzerLocalizations.of(context)
+//                          .authRegisterTitle
+//                          .toUpperCase(),
+//                      style: TextStyle(fontWeight: FontWeight.bold),
 //                    ),
 //                  ),
                   Padding(
-                    padding: const EdgeInsets.all(
-                        AppDimensions.defaultFormInputPadding),
+                    padding: AppStyles.formDefaultInputPadding,
                     child: TextFormField(
                       controller: signupEmailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        hintText: 'someone@email.com',
-                        labelText: 'Email',
+                        hintText: BuzzerLocalizations.of(context).formEmailHint,
+                        labelText:
+                            BuzzerLocalizations.of(context).formEmailLabel,
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(
-                        AppDimensions.defaultFormInputPadding),
+                    padding: AppStyles.formDefaultInputPadding,
                     child: TextFormField(
                       controller: signupPasswordController,
                       obscureText: _obscureTextSignup,
@@ -122,13 +110,13 @@ class _RegisterWidget extends State<RegisterWidget> {
                               : MdiIcons.eyeOutline),
                           onPressed: _toggleSignup,
                         ),
-                        labelText: 'Password',
+                        labelText:
+                            BuzzerLocalizations.of(context).formPasswordLabel,
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(
-                        AppDimensions.defaultFormInputPadding),
+                    padding: AppStyles.formDefaultInputPadding,
                     child: TextFormField(
                       controller: signupConfirmPasswordController,
                       obscureText: _obscureTextSignupConfirm,
@@ -139,12 +127,14 @@ class _RegisterWidget extends State<RegisterWidget> {
                               : MdiIcons.eyeOutline),
                           onPressed: _toggleSignupConfirm,
                         ),
-                        labelText: 'Password Confirm',
+                        labelText:
+                            BuzzerLocalizations.of(context).formPassword2Label,
                       ),
                     ),
                   ),
-                  MaterialButton(
-                    child: Text('REGISTER'),
+                  RaisedButton(
+                    child:
+                        Text(BuzzerLocalizations.of(context).authRegisterCTA),
                     onPressed:
                         state is! RegisterLoading ? _registerPressed : null,
                   ),

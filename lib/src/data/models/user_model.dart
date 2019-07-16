@@ -6,18 +6,21 @@ part 'user_model.g.dart';
 class UserModel {
   @JsonKey(name: 'id')
   int id;
-  @JsonKey(name: 'username')
-  String username;
+
   @JsonKey(name: 'email')
   String email;
-  @JsonKey(name: 'token')
-  String token;
+
+  @JsonKey(name: 'role')
+  String role;
+
+  @JsonKey(name: 'is_active')
+  bool isActive;
 
   UserModel({
     this.id,
-    this.username,
     this.email,
-    this.token,
+    this.role,
+    this.isActive,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

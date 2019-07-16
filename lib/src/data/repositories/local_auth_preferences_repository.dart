@@ -74,6 +74,21 @@ class LocalAuthPreferencesRepository implements AuthPreferencesRepository {
   }
 
   @override
+  Future<void> deleteUserId() async {
+    return await authSharedPreferencesManager.deleteUserId();
+  }
+
+  @override
+  Future<int> getUserId() async {
+    return await authSharedPreferencesManager.getUserId();
+  }
+
+  @override
+  Future<void> setUserId(int userId) async {
+    return await authSharedPreferencesManager.setUserId(userId);
+  }
+
+  @override
   Future deleteAll() async {
     return await authSharedPreferencesManager.deleteAll();
   }

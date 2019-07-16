@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
-import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/register/register.dart';
 import 'package:meta/meta.dart';
 
@@ -8,17 +7,14 @@ import 'package:meta/meta.dart';
 ///
 /// Use [RegisterEvent] for events and [RegisterState] for states
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  final String _tag = 'RegisterBloc';
+  final String _tag = '$RegisterBloc';
+
+  final BuzzerRepository buzzerRepository;
 
   RegisterBloc({
-    @required this.authBloc,
     @required this.buzzerRepository,
-  })  : assert(authBloc != null),
-        assert(buzzerRepository != null),
+  })  : assert(buzzerRepository != null),
         super();
-
-  final AuthenticationBloc authBloc;
-  final BuzzerRepository buzzerRepository;
 
   @override
   void dispose() {
@@ -51,15 +47,14 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       RegisterButtonPressed event) async* {
     try {
       yield RegisterLoading();
-      var response = await buzzerRepository.register(
+      final response = await buzzerRepository.register(
         email: event.email,
         password: event.password,
       );
       if (response.auth?.accessToken != null) {
-        final token = response.auth?.accessToken;
-        authBloc.dispatch(LoggedIn(token: token));
-        yield RegisterSucceed();
+        yield RegisterSucceed(auth: response.auth, user: response.user);
       } else {
+        // TODO: Add no login exception
         yield RegisterFailure();
       }
     } catch (error) {

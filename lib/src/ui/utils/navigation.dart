@@ -14,6 +14,6 @@ void navigateToSettings(BuildContext context) {
 void openMenuBottomSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
-    builder: (context) => MenuBottomSheet(),
+    builder: (context) => const MenuBottomSheet(),
   );
 }

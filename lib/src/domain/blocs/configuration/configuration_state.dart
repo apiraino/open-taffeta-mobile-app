@@ -14,6 +14,12 @@ abstract class ConfigurationState extends Equatable {
 
 class ConfigLoading extends ConfigurationState {}
 
+class ConfigFailure extends ConfigurationState {
+  final dynamic error;
+
+  ConfigFailure({@required this.error}) : super([error]);
+}
+
 class ConfigLoaded extends ConfigurationState {
   final BuzzerRepository buzzerRepository;
   final AuthPreferencesRepository authPreferencesRepository;

@@ -1,10 +1,12 @@
+import 'package:flutter_door_buzzer/src/data/models/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'api_models.g.dart';
 
-////////////////////////////////////////////////////////////////////////////////
-//                              Auth                                          //
-////////////////////////////////////////////////////////////////////////////////
+/// ----------------------------------------------------------------------------
+///                              Auth
+/// ----------------------------------------------------------------------------
+
 @JsonSerializable()
 class AuthSignUpRequestModel {
   @JsonKey(name: 'email')
@@ -22,24 +24,6 @@ class AuthSignUpRequestModel {
       _$AuthSignUpRequestModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthSignUpRequestModelToJson(this);
-}
-
-@JsonSerializable()
-class AuthSignUpResponseModel {
-  @JsonKey(name: 'auth')
-  final AuthModel auth;
-  @JsonKey(name: 'is_active')
-  final bool isActive;
-
-  AuthSignUpResponseModel({
-    this.auth,
-    this.isActive,
-  });
-
-  factory AuthSignUpResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$AuthSignUpResponseModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$AuthSignUpResponseModelToJson(this);
 }
 
 @JsonSerializable()
@@ -62,21 +46,22 @@ class AuthLoginRequestModel {
 }
 
 @JsonSerializable()
-class AuthLoginResponseModel {
+class AuthResponseModel {
   @JsonKey(name: 'auth')
   final AuthModel auth;
-  @JsonKey(name: 'is_active')
-  final bool isActive;
 
-  AuthLoginResponseModel({
+  @JsonKey(name: 'user')
+  final UserModel user;
+
+  AuthResponseModel({
     this.auth,
-    this.isActive,
+    this.user,
   });
 
-  factory AuthLoginResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$AuthLoginResponseModelFromJson(json);
+  factory AuthResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$AuthResponseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AuthLoginResponseModelToJson(this);
+  Map<String, dynamic> toJson() => _$AuthResponseModelToJson(this);
 }
 
 @JsonSerializable()
@@ -106,9 +91,10 @@ class AuthModel {
   Map<String, dynamic> toJson() => _$AuthModelToJson(this);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-//                           Buzzer                                           //
-////////////////////////////////////////////////////////////////////////////////
+/// ----------------------------------------------------------------------------
+///                           Buzzer
+/// ----------------------------------------------------------------------------
+
 @JsonSerializable()
 class BuzzerRequestModel {
   @JsonKey(name: 'authorization')
@@ -140,4 +126,22 @@ class BuzzerResponseModel {
       _$BuzzerResponseModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$BuzzerResponseModelToJson(this);
+}
+
+/// Users
+///
+
+@JsonSerializable()
+class UserResponseModel {
+  @JsonKey(name: 'user')
+  final UserModel user;
+
+  UserResponseModel({
+    this.user,
+  });
+
+  factory UserResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$UserResponseModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserResponseModelToJson(this);
 }
