@@ -1,22 +1,34 @@
-/// Interface for all app preferences repositories
-abstract class AppPreferencesRepository {
-  Future<void> setUserId(String userId);
+import 'package:flutter_door_buzzer/src/data/stores/app_preferences/app_preferences_data_store_factory.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/app_preferences_repository.dart';
+import 'package:meta/meta.dart';
 
-  Future<String> getUserId();
+///
+class ImplAppPreferencesRepository implements AppPreferencesRepository {
+  final AppPreferencesDataStoreFactory factory;
 
-  Future<void> deleteUserId();
+  ImplAppPreferencesRepository({@required this.factory})
+      : assert(
+          factory != null,
+          'No $AppPreferencesDataStoreFactory given',
+        );
 
-  Future<void> setUserEmail(String userEmail);
+  @override
+  Future<bool> getDarkMode() async {
+    return await factory.create().getDarkMode();
+  }
 
-  Future<String> getUserEmail();
+  @override
+  Future<void> toggleDarkMode(bool darkMode) async {
+    return await factory.create().toggleDarkMode(darkMode);
+  }
 
-  Future<void> deleteUserEmail();
+  @override
+  Future<void> deleteDarkMode() async {
+    return await factory.create().deleteDarkMode();
+  }
 
-  Future<String> getAppTheme();
-
-  Future<void> setAppTheme(String theme);
-
-  Future<void> deleteAppTheme();
-
-  Future deleteAll();
+  @override
+  Future<void> deleteAll() async {
+    return await factory.create().deleteAll();
+  }
 }

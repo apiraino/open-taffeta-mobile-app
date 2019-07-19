@@ -134,16 +134,7 @@ class BuzzerLocalizationsFR implements BuzzerLocalizations {
   String get settingsCTA => 'Paramètres';
 
   @override
-  String get settingsThemeCTA => 'Mode Sombre';
-
-  @override
-  String get settingsThemeDefault => 'Défaut';
-
-  @override
-  String get settingsThemeLight => 'Claire';
-
-  @override
-  String get settingsThemeDark => 'Sombre';
+  String get settingsToggleDarkModeCTA => 'Mode Sombre';
 
   /// --------------------------------------------------------------------------
   ///                             Menu Widget

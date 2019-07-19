@@ -103,13 +103,7 @@ abstract class BuzzerLocalizations {
 
   String get settingsCTA;
 
-  String get settingsThemeCTA;
-
-  String get settingsThemeDefault;
-
-  String get settingsThemeLight;
-
-  String get settingsThemeDark;
+  String get settingsToggleDarkModeCTA;
 
   /// --------------------------------------------------------------------------
   ///                             Menu Widget

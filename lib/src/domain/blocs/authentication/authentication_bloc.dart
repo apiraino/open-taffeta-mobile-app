@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/auth_preferences_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/login/login.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/register/register.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/auth_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/buzzer_repository.dart';
 import 'package:meta/meta.dart';
 
 /// Business Logic Component for Authentication
@@ -16,7 +16,7 @@ class AuthenticationBloc
   final String _tag = '$AuthenticationBloc';
 
   final BuzzerRepository buzzerRepository;
-  final AuthPreferencesRepository authPreferencesRepository;
+  final AuthRepository authPreferencesRepository;
 
   final LoginBloc loginBloc;
   final RegisterBloc registerBloc;
@@ -35,7 +35,7 @@ class AuthenticationBloc
         ),
         assert(
           authPreferencesRepository != null,
-          'No $AuthPreferencesRepository given',
+          'No $AuthRepository given',
         ),
         assert(
           loginBloc != null,
@@ -103,9 +103,9 @@ class AuthenticationBloc
       } else {
         yield AuthenticationUnauthenticated();
       }
-    } catch (error) {
-      print('$_tag:$_mapAppStartedToState -> ${error.runtimeType}');
-      yield AuthenticationFailed(error: error);
+    } catch (e) {
+      print('$_tag:$_mapAppStartedToState -> ${e.runtimeType}');
+      yield AuthenticationFailed(error: e);
     }
   }
 
@@ -121,9 +121,9 @@ class AuthenticationBloc
       await authPreferencesRepository.setAccessToken(event.auth.accessToken);
       await authPreferencesRepository.setUserId(event.auth.userId);
       yield AuthenticationAuthenticated();
-    } catch (error) {
-      print('$_tag:$_mapAuthenticatedEventToState -> ${error.runtimeType}');
-      yield AuthenticationFailed(error: error);
+    } catch (e) {
+      print('$_tag:$_mapAuthenticatedEventToState -> ${e.runtimeType}');
+      yield AuthenticationFailed(error: e);
     }
   }
 
@@ -146,9 +146,9 @@ class AuthenticationBloc
       await buzzerRepository.logout();
 
       yield AuthenticationUnauthenticated();
-    } catch (error) {
-      print('$_tag:$_mapLoggedOutEventToState -> ${error.runtimeType}');
-      yield AuthenticationFailed(error: error);
+    } catch (e) {
+      print('$_tag:$_mapLoggedOutEventToState -> ${e.runtimeType}');
+      yield AuthenticationFailed(error: e);
     }
   }
 }

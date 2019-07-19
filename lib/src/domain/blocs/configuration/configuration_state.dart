@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/app_preferences_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/auth_preferences_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/config_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/app_preferences_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/auth_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/buzzer_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/config_repository.dart';
 import 'package:meta/meta.dart';
 
 abstract class ConfigurationState extends Equatable {
@@ -21,36 +21,36 @@ class ConfigFailure extends ConfigurationState {
 }
 
 class ConfigLoaded extends ConfigurationState {
-  final BuzzerRepository buzzerRepository;
-  final AuthPreferencesRepository authPreferencesRepository;
-  final AppPreferencesRepository appPreferencesRepository;
-  final ConfigRepository configRepository;
+  final ConfigRepository configRepo;
+  final AuthRepository authRepo;
+  final BuzzerRepository buzzerRepo;
+  final AppPreferencesRepository appPrefsRepo;
 
   ConfigLoaded({
-    @required this.buzzerRepository,
-    @required this.authPreferencesRepository,
-    @required this.appPreferencesRepository,
-    @required this.configRepository,
+    @required this.configRepo,
+    @required this.authRepo,
+    @required this.buzzerRepo,
+    @required this.appPrefsRepo,
   })  : assert(
-          buzzerRepository != null,
-          'No $AppPreferencesRepository given',
-        ),
-        assert(
-          authPreferencesRepository != null,
-          'No $AuthPreferencesRepository given',
-        ),
-        assert(
-          appPreferencesRepository != null,
-          'No $AppPreferencesRepository given',
-        ),
-        assert(
-          configRepository != null,
+          configRepo != null,
           'No $ConfigRepository given',
         ),
+        assert(
+          authRepo != null,
+          'No $AuthRepository given',
+        ),
+        assert(
+          buzzerRepo != null,
+          'No $BuzzerRepository given',
+        ),
+        assert(
+          appPrefsRepo != null,
+          'No $AppPreferencesRepository given',
+        ),
         super([
-          buzzerRepository,
-          authPreferencesRepository,
-          appPreferencesRepository,
-          configRepository,
+          configRepo,
+          authRepo,
+          buzzerRepo,
+          appPrefsRepo,
         ]);
 }

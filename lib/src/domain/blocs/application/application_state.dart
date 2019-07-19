@@ -12,17 +12,19 @@ abstract class ApplicationState extends Equatable {
 
 class AppLoading extends ApplicationState {}
 
-class AppInitialized extends ApplicationState {
-  final ThemeType theme;
+class AppUninitialized extends ApplicationState {}
 
-  AppInitialized({@required this.theme}) : super([theme]);
+class AppInitialized extends ApplicationState {
+  final bool isDarkMode;
+
+  AppInitialized({@required this.isDarkMode}) : super([isDarkMode]);
 
   @override
-  String toString() => '$runtimeType{ theme: $theme }';
+  String toString() => '$runtimeType{ isDarkMode: $isDarkMode }';
 }
 
 class AppFailure extends ApplicationState {
-  final Error error;
+  final dynamic error;
 
   AppFailure({@required this.error}) : super([error]);
 

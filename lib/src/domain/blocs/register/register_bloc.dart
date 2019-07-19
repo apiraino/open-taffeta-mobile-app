@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/register/register.dart';
 import 'package:meta/meta.dart';
 

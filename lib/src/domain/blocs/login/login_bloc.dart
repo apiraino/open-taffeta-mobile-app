@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/login/login.dart';
 import 'package:meta/meta.dart';
 
@@ -51,7 +51,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           email: event.email, password: event.password);
 
       if (response.auth?.accessToken != null) {
-        final token = response.auth.accessToken;
         yield LoginSucceed(auth: response.auth, user: response.user);
       } else {
         // TODO: Add no login exception

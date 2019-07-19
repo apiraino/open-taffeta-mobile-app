@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/config_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/buzzer_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/config_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/door/door.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/styles.dart';
 import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dart';

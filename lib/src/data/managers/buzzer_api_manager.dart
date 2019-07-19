@@ -2,10 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_door_buzzer/src/data/interceptors/api_interceptor.dart';
+import 'package:flutter_door_buzzer/src/data/managers/api_interceptor.dart';
 import 'package:flutter_door_buzzer/src/data/models/api_models.dart';
 import 'package:meta/meta.dart';
 
+/// [BuzzerApiManager] is the direct and should be the only one to manage
+/// the communication with the BuzzerAPI
+///
+/// It can use many interceptors to keep the communication stateless
+/// (e.g. authentication).
 class BuzzerApiManager {
   final String baseUrl;
   final ApiInterceptor apiInterceptor;
@@ -34,6 +39,10 @@ class BuzzerApiManager {
   final String _pathDoors = '/door';
   final String _pathUsers = '/users';
 
+  /// --------------------------------------------------------------------------
+  ///                                   Auth
+  /// --------------------------------------------------------------------------
+
   /// Login
   Future<AuthResponseModel> login({
     @required String email,
@@ -50,7 +59,7 @@ class BuzzerApiManager {
     return AuthResponseModel.fromJson(response.data);
   }
 
-  /// Register
+  /// Register with [email] and [password]
   Future<AuthResponseModel> register({
     @required String email,
     @required String password,
@@ -71,7 +80,11 @@ class BuzzerApiManager {
     await apiInterceptor.deleteAuthData();
   }
 
-  /// Open door
+  /// --------------------------------------------------------------------------
+  ///                                   Users
+  /// --------------------------------------------------------------------------
+
+  /// Open door [doorId]
   Future<BuzzerResponseModel> openDoor({
     @required int doorId,
   }) async {
@@ -84,11 +97,15 @@ class BuzzerApiManager {
     return BuzzerResponseModel.fromJson(response.data);
   }
 
-  /// Fetch User details
- Future<UserResponseModel> getUser({@required int userId})async{
-   final Response<Map<String, dynamic>> response = await _dio.get(
-     '$_pathUsers/$userId',
-   );
-   return UserResponseModel.fromJson(response.data);
- }
+  /// --------------------------------------------------------------------------
+  ///                                   Doors
+  /// --------------------------------------------------------------------------
+
+  /// Fetch User [userId] details
+  Future<UserResponseModel> getUser({@required int userId}) async {
+    final Response<Map<String, dynamic>> response = await _dio.get(
+      '$_pathUsers/$userId',
+    );
+    return UserResponseModel.fromJson(response.data);
+  }
 }

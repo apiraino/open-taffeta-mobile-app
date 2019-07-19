@@ -23,7 +23,7 @@ void main() async {
 }
 
 /// Global error handler. Show stack trace
-void globalErrorHandler(details) {
+void globalErrorHandler(dynamic details) {
   StackTrace stackTrace;
 
   if (details is FlutterErrorDetails) {

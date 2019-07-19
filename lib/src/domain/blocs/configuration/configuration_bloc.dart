@@ -1,17 +1,20 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_door_buzzer/src/data/interceptors/api_interceptor.dart';
-import 'package:flutter_door_buzzer/src/data/managers/app_shared_preferences_manager.dart';
-import 'package:flutter_door_buzzer/src/data/managers/auth_shared_preferences_manager.dart';
+import 'package:flutter_door_buzzer/src/data/managers/api_interceptor.dart';
 import 'package:flutter_door_buzzer/src/data/managers/buzzer_api_manager.dart';
-import 'package:flutter_door_buzzer/src/data/managers/config_assets_manager.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/app_preferences_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/auth_preferences_repository.dart';
+import 'package:flutter_door_buzzer/src/data/repositories/auth_repository.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/cloud_buzzer_repository.dart';
 import 'package:flutter_door_buzzer/src/data/repositories/config_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/local_app_preferences_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/local_auth_preferences_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/local_config_repository.dart';
+import 'package:flutter_door_buzzer/src/data/stores/app_preferences/app_preferences_data_store_factory.dart';
+import 'package:flutter_door_buzzer/src/data/stores/auth/auth_data_store_factory.dart';
+import 'package:flutter_door_buzzer/src/data/stores/auth/disk_auth_data_store.dart';
+import 'package:flutter_door_buzzer/src/data/stores/buzzer/buzzer_data_store_factory.dart';
+import 'package:flutter_door_buzzer/src/data/stores/config/config_data_store_factory.dart';
+import 'package:flutter_door_buzzer/src/data/stores/config/disk_config_data_store.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/app_preferences_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/auth_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/buzzer_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/config_repository.dart';
 
 import 'configuration.dart';
 
@@ -20,78 +23,90 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
 
   ConfigurationBloc() : super();
 
-  /// Interceptors
-  ApiInterceptor _apiInterceptor;
-
-  /// Managers
-  BuzzerApiManager _buzzerApiManager;
-
   /// Repositories
-  BuzzerRepository _buzzerRepository;
-  AuthPreferencesRepository _authPreferencesRepository;
-  AppPreferencesRepository _appPreferencesRepository;
-  ConfigRepository _configRepository;
+
+  ConfigRepository _configRepo;
+  AuthRepository _authRepo;
+  BuzzerRepository _buzzerRepo;
+  AppPreferencesRepository _appPreferencesRepo;
 
   @override
   ConfigurationState get initialState => ConfigLoading();
 
   @override
   Stream<ConfigurationState> mapEventToState(ConfigurationEvent event) async* {
-    if (event is AppLaunched) {
+    if (event is ConfigApp) {
       yield* _mapAppLaunchedEventToState();
     }
   }
 
-  /// -----------------------------------------------------------------------
+  /// --------------------------------------------------------------------------
   ///                       All Event map to State
-  /// -----------------------------------------------------------------------
+  /// --------------------------------------------------------------------------
 
   Stream<ConfigurationState> _mapAppLaunchedEventToState() async* {
     try {
       yield ConfigLoading();
 
-      final _authSharedPreferencesManager = AuthSharedPreferencesManager();
+      // Disk Data Store (need access info for managers)
 
-      /// Interceptors
-      _apiInterceptor = ApiInterceptor(
-        accessToken: await _authSharedPreferencesManager.getAccessToken(),
+      final DiskAuthDataStore diskAuthDataStore = DiskAuthDataStore();
+      final DiskConfigDataStore diskConfigDataStore = DiskConfigDataStore();
+
+      // Managers
+
+      final apiInterceptor = ApiInterceptor(
+        accessToken: await diskAuthDataStore.getAccessToken(),
       );
 
-      /// Managers
-      final _localConfigManager = ConfigAssetsManager();
-      final _appSharedPreferencesManager = AppSharedPreferencesManager();
-
-      _configRepository = LocalConfigRepository(
-        localConfigManager: _localConfigManager,
+      final BuzzerApiManager buzzerApiManager = BuzzerApiManager(
+        baseUrl: await diskConfigDataStore.getApiServerUrl(),
+        apiInterceptor: apiInterceptor,
       );
 
-      _buzzerApiManager = BuzzerApiManager(
-        baseUrl: await _configRepository.getApiServerUrl(),
-        apiInterceptor: _apiInterceptor,
+      // Data Store Factory
+
+      final ConfigDataStoreFactory configDataStoreFactory =
+          ConfigDataStoreFactory(diskDataStore: diskConfigDataStore);
+
+      final AppPreferencesDataStoreFactory appPreferencesDataStoreFactory =
+          AppPreferencesDataStoreFactory();
+
+      final BuzzerDataStoreFactory buzzerDataStoreFactory =
+          BuzzerDataStoreFactory(apiManager: buzzerApiManager);
+
+      final AuthDataStoreFactory authDataStoreFactory =
+          AuthDataStoreFactory(diskDataStore: diskAuthDataStore);
+
+      // Repositories
+
+      _configRepo = ImplConfigRepository(
+        factory: configDataStoreFactory,
       );
 
-      /// Repositories
-      _authPreferencesRepository = LocalAuthPreferencesRepository(
-        authSharedPreferencesManager: _authSharedPreferencesManager,
+      _authRepo = ImplAuthRepository(
+        factory: authDataStoreFactory,
       );
 
-      _appPreferencesRepository = LocalAppPreferencesRepository(
-        appSharedPreferencesManager: _appSharedPreferencesManager,
+      _appPreferencesRepo = ImplAppPreferencesRepository(
+        factory: appPreferencesDataStoreFactory,
       );
 
-      _buzzerRepository = CloudBuzzerRepository(
-        buzzerApiManager: _buzzerApiManager,
+      _buzzerRepo = ImplBuzzerRepository(
+        factory: buzzerDataStoreFactory,
       );
+
+      // Yield update
 
       yield ConfigLoaded(
-        buzzerRepository: _buzzerRepository,
-        authPreferencesRepository: _authPreferencesRepository,
-        appPreferencesRepository: _appPreferencesRepository,
-        configRepository: _configRepository,
+        configRepo: _configRepo,
+        authRepo: _authRepo,
+        buzzerRepo: _buzzerRepo,
+        appPrefsRepo: _appPreferencesRepo,
       );
     } catch (error) {
       print('$_tag:$_mapAppLaunchedEventToState -> ${error.runtimeType}');
-      yield ConfigFailure(error:error);
+      yield ConfigFailure(error: error);
     }
   }
 }

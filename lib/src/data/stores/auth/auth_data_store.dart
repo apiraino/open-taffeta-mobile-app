@@ -1,6 +1,8 @@
-/// Interface for all AuthPreferences repositories
-/// Mostly only one local repository
-abstract class AuthPreferencesRepository {
+abstract class AuthDataStore {
+  /// --------------------------------------------------------------------------
+  ///                                Tokens
+  /// --------------------------------------------------------------------------
+
   Future<String> getAccessToken();
 
   Future<void> setAccessToken(String accessToken);
@@ -25,11 +27,19 @@ abstract class AuthPreferencesRepository {
 
   Future<void> deleteRefreshTokenExpiration();
 
+  /// --------------------------------------------------------------------------
+  ///                              Connected
+  /// --------------------------------------------------------------------------
+
   Future<int> getUserId();
 
   Future<void> setUserId(int userId);
 
   Future<void> deleteUserId();
 
-  Future deleteAll();
+  /// --------------------------------------------------------------------------
+  ///                                  All
+  /// --------------------------------------------------------------------------
+
+  Future<void> deleteAll();
 }

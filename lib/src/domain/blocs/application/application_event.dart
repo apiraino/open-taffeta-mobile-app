@@ -12,17 +12,15 @@ abstract class ApplicationEvent extends Equatable {
 
 class AppInitialization extends ApplicationEvent {}
 
-class AppThemeToggled extends ApplicationEvent {
-  final ThemeType theme;
+class AppDarkModeToggled extends ApplicationEvent {
+  final bool darkMode;
 
-  AppThemeToggled({@required this.theme})
-      : assert(
-          theme != null,
-        ),
-        super([theme]);
+  AppDarkModeToggled({@required this.darkMode})
+      : assert(darkMode != null),
+        super([darkMode]);
 
   @override
   String toString() => '$runtimeType{ '
-      'theme: $theme'
+      'darkMode: $darkMode'
       ' }';
 }

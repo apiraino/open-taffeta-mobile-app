@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/app_preferences_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/auth_preferences_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/buzzer_repository.dart';
-import 'package:flutter_door_buzzer/src/data/repositories/config_repository.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/account/account_bloc.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/application/application.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/authentication/authentication.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/configuration/configuration.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/login/login.dart';
 import 'package:flutter_door_buzzer/src/domain/blocs/register/register.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/app_preferences_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/auth_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/buzzer_repository.dart';
+import 'package:flutter_door_buzzer/src/domain/repositories/config_repository.dart';
 import 'package:flutter_door_buzzer/src/routes.dart';
 import 'package:flutter_door_buzzer/src/ui/commons/styles.dart';
 import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dart';
 import 'package:flutter_door_buzzer/src/ui/pages/main_navigation_page.dart';
 import 'package:flutter_door_buzzer/src/ui/pages/splash_page.dart';
+import 'package:flutter_door_buzzer/src/ui/widgets/error_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,7 @@ class _ConfigurationWrapperState extends State<ConfigurationWrapper> {
     super.initState();
 
     _configBloc = ConfigurationBloc();
-    _configBloc.dispatch(AppLaunched());
+    _configBloc.dispatch(ConfigApp());
   }
 
   @override
@@ -65,16 +66,16 @@ class _ConfigurationWrapperState extends State<ConfigurationWrapper> {
             return MultiProvider(
               providers: [
                 Provider<BuzzerRepository>.value(
-                  value: state.buzzerRepository,
+                  value: state.buzzerRepo,
                 ),
                 Provider<ConfigRepository>.value(
-                  value: state.configRepository,
+                  value: state.configRepo,
                 ),
                 Provider<AppPreferencesRepository>.value(
-                  value: state.appPreferencesRepository,
+                  value: state.appPrefsRepo,
                 ),
-                Provider<AuthPreferencesRepository>.value(
-                  value: state.authPreferencesRepository,
+                Provider<AuthRepository>.value(
+                  value: state.authRepo,
                 ),
               ],
               child: _ConfiguredApp(state),
@@ -116,31 +117,32 @@ class _ConfiguredAppState extends State<_ConfiguredApp> {
     super.initState();
 
     _appBloc = ApplicationBloc(
-      appPreferencesRepository: _state.appPreferencesRepository,
+      appPreferencesRepository: _state.appPrefsRepo,
     );
 
     _loginBloc = LoginBloc(
-      buzzerRepository: _state.buzzerRepository,
+      buzzerRepository: _state.buzzerRepo,
     );
 
     _registerBloc = RegisterBloc(
-      buzzerRepository: _state.buzzerRepository,
+      buzzerRepository: _state.buzzerRepo,
     );
 
     _authBloc = AuthenticationBloc(
-      authPreferencesRepository: _state.authPreferencesRepository,
-      buzzerRepository: _state.buzzerRepository,
+      authPreferencesRepository: _state.authRepo,
+      buzzerRepository: _state.buzzerRepo,
       registerBloc: _registerBloc,
       loginBloc: _loginBloc,
     );
 
     _accountBloc = AccountBloc(
-      buzzerRepository: _state.buzzerRepository,
-      autPreferencesRepository: _state.authPreferencesRepository,
+      authRepo: _state.authRepo,
+      buzzerRepo: _state.buzzerRepo,
       authBloc: _authBloc,
     );
 
     _authBloc.dispatch(AppStarted());
+    _appBloc.dispatch(AppInitialization());
   }
 
   @override
@@ -168,21 +170,16 @@ class _ConfiguredAppState extends State<_ConfiguredApp> {
         bloc: _appBloc,
         builder: (BuildContext context, ApplicationState state) {
           if (state is AppLoading) {
-            return WidgetsApp(
+            return MaterialApp(
               home: SplashPage(),
-              color: AppStyles.primaryColor,
+              debugShowCheckedModeBanner: false,
             );
           } else if (state is AppInitialized) {
             return _App(
-              theme: state.theme,
+              darkMode: state.isDarkMode,
             );
           } else if (state is AppFailure) {
-            return WidgetsApp(
-              home: Scaffold(
-                body: Text('${state.error.runtimeType} error'),
-              ),
-              color: AppStyles.primaryColor,
-            );
+            return ErrorApp(error: state.error);
           }
           return Container();
         },
@@ -195,15 +192,15 @@ class _ConfiguredAppState extends State<_ConfiguredApp> {
 class _App extends StatelessWidget {
   final String _tag = '$_App';
 
-  final ThemeType theme;
+  final bool darkMode;
 
-  _App({Key key, this.theme = ThemeType.light})
-      : assert(theme != null),
+  _App({Key key, this.darkMode = false})
+      : assert(darkMode != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:$build');
+    print('$_tag:build');
 
     /// Routes
     final Routes routes = Routes();
@@ -211,7 +208,7 @@ class _App extends StatelessWidget {
     return MaterialApp(
       onGenerateTitle: (BuildContext context) =>
           BuzzerLocalizations.of(context).appName,
-      theme: _buildCVTheme(theme),
+      theme: _buildCVTheme(darkMode),
       home: MainNavigationPage(),
 
       /// Use Fluro routes
@@ -233,16 +230,12 @@ class _App extends StatelessWidget {
     );
   }
 
-  ThemeData _buildCVTheme(ThemeType theme) {
+  ThemeData _buildCVTheme(bool darkMode) {
     ThemeData themeData;
-
-    switch (theme) {
-      case ThemeType.light:
-        themeData = ThemeData.light();
-        break;
-      case ThemeType.dark:
-        themeData = ThemeData.dark();
-        break;
+    if (!darkMode) {
+      themeData = ThemeData.light();
+    } else {
+      themeData = ThemeData.dark();
     }
 
     themeData = themeData.copyWith(
@@ -259,17 +252,14 @@ class _App extends StatelessWidget {
     Color buttonColor;
     ButtonThemeData buttonTheme;
     IconThemeData iconThemeData;
-    switch (theme) {
-      case ThemeType.light:
-        buttonColor = AppStyles.colorWhite;
-        buttonTheme = ButtonThemeData(buttonColor: themeData.primaryColorLight);
-        iconThemeData = IconThemeData(color: Colors.black);
-        break;
-      case ThemeType.dark:
-        buttonColor = AppStyles.primaryColorDark;
-        buttonTheme = ButtonThemeData(buttonColor: themeData.primaryColorDark);
-        iconThemeData = IconThemeData(color: Colors.white);
-        break;
+    if (!darkMode) {
+      buttonColor = AppStyles.colorWhite;
+      buttonTheme = ButtonThemeData(buttonColor: themeData.primaryColorLight);
+      iconThemeData = IconThemeData(color: Colors.black);
+    } else {
+      buttonColor = AppStyles.primaryColorDark;
+      buttonTheme = ButtonThemeData(buttonColor: themeData.primaryColorDark);
+      iconThemeData = IconThemeData(color: Colors.white);
     }
 
     return themeData.copyWith(

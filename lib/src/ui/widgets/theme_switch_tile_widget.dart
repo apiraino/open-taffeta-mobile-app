@@ -18,21 +18,15 @@ class ThemeSwitchTile extends StatelessWidget {
       bloc: _appBloc,
       builder: (BuildContext context, ApplicationState state) {
         if (state is AppInitialized) {
-          final ThemeType theme = state.theme;
+          final bool darkMode = state.isDarkMode;
           return SwitchListTile(
             secondary: Icon(
-              theme == ThemeType.dark
-                  ? MdiIcons.weatherSunny
-                  : MdiIcons.whiteBalanceSunny,
+              darkMode ? MdiIcons.weatherSunny : MdiIcons.whiteBalanceSunny,
             ),
-            title: Text(BuzzerLocalizations.of(context).settingsThemeCTA),
-            value: theme == ThemeType.dark ? true : false,
-            onChanged: (bool enable) {
-              if (enable)
-                _appBloc.dispatch(AppThemeToggled(theme: ThemeType.dark));
-              else
-                _appBloc.dispatch(AppThemeToggled(theme: ThemeType.light));
-            },
+            title: Text(BuzzerLocalizations.of(context).settingsToggleDarkModeCTA),
+            value: darkMode,
+            onChanged: (bool newValue) =>
+                _appBloc.dispatch(AppDarkModeToggled(darkMode: newValue)),
           );
         }
         return Container(child: Text('${state.runtimeType} state unhandled'));

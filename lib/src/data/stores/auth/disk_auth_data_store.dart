@@ -1,7 +1,7 @@
+import 'package:flutter_door_buzzer/src/data/stores/auth/auth_data_store.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// One of the possible Implementation of PreferencesService Interface
-class AuthSharedPreferencesManager {
+class DiskAuthDataStore implements AuthDataStore {
   final String _keyOAuthAccessToken = 'OAUTH_ACCESS_TOKEN';
   final String _keyOAuthAccessTokenExpiration = 'OAUTH_ACCESS_TOKEN_EXPIRATION';
   final String _keyOAuthRefreshToken = 'OAUTH_REFRESH_TOKEN';
@@ -11,18 +11,20 @@ class AuthSharedPreferencesManager {
 
   FlutterSecureStorage storage;
 
-  AuthSharedPreferencesManager() {
+  DiskAuthDataStore() {
     storage = FlutterSecureStorage();
   }
 
-  /// ----------------------------------------------------------
-  /// ------------------------- Tokens -------------------------
-  /// ----------------------------------------------------------
+  /// --------------------------------------------------------------------------
+  ///                            Access Token
+  /// --------------------------------------------------------------------------
 
+  @override
   Future<String> getAccessToken() async {
     return await storage.read(key: _keyOAuthAccessToken);
   }
 
+  @override
   Future<void> setAccessToken(String accessToken) async {
     return await storage.write(
       key: _keyOAuthAccessToken,
@@ -30,15 +32,18 @@ class AuthSharedPreferencesManager {
     );
   }
 
+  @override
   Future<void> deleteAccessToken() async {
     return await storage.delete(key: _keyOAuthAccessToken);
   }
 
+  @override
   Future<int> getAccessTokenExpiration() async {
     return int.parse(await storage.read(key: _keyOAuthAccessTokenExpiration)) ??
         0;
   }
 
+  @override
   Future<void> setAccessTokenExpiration(int accessTokenExpiration) async {
     return await storage.write(
       key: _keyOAuthAccessTokenExpiration,
@@ -46,14 +51,21 @@ class AuthSharedPreferencesManager {
     );
   }
 
+  @override
   Future<void> deleteAccessTokenExpiration() async {
     return await storage.delete(key: _keyOAuthAccessTokenExpiration);
   }
 
+  /// --------------------------------------------------------------------------
+  ///                            Refresh Token
+  /// --------------------------------------------------------------------------
+
+  @override
   Future<String> getRefreshToken() async {
     return await storage.read(key: _keyOAuthRefreshToken);
   }
 
+  @override
   Future<void> setRefreshToken(String refreshToken) async {
     return await storage.write(
       key: _keyOAuthRefreshToken,
@@ -61,14 +73,17 @@ class AuthSharedPreferencesManager {
     );
   }
 
+  @override
   Future<void> deleteRefreshToken() async {
     return await storage.delete(key: _keyOAuthRefreshToken);
   }
 
+  @override
   Future<String> getRefreshTokenExpiration() async {
     return await storage.read(key: _keyOAuthRefreshTokenExpiration) ?? '';
   }
 
+  @override
   Future<void> setRefreshTokenExpiration(String refreshTokenExpiration) async {
     return await storage.write(
       key: _keyOAuthRefreshTokenExpiration,
@@ -76,18 +91,21 @@ class AuthSharedPreferencesManager {
     );
   }
 
+  @override
   Future<void> deleteRefreshTokenExpiration() async {
     return await storage.delete(key: _keyOAuthRefreshTokenExpiration);
   }
 
-  /// ----------------------------------------------------------
-  /// ----------------------- Connected ------------------------
-  /// ----------------------------------------------------------
+  /// --------------------------------------------------------------------------
+  ///                              Connected
+  /// --------------------------------------------------------------------------
 
+  @override
   Future<int> getUserId() async {
     return int.parse(await storage.read(key: _keyAuthUserId));
   }
 
+  @override
   Future<void> setUserId(int userId) async {
     return await storage.write(
       key: _keyAuthUserId,
@@ -95,14 +113,16 @@ class AuthSharedPreferencesManager {
     );
   }
 
+  @override
   Future<void> deleteUserId() async {
     return await storage.delete(key: _keyAuthUserId);
   }
 
-  /// ----------------------------------------------------------
-  /// -------------------------- All ---------------------------
-  /// ----------------------------------------------------------
+  /// --------------------------------------------------------------------------
+  ///                                  All
+  /// --------------------------------------------------------------------------
 
+  @override
   Future<void> deleteAll() async {
     await storage.deleteAll();
   }

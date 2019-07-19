@@ -7,4 +7,4 @@ abstract class ConfigurationEvent extends Equatable {
   String toString() => '$runtimeType{}';
 }
 
-class AppLaunched extends ConfigurationEvent {}
+class ConfigApp extends ConfigurationEvent {}

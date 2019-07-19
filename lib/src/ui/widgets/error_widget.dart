@@ -6,18 +6,18 @@ import 'package:flutter_door_buzzer/src/ui/commons/styles.dart';
 import 'package:flutter_door_buzzer/src/ui/localizations/buzzer_localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-/// [CustomErrorWidget] is a based widget for [Error]
+/// [CustomErrorWidget] is a based widget for error
 ///
 /// Must be initialized with an [error]
 abstract class CustomErrorWidget extends StatelessWidget {
-  final Error error;
+  final dynamic error;
 
   const CustomErrorWidget({Key key, @required this.error})
-      : assert(error != null, 'No $Error given'),
+      : assert(error != null, 'No error given'),
         super(key: key);
 }
 
-/// [ErrorIcon] is a [Icon] like widget to display [Error]
+/// [ErrorIcon] is a [Icon] like widget to display error
 ///
 /// See [Icon] widget for more documentation
 class ErrorIcon extends StatelessWidget {
@@ -48,7 +48,7 @@ class ErrorIcon extends StatelessWidget {
   }
 }
 
-/// [ErrorText] is a [Text] like widget like to display [Error]
+/// [ErrorText] is a [Text] like widget like to display error
 ///
 /// See [Text] widget for more documentation
 class ErrorText extends CustomErrorWidget {
@@ -66,7 +66,7 @@ class ErrorText extends CustomErrorWidget {
 
   const ErrorText({
     Key key,
-    @required Error error,
+    @required dynamic error,
     this.style,
     this.strutStyle,
     this.textAlign = TextAlign.center,
@@ -101,7 +101,7 @@ class ErrorText extends CustomErrorWidget {
 ///
 /// See [Row] widget for more documentation
 class ErrorRow extends CustomErrorWidget {
-  const ErrorRow({Key key, @required Error error})
+  const ErrorRow({Key key, @required dynamic error})
       : super(key: key, error: error);
 
   @override
@@ -116,11 +116,11 @@ class ErrorRow extends CustomErrorWidget {
   }
 }
 
-/// [ErrorTile] is a [ListTile] like widget to display [Error]
+/// [ErrorTile] is a [ListTile] like widget to display error
 ///
 /// See [ListTile] widget for more documentation
 class ErrorTile extends CustomErrorWidget {
-  const ErrorTile({Key key, @required Error error})
+  const ErrorTile({Key key, @required dynamic error})
       : super(key: key, error: error);
 
   @override
@@ -136,7 +136,7 @@ class ErrorTile extends CustomErrorWidget {
   }
 }
 
-/// [ErrorCard] is a [Card] like widget to display [Error]
+/// [ErrorCard] is a [Card] like widget to display error
 ///
 /// See [Card] widget for more documentation
 class ErrorCard extends CustomErrorWidget {
@@ -145,7 +145,7 @@ class ErrorCard extends CustomErrorWidget {
 
   const ErrorCard({
     Key key,
-    @required Error error,
+    @required dynamic error,
     this.height,
     this.width,
   }) : super(key: key, error: error);
@@ -164,7 +164,7 @@ class ErrorCard extends CustomErrorWidget {
   }
 }
 
-/// [ErrorList] is a [ListView] like widget to display [Error]
+/// [ErrorList] is a [ListView] like widget to display error
 ///
 /// See [ListView] widget for more documentation
 class ErrorList extends CustomErrorWidget {
@@ -196,11 +196,11 @@ class ErrorList extends CustomErrorWidget {
   }
 }
 
-/// [ErrorPage] is a [Scaffold] like widget to display [Error]
+/// [ErrorPage] is a [Scaffold] like widget to display error
 ///
 /// See [Scaffold] widget for more documentation
 class ErrorPage extends CustomErrorWidget {
-  const ErrorPage({Key key, @required Error error})
+  const ErrorPage({Key key, @required dynamic error})
       : super(key: key, error: error);
 
   @override
@@ -211,11 +211,11 @@ class ErrorPage extends CustomErrorWidget {
   }
 }
 
-/// [ErrorApp] is a [MaterialApp] like widget to display [Error]
+/// [ErrorApp] is a [MaterialApp] like widget to display error
 ///
 /// See [MaterialApp] widget for more documentation
 class ErrorApp extends CustomErrorWidget {
-  const ErrorApp({Key key, @required Error error})
+  const ErrorApp({Key key, @required dynamic error})
       : super(key: key, error: error);
 
   @override
