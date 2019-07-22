@@ -35,19 +35,19 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   String get authTitle => 'Connection';
 
   @override
-  String get authBubbleLoginCTA => 'Existant';
+  String get authBubbleLoginCTA => 'login';
 
   @override
-  String get authBubbleRegisterCTA => 'New';
+  String get authBubbleRegisterCTA => 'registrieren';
 
   @override
-  String get authRegisterTitle => 'Create an new account';
+  String get authRegisterTitle => 'Neues Benutzerkonto';
 
   @override
-  String get authRegisterCTA => 'Sign-up';
+  String get authRegisterCTA => 'Registrieren';
 
   @override
-  String get authRegisterFailed => 'Registration failed!';
+  String get authRegisterFailed => 'Registrierung fehlgeschlagen';
 
   @override
   String get authLoginTitle => 'Login';
@@ -56,10 +56,10 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   String get authLoginCTA => 'Login';
 
   @override
-  String get authForgotPasswordCTA => 'Forgot password?';
+  String get authForgotPasswordCTA => 'Passwort vergessen?';
 
   @override
-  String get authLoginSucceed => 'Logged';
+  String get authLoginSucceed => 'eingelogged';
 
   @override
   String get authPrivacyExplain =>
@@ -79,32 +79,32 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   /// --------------------------------------------------------------------------
 
   @override
-  String get formEmailLabel => 'Empty email';
+  String get formEmailLabel => 'Leere Email';
 
   @override
   String get formEmailHint => 'someone@email.com';
 
   @override
-  String get formNotEmailExplain => 'Please enter a real e-mail.';
+  String get formNotEmailExplain => 'Bitte gib eine gültige Emailadresse an.';
 
   @override
-  String get formNoEmailExplain => 'Please provide an email';
+  String get formNoEmailExplain => 'Bitte Emailadresse eingeben.';
 
   @override
-  String get formPasswordLabel => 'Empty password';
+  String get formPasswordLabel => 'Leeres Passwort';
 
   @override
-  String get formNoPasswordExplain => 'Please provide a password';
+  String get formNoPasswordExplain => 'Bitte gib ein Passwort an.';
 
   @override
-  String get formPassword2Label => 'Password';
+  String get formPassword2Label => 'Passwort';
 
   /// --------------------------------------------------------------------------
   ///                              Account Page
   /// --------------------------------------------------------------------------
 
   @override
-  String get accountActiveStatusLabel => 'Active';
+  String get accountActiveStatusLabel => 'Aktiv';
 
   /// --------------------------------------------------------------------------
   ///                              Buzzer Page
@@ -117,20 +117,20 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   String get buzzerDoorCTA => 'Buzz door';
 
   @override
-  String get buzzerDoorFailed => 'Door opening failed!';
+  String get buzzerDoorFailed => 'Türöffner fehlgeschlagen!';
 
   @override
-  String get buzzerDoorSucceed => 'Door opening succeed!';
+  String get buzzerDoorSucceed => 'Türöffner aktiviert!';
 
   /// --------------------------------------------------------------------------
   ///                             Settings Page
   /// --------------------------------------------------------------------------
 
   @override
-  String get settingsTitle => 'Settings';
+  String get settingsTitle => 'Einstellungen';
 
   @override
-  String get settingsToggleDarkModeCTA => 'Dark Mode';
+  String get settingsToggleDarkModeCTA => 'Dunkle Ansicht';
 
   /// --------------------------------------------------------------------------
   ///                             Menu Widget
@@ -150,46 +150,46 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   String get middleDot => '·';
 
   @override
-  String get username => 'Username';
+  String get username => 'Benutzername';
 
   @override
   String get token => 'Token';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Abbrechen';
 
   @override
-  String get settingsCTA => 'Settings';
+  String get settingsCTA => 'Einstellungen';
 
   @override
-  String get account => 'Account';
+  String get account => 'Konto';
 
   @override
   String get history => 'History';
 
   @override
-  String get loadMore => 'Load more';
+  String get loadMore => 'mehr laden';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'erneut veruschen';
 
   @override
-  String get yes => 'Yes';
+  String get yes => 'Ja';
 
   @override
-  String get no => 'No';
+  String get no => 'Nein';
 
   @override
-  String get more => 'More';
+  String get more => 'Mehr';
 
   @override
-  String get errorOccurred => 'An error occurred';
+  String get errorOccurred => 'Ein Fehler ist aufgetreten';
 
   @override
-  String get notYetImplemented => 'Not yet implemented';
+  String get notYetImplemented => 'Noch nicht impelmentiert';
 
   @override
-  String get notSupported => 'Not supported';
+  String get notSupported => 'Nicht unterstützt';
 
   /// --------------------------------------------------------------------------
   ///                            Exception Error
@@ -206,10 +206,10 @@ class BuzzerLocalizationsDE implements BuzzerLocalizations {
   /// --------------------------------------------------------------------------
 
   @override
-  String get apiErrorWrongPasswordError => 'Wrong password';
+  String get apiErrorWrongPasswordError => 'Ungültiges Passwort';
 
   @override
-  String get apiErrorUserNotFoundError => 'User not found';
+  String get apiErrorUserNotFoundError => 'Benutzer nicht gefunden';
 
   /// --------------------------------------------------------------------------
   ///                       HTTP Client Error (4XX)
