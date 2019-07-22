@@ -35,10 +35,10 @@ class BuzzerLocalizationsEN implements BuzzerLocalizations {
   String get authTitle => 'Connection';
 
   @override
-  String get authBubbleLoginCTA => 'Existant';
+  String get authBubbleLoginCTA => 'login';
 
   @override
-  String get authBubbleRegisterCTA => 'New';
+  String get authBubbleRegisterCTA => 'register';
 
   @override
   String get authRegisterTitle => 'Create an new account';
