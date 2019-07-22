@@ -1,9 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_door_buzzer/src/ui/commons/paths.dart';
-import 'package:flutter_door_buzzer/src/ui/pages/auth_page.dart';
-import 'package:flutter_door_buzzer/src/ui/pages/home_page.dart';
-import 'package:flutter_door_buzzer/src/ui/pages/settings_page.dart';
+import 'package:flutter_door_buzzer/presentation.dart';
 
 class Routes {
   final Router router = Router();

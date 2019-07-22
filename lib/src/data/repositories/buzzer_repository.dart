@@ -24,9 +24,7 @@ class ImplBuzzerRepository extends BuzzerRepository {
     @required String email,
     @required String password,
   }) async {
-    return await factory
-        .create()
-        .register(email: email, password: password);
+    return await factory.create().register(email: email, password: password);
   }
 
   @override
@@ -40,7 +38,7 @@ class ImplBuzzerRepository extends BuzzerRepository {
   }
 
   @override
-  Future<UserModel> getUser({@required int userId}) async {
+  Future<UserDataModel> getUser({@required int userId}) async {
     final response = await factory.create().getUser(userId: userId);
     return response.user;
   }

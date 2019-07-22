@@ -1,30 +1,35 @@
+import 'package:flutter_door_buzzer/domain.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';
 
 @JsonSerializable()
-class UserModel {
+class UserDataModel implements UserEntity {
   @JsonKey(name: 'id')
+  @override
   int id;
 
   @JsonKey(name: 'email')
+  @override
   String email;
 
   @JsonKey(name: 'role')
+  @override
   String role;
 
   @JsonKey(name: 'is_active')
+  @override
   bool isActive;
 
-  UserModel({
+  UserDataModel({
     this.id,
     this.email,
     this.role,
     this.isActive,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) =>
-      _$UserModelFromJson(json);
+  factory UserDataModel.fromJson(Map<String, dynamic> json) =>
+      _$UserDataModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserModelToJson(this);
+  Map<String, dynamic> toJson() => _$UserDataModelToJson(this);
 }

@@ -20,7 +20,7 @@ abstract class BuzzerRepository {
     @required int doorId,
   });
 
-  Future<UserModel> getUser({
+  Future<UserDataModel> getUser({
     @required int userId,
   });
 }

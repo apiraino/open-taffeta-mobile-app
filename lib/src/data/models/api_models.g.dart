@@ -33,7 +33,7 @@ AuthResponseModel _$AuthResponseModelFromJson(Map<String, dynamic> json) {
           : AuthModel.fromJson(json['auth'] as Map<String, dynamic>),
       user: json['user'] == null
           ? null
-          : UserModel.fromJson(json['user'] as Map<String, dynamic>));
+          : UserDataModel.fromJson(json['user'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$AuthResponseModelToJson(AuthResponseModel instance) =>
@@ -75,7 +75,7 @@ UserResponseModel _$UserResponseModelFromJson(Map<String, dynamic> json) {
   return UserResponseModel(
       user: json['user'] == null
           ? null
-          : UserModel.fromJson(json['user'] as Map<String, dynamic>));
+          : UserDataModel.fromJson(json['user'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$UserResponseModelToJson(UserResponseModel instance) =>

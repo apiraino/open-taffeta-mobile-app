@@ -51,7 +51,7 @@ class AuthResponseModel {
   final AuthModel auth;
 
   @JsonKey(name: 'user')
-  final UserModel user;
+  final UserDataModel user;
 
   AuthResponseModel({
     this.auth,
@@ -134,7 +134,7 @@ class BuzzerResponseModel {
 @JsonSerializable()
 class UserResponseModel {
   @JsonKey(name: 'user')
-  final UserModel user;
+  final UserDataModel user;
 
   UserResponseModel({
     this.user,

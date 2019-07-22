@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_door_buzzer/src/app.dart';
+import 'package:flutter_door_buzzer/presentation.dart';
 
 /// TODO : automatically set this to false for release builds
 const DEBUG_MODE = true;
