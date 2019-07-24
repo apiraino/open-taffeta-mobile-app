@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_door_buzzer/src/data/managers/api_interceptor.dart';
+import 'package:flutter_door_buzzer/src/data/managers/api_interceptors.dart';
 import 'package:flutter_door_buzzer/src/data/models/api_models.dart';
 import 'package:meta/meta.dart';
 
@@ -13,14 +13,14 @@ import 'package:meta/meta.dart';
 /// (e.g. authentication).
 class BuzzerApiManager {
   final String baseUrl;
-  final ApiInterceptor apiInterceptor;
+  final TokenInterceptor tokenInterceptor;
 
   BuzzerApiManager({
     @required this.baseUrl,
-    @required this.apiInterceptor,
+    @required this.tokenInterceptor,
     int connectTimeoutSecond = 10,
   })  : assert(baseUrl != null, 'No base url given'),
-        assert(apiInterceptor != null, 'No $ApiInterceptor given') {
+        assert(tokenInterceptor != null, 'No $TokenInterceptor given') {
     final BaseOptions options = BaseOptions(
       baseUrl: baseUrl,
       connectTimeout: connectTimeoutSecond * 1000,
@@ -29,7 +29,14 @@ class BuzzerApiManager {
     );
 
     _dio = Dio(options);
-    _dio.interceptors.add(apiInterceptor.interceptorWrapper);
+
+    // Add all interceptors
+    _dio.interceptors.add(tokenInterceptor.interceptorWrapper);
+
+    _dio.interceptors.add(InterceptorsWrapper(
+      onResponse: checkApiResponse,
+      onError: apiErrorCatcher,
+    ));
   }
 
   Dio _dio;
@@ -44,19 +51,23 @@ class BuzzerApiManager {
   /// --------------------------------------------------------------------------
 
   /// Login
-  Future<AuthResponseModel> login({
+  Future<AuthResponseModel> authenticate({
     @required String email,
     @required String password,
   }) async {
-    final request = AuthLoginRequestModel(
-      email: email,
-      password: password,
-    );
+    try {
+      final request = AuthLoginRequestModel(
+        email: email,
+        password: password,
+      );
 
-    final Response<Map<String, dynamic>> response =
-        await _dio.post(_pathLogin, data: jsonEncode(request));
+      final Response<Map<String, dynamic>> response =
+          await _dio.post(_pathLogin, data: jsonEncode(request));
 
-    return AuthResponseModel.fromJson(response.data);
+      return AuthResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e.error ?? e;
+    }
   }
 
   /// Register with [email] and [password]
@@ -64,48 +75,61 @@ class BuzzerApiManager {
     @required String email,
     @required String password,
   }) async {
-    final request = AuthSignUpRequestModel(
-      email: email,
-      password: password,
-    );
+    try {
+      final request = AuthSignUpRequestModel(
+        email: email,
+        password: password,
+      );
 
-    final Response<Map<String, dynamic>> response =
-        await _dio.post(_pathSignUp, data: jsonEncode(request));
+      final Response<Map<String, dynamic>> response =
+          await _dio.post(_pathSignUp, data: jsonEncode(request));
 
-    return AuthResponseModel.fromJson(response.data);
+      return AuthResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e.error ?? e;
+    }
   }
 
   /// Logout
   Future<void> logout() async {
-    await apiInterceptor.deleteAuthData();
-  }
-
-  /// --------------------------------------------------------------------------
-  ///                                   Users
-  /// --------------------------------------------------------------------------
-
-  /// Open door [doorId]
-  Future<BuzzerResponseModel> openDoor({
-    @required int doorId,
-  }) async {
-    final Response<Map<String, dynamic>> response = await _dio.post(
-      '$_pathDoors/$doorId',
-
-      // Needed if content-type header is specified
-      data: {},
-    );
-    return BuzzerResponseModel.fromJson(response.data);
+    await tokenInterceptor.deleteAuthData();
   }
 
   /// --------------------------------------------------------------------------
   ///                                   Doors
   /// --------------------------------------------------------------------------
 
+  /// Open door [doorId]
+  Future<BuzzerResponseModel> openDoor({
+    @required int doorId,
+  }) async {
+    try {
+      final Response<Map<String, dynamic>> response = await _dio.post(
+        '$_pathDoors/$doorId',
+
+        // Needed if content-type header is specified
+        data: {},
+      );
+      return BuzzerResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e.error ?? e;
+    }
+  }
+
+  /// --------------------------------------------------------------------------
+  ///                                  Users
+  /// --------------------------------------------------------------------------
+
   /// Fetch User [userId] details
   Future<UserResponseModel> getUser({@required int userId}) async {
-    final Response<Map<String, dynamic>> response = await _dio.get(
-      '$_pathUsers/$userId',
-    );
-    return UserResponseModel.fromJson(response.data);
+    try {
+      final Response<Map<String, dynamic>> response = await _dio.get(
+        '$_pathUsers/$userId',
+      );
+
+      return UserResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e.error ?? e;
+    }
   }
 }

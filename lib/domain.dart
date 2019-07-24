@@ -7,6 +7,20 @@
 export './src/domain/entities/config_entity.dart';
 export './src/domain/entities/door_entity.dart';
 export './src/domain/entities/user_entity.dart';
+
+/// ----------------------------------------------------------------------------
+///                               Errors
+/// ----------------------------------------------------------------------------
+
+export './src/domain/errors/commons_errors.dart';
+
+/// ----------------------------------------------------------------------------
+///                              Exceptions
+/// ----------------------------------------------------------------------------
+
+export './src/domain/exceptions/app_exceptions.dart';
+export './src/domain/exceptions/http_exceptions.dart';
+
 /// ----------------------------------------------------------------------------
 ///                              Repositories
 /// ----------------------------------------------------------------------------

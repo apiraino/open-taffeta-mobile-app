@@ -14,7 +14,7 @@ class CloudBuzzerDataStore implements BuzzerDataStore {
 
   @override
   Future<AuthResponseModel> login({String email, String password}) {
-    return apiManager.login(email: email, password: password);
+    return apiManager.authenticate(email: email, password: password);
   }
 
   @override

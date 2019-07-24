@@ -2,13 +2,15 @@
 ///                               Misc
 /// ----------------------------------------------------------------------------
 
-export './src/data/managers/api_interceptor.dart';
+export './src/data/managers/api_interceptors.dart';
 export './src/data/managers/buzzer_api_manager.dart';
+
 /// ----------------------------------------------------------------------------
 ///                                Models
 /// ----------------------------------------------------------------------------
 
 export './src/data/models/user_model.dart';
+
 /// ----------------------------------------------------------------------------
 ///                                Repositories
 /// ----------------------------------------------------------------------------
@@ -17,6 +19,7 @@ export './src/data/repositories/app_preferences_repository.dart';
 export './src/data/repositories/auth_info_repository.dart';
 export './src/data/repositories/buzzer_repository.dart';
 export './src/data/repositories/config_repository.dart';
+
 /// ----------------------------------------------------------------------------
 ///                               Data Store
 /// ----------------------------------------------------------------------------

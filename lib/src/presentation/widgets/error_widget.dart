@@ -80,7 +80,7 @@ class ErrorText extends CustomErrorWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${error.runtimeType}',
+      translateError(context, error),
       style: style as TextStyle,
       strutStyle: strutStyle as StrutStyle,
       textAlign: textAlign,

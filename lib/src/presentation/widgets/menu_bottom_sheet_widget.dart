@@ -37,7 +37,7 @@ class MenuBottomSheet extends StatelessWidget {
                 child: Text(BuzzerLocalizations.of(context).menuPPCTA),
                 onPressed: null,
               ),
-              Text(BuzzerLocalizations.of(context).middleDot),
+              const Text('·'),
               MaterialButton(
                 child: Text(BuzzerLocalizations.of(context).menuToSCTA),
                 onPressed: null,

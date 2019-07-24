@@ -12,7 +12,7 @@ class MainNavigationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:$build');
+    print('$_tag:build');
 
     return Scaffold(
       appBar: AppBar(

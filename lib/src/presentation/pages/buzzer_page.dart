@@ -47,15 +47,14 @@ class _BuzzerPageState extends State<BuzzerPage> {
           Scaffold.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                  '${BuzzerLocalizations.of(context).buzzerDoorSucceed} : ${state.message}'),
+                  '${BuzzerLocalizations.of(context).doorOpeningSucceed} : ${state.message}'),
               backgroundColor: AppStyles.successColor,
             ),
           );
         } else if (state is DoorFailure) {
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                  '${BuzzerLocalizations.of(context).buzzerDoorFailed} : ${state.error?.message ?? state.error?.runtimeType}'),
+              content: ErrorRow(error: state.error),
               backgroundColor: AppStyles.errorColor,
             ),
           );
@@ -72,7 +71,7 @@ class _BuzzerPageState extends State<BuzzerPage> {
             if (state is DoorFailure) icon = Icon(MdiIcons.informationOutline);
             return Center(
               child: IconButton(
-                tooltip: BuzzerLocalizations.of(context).buzzerDoorCTA,
+                tooltip: BuzzerLocalizations.of(context).doorOpeningCTA,
                 iconSize: 100,
                 icon: icon,
                 onPressed: () => buzzerBloc.dispatch(DoorBuzzed()),

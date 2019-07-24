@@ -18,7 +18,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   @override
   void dispose() {
-    print('$_tag:$dispose()');
+    print('$_tag:dispose()');
     super.dispose();
   }
 
@@ -27,7 +27,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   @override
   Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
-    print('$_tag:$mapEventToState($event)');
+    print('$_tag:mapEventToState($event)');
 
     if (event is RegisterButtonPressed) {
       yield* _mapRegisterButtonPressedEventToState(event);
@@ -59,7 +59,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       }
     } catch (error) {
       print(
-          '$_tag:$_mapRegisterButtonPressedEventToState -> ${error.runtimeType}');
+          '$_tag:_mapRegisterButtonPressedEventToState -> ${error.runtimeType}');
       yield RegisterFailure(error: error);
     }
   }

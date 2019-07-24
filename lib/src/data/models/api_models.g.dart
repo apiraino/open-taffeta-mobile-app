@@ -80,3 +80,43 @@ UserResponseModel _$UserResponseModelFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$UserResponseModelToJson(UserResponseModel instance) =>
     <String, dynamic>{'user': instance.user};
+
+DataEnvelop<T> _$DataEnvelopFromJson<T>(Map<String, dynamic> json) {
+  return DataEnvelop<T>(
+      error: json['error'] as bool,
+      message: json['message'] as String,
+      data: json['data'] == null
+          ? null
+          : _GenericListConverter<T>().fromJson(json['data']));
+}
+
+Map<String, dynamic> _$DataEnvelopToJson<T>(DataEnvelop<T> instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      'message': instance.message,
+      'data': instance.data == null
+          ? null
+          : _GenericListConverter<T>().toJson(instance.data)
+    };
+
+DataArrayEnvelop<T> _$DataArrayEnvelopFromJson<T>(Map<String, dynamic> json) {
+  return DataArrayEnvelop<T>(
+      error: json['error'] as bool,
+      message: json['message'] as String,
+      data: (json['data'] as List)
+          ?.map(
+              (e) => e == null ? null : _GenericListConverter<T>().fromJson(e))
+          ?.toList(),
+      total: json['total'] as int);
+}
+
+Map<String, dynamic> _$DataArrayEnvelopToJson<T>(
+        DataArrayEnvelop<T> instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      'message': instance.message,
+      'data': instance.data
+          ?.map((e) => e == null ? null : _GenericListConverter<T>().toJson(e))
+          ?.toList(),
+      'total': instance.total
+    };

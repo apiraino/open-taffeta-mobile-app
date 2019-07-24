@@ -1,12 +1,14 @@
 export 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 export './src/presentation/app.dart';
+
 /// ----------------------------------------------------------------------------
 ///                               Commons
 /// ----------------------------------------------------------------------------
 
 export './src/presentation/commons/paths.dart';
 export './src/presentation/commons/styles.dart';
+
 /// ----------------------------------------------------------------------------
 ///                            Localizations
 /// ----------------------------------------------------------------------------
@@ -14,6 +16,7 @@ export './src/presentation/commons/styles.dart';
 export './src/presentation/localizations/buzzer_localization.dart';
 export './src/presentation/localizations/buzzer_localization.dart';
 export './src/presentation/localizations/buzzer_localization.dart';
+
 /// ----------------------------------------------------------------------------
 ///                               Pages
 /// ----------------------------------------------------------------------------
@@ -24,12 +27,15 @@ export './src/presentation/pages/home_page.dart';
 export './src/presentation/pages/main_navigation_page.dart';
 export './src/presentation/pages/settings_page.dart';
 export './src/presentation/pages/splash_page.dart';
+
 /// ----------------------------------------------------------------------------
 ///                               Utils
 /// ----------------------------------------------------------------------------
 
+export './src/presentation/utils/translate_error.dart';
 export './src/presentation/utils/navigation.dart';
 export './src/presentation/utils/utils.dart';
+
 /// ----------------------------------------------------------------------------
 ///                               Widgets
 /// ----------------------------------------------------------------------------

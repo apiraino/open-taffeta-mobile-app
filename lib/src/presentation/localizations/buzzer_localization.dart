@@ -12,114 +12,10 @@ abstract class BuzzerLocalizations {
   }
 
   /// --------------------------------------------------------------------------
-  ///                                   App
-  /// --------------------------------------------------------------------------
-
-  String get appName;
-
-  /// --------------------------------------------------------------------------
-  ///                               Home Page
-  /// --------------------------------------------------------------------------
-
-  String get homeTitle;
-
-  String get homeCTA;
-
-  String get homeWelcome;
-
-  /// --------------------------------------------------------------------------
-  ///                 Authentication Page - Login - SignUp
-  /// --------------------------------------------------------------------------
-
-  String get authTitle;
-
-  String get authBubbleLoginCTA;
-
-  String get authBubbleRegisterCTA;
-
-  String get authForgotPasswordCTA;
-
-  String get authRegisterFailed;
-
-  String get authRegisterTitle;
-
-  String get authRegisterCTA;
-
-  String get authPrivacyExplain;
-
-  String get authPrivacyReadCTA;
-
-  String get authLoginTitle;
-
-  String get authLoginCTA;
-
-  String get authLoginSucceed;
-
-  String get authLogoutLabel;
-
-  String get authLogoutCTA;
-
-  /// --------------------------------------------------------------------------
-  ///                                Forms
-  /// --------------------------------------------------------------------------
-
-  String get formEmailLabel;
-
-  String get formEmailHint;
-
-  String get formNoEmailExplain;
-
-  String get formNotEmailExplain;
-
-  String get formPasswordLabel;
-
-  String get formNoPasswordExplain;
-
-  String get formPassword2Label;
-
-  /// --------------------------------------------------------------------------
-  ///                              Account
-  /// --------------------------------------------------------------------------
-
-  String get accountActiveStatusLabel;
-
-  /// --------------------------------------------------------------------------
-  ///                              Buzzer Page
-  /// --------------------------------------------------------------------------
-
-  String get buzzerTitle;
-
-  String get buzzerDoorCTA;
-
-  String get buzzerDoorFailed;
-
-  String get buzzerDoorSucceed;
-
-  /// --------------------------------------------------------------------------
-  ///                             Settings Page
-  /// --------------------------------------------------------------------------
-
-  String get settingsTitle;
-
-  String get settingsCTA;
-
-  String get settingsToggleDarkModeCTA;
-
-  /// --------------------------------------------------------------------------
-  ///                             Menu Widget
-  /// --------------------------------------------------------------------------
-
-  String get menuPPCTA;
-
-  String get menuToSCTA;
-
-  /// --------------------------------------------------------------------------
   ///                              Commons
   /// --------------------------------------------------------------------------
 
   String get account;
-
-  String get middleDot;
 
   String get username;
 
@@ -141,12 +37,118 @@ abstract class BuzzerLocalizations {
 
   String get errorOccurred;
 
-  String get notYetImplemented;
+  /// --------------------------------------------------------------------------
+  ///                                   App
+  /// --------------------------------------------------------------------------
 
-  String get notSupported;
+  String get appName;
 
   /// --------------------------------------------------------------------------
-  ///                            Exception Error
+  ///                               Home Page
+  /// --------------------------------------------------------------------------
+
+  String get homeTitle;
+
+  String get homeCTA;
+
+  String get homeWelcome;
+
+  /// --------------------------------------------------------------------------
+  ///                             Menu Widget
+  /// --------------------------------------------------------------------------
+
+  String get menuPPCTA;
+
+  String get menuToSCTA;
+
+  /// --------------------------------------------------------------------------
+  ///                 Authentication Page - Login - SignUp
+  /// --------------------------------------------------------------------------
+
+  String get authTitle;
+
+  String get authBubbleLoginCTA;
+
+  String get authBubbleRegisterCTA;
+
+  String get authForgotPasswordCTA;
+
+  String get authRegisterSucceed;
+
+  String get authRegisterFailed;
+
+  String get authRegisterTitle;
+
+  String get authRegisterCTA;
+
+  String get authLoginTitle;
+
+  String get authLoginCTA;
+
+  String get authLoginSucceed;
+
+  String get authLoginFailed;
+
+  String get authLogoutLabel;
+
+  String get authLogoutCTA;
+
+  String get authPrivacyExplain;
+
+  String get authPrivacyReadCTA;
+
+  String get authAccountAlreadyExistsFailure;
+
+  /// --------------------------------------------------------------------------
+  ///                                Forms
+  /// --------------------------------------------------------------------------
+
+  String get formEmailLabel;
+
+  String get formEmailHint;
+
+  String get formNoEmailExplain;
+
+  String get formNotEmailExplain;
+
+  String get formPasswordLabel;
+
+  String get formNoPasswordExplain;
+
+  String get formPassword2Label;
+
+  String get formPasswordWrongPolicy;
+
+  /// --------------------------------------------------------------------------
+  ///                              Account
+  /// --------------------------------------------------------------------------
+
+  String get accountActiveStatusLabel;
+
+  /// --------------------------------------------------------------------------
+  ///                             Settings Page
+  /// --------------------------------------------------------------------------
+
+  String get settingsTitle;
+
+  String get settingsCTA;
+
+  String get settingsToggleDarkModeCTA;
+
+  /// --------------------------------------------------------------------------
+  ///                              Door Page
+  /// --------------------------------------------------------------------------
+
+  String get doorPageTitle;
+
+  String get doorOpeningCTA;
+
+  String get doorOpeningFailed;
+
+  String get doorOpeningSucceed;
+
+  /// --------------------------------------------------------------------------
+  ///                            Exceptions and Errors
   /// --------------------------------------------------------------------------
 
   String get exceptionFormatException;
@@ -154,62 +156,82 @@ abstract class BuzzerLocalizations {
   String get exceptionTimeoutException;
 
   /// --------------------------------------------------------------------------
-  ///                            Api Error
+  ///                            App Exceptions
   /// --------------------------------------------------------------------------
 
-  String get apiErrorWrongPasswordError;
+  String get appErrorAuthUnauthorized;
 
-  String get apiErrorUserNotFoundError;
+  String get appErrorAuthAccountDisabled;
+
+  String get appErrorAuthForbidden;
+
+  String get appErrorAuthNoToken;
+
+  String get appErrorUserNotFound;
+
+  String get doorNotFound;
+
+  String get appErrorServerSideProblem;
+
+  /// --------------------------------------------------------------------------
+  ///                             Errors
+  /// --------------------------------------------------------------------------
+
+  String get errorNotYetImplemented;
+
+  String get errorNotSupported;
 
   /// --------------------------------------------------------------------------
   ///                       HTTP Request Error (4XX)
   /// --------------------------------------------------------------------------
 
-  String get httpClientErrorBadRequest;
+  String get http400ClientErrorBadRequest;
 
-  String get httpClientErrorPaymentRequired;
+  String get http401ClientErrorUnauthorized;
 
-  String get httpClientErrorForbidden;
+  String get http402ClientErrorPaymentRequired;
 
-  String get httpClientErrorNotFound;
+  String get http403ClientErrorForbidden;
 
-  String get httpClientErrorMethodNotAllowed;
+  String get http404ClientErrorNotFound;
 
-  String get httpClientErrorNotAcceptable;
+  String get http405ClientErrorMethodNotAllowed;
 
-  String get httpClientErrorRequestTimeout;
+  String get http406ClientErrorNotAcceptable;
 
-  String get httpClientErrorConflict;
+  String get http408ClientErrorRequestTimeout;
 
-  String get httpClientErrorGone;
+  String get http409ClientErrorConflict;
 
-  String get httpClientErrorLengthRequired;
+  String get http410ClientErrorGone;
 
-  String get httpClientErrorPayloadTooLarge;
+  String get http411ClientErrorLengthRequired;
 
-  String get httpClientErrorURITooLong;
+  String get http413ClientErrorPayloadTooLarge;
 
-  String get httpClientErrorUnsupportedMediaType;
+  String get http414ClientErrorURITooLong;
 
-  String get httpClientErrorExpectationFailed;
+  String get http415ClientErrorUnsupportedMediaType;
 
-  String get httpClientErrorUpgradeRequired;
+  String get http417ClientErrorExpectationFailed;
+
+  String get http426ClientErrorUpgradeRequired;
 
   /// --------------------------------------------------------------------------
   ///                       HTTP Server Error (5XX)
   /// --------------------------------------------------------------------------
 
-  String get httpServerErrorInternalServerError;
+  String get http500ServerErrorInternalServerError;
 
-  String get httpServerErrorNotImplemented;
+  String get http501ServerErrorNotImplemented;
 
-  String get httpServerErrorBadGateway;
+  String get http502ServerErrorBadGateway;
 
-  String get httpServerErrorServiceUnavailable;
+  String get http503ServerErrorServiceUnavailable;
 
-  String get httpServerErrorGatewayTimeout;
+  String get http504ServerErrorGatewayTimeout;
 
-  String get httpServerErrorHttpVersionNotSupported;
+  String get http505ServerErrorHttpVersionNotSupported;
 }
 
 class BuzzerLocalizationsDelegate

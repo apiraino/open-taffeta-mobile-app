@@ -18,7 +18,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   void dispose() {
-    print('$_tag:$dispose()');
+    print('$_tag:dispose()');
     super.dispose();
   }
 
@@ -27,7 +27,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    print('$_tag:$mapEventToState($event)');
+    print('$_tag:mapEventToState($event)');
 
     if (event is LoginButtonPressed) {
       yield* _mapLoginButtonPressedEventToState(event);
@@ -58,7 +58,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     } catch (error) {
       print(
-          '$_tag:$_mapLoginButtonPressedEventToState -> ${error.runtimeType}');
+          '$_tag:_mapLoginButtonPressedEventToState -> ${error.runtimeType}');
       yield LoginFailure(error: error);
     }
   }

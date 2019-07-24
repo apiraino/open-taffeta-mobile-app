@@ -22,7 +22,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   void dispose() {
-    print('$_tag:$dispose()');
+    print('$_tag:dispose()');
     loginEmailController.dispose();
     loginPasswordController.dispose();
     myFocusNodeEmailLogin.dispose();
@@ -32,7 +32,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:$build');
+    print('$_tag:build');
     final LoginBloc _loginBloc = BlocProvider.of<LoginBloc>(context);
 
     void _loginPressed() {
@@ -49,7 +49,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           Scaffold.of(context).showSnackBar(
             SnackBar(
               backgroundColor: AppStyles.errorColor,
-              content: Text('${state.error.runtimeType}'),
+              content: ErrorRow(error: state.error),
             ),
           );
         }

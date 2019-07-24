@@ -60,7 +60,7 @@ class AuthenticationBloc
 
   @override
   void dispose() {
-    print('$_tag:$dispose()');
+    print('$_tag:dispose()');
     loginBlocSubscription?.cancel();
     registerBlocSubscription?.cancel();
     super.dispose();
@@ -72,7 +72,7 @@ class AuthenticationBloc
   @override
   Stream<AuthenticationState> mapEventToState(
       AuthenticationEvent event) async* {
-    print('$_tag:$mapEventToState($event)');
+    print('$_tag:mapEventToState($event)');
     if (event is AppStarted) {
       yield* _mapAppStartedToState(event);
     } else if (event is Authenticated) {
@@ -103,7 +103,7 @@ class AuthenticationBloc
         yield AuthenticationUnauthenticated();
       }
     } catch (e) {
-      print('$_tag:$_mapAppStartedToState -> ${e.runtimeType}');
+      print('$_tag:_mapAppStartedToState -> ${e.runtimeType}');
       yield AuthenticationFailed(error: e);
     }
   }
@@ -121,7 +121,7 @@ class AuthenticationBloc
       await authPreferencesRepository.setUserId(event.auth.userId);
       yield AuthenticationAuthenticated();
     } catch (e) {
-      print('$_tag:$_mapAuthenticatedEventToState -> ${e.runtimeType}');
+      print('$_tag:_mapAuthenticatedEventToState -> ${e.runtimeType}');
       yield AuthenticationFailed(error: e);
     }
   }
@@ -146,7 +146,7 @@ class AuthenticationBloc
 
       yield AuthenticationUnauthenticated();
     } catch (e) {
-      print('$_tag:$_mapLoggedOutEventToState -> ${e.runtimeType}');
+      print('$_tag:_mapLoggedOutEventToState -> ${e.runtimeType}');
       yield AuthenticationFailed(error: e);
     }
   }

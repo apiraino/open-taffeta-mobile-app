@@ -8,7 +8,7 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:$build');
+    print('$_tag:build');
     return Scaffold(
       appBar: AppBar(
         title: Text(BuzzerLocalizations.of(context).settingsTitle),

@@ -10,7 +10,7 @@ class DiskAppPreferencesDataStore implements AppPreferencesDataStore {
   DiskAppPreferencesDataStore() : storage = FlutterSecureStorage();
 
   /// --------------------------------------------------------------------------
-  ///                                Theme
+  ///                                Dark Mode
   /// --------------------------------------------------------------------------
 
   @override

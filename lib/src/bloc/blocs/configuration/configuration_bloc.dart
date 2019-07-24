@@ -42,13 +42,13 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
 
       // Managers
 
-      final apiInterceptor = ApiInterceptor(
+      final apiInterceptor = TokenInterceptor(
         accessToken: await diskAuthInfoDataStore.getAccessToken(),
       );
 
       final BuzzerApiManager buzzerApiManager = BuzzerApiManager(
         baseUrl: await diskConfigDataStore.getApiServerUrl(),
-        apiInterceptor: apiInterceptor,
+        tokenInterceptor: apiInterceptor,
       );
 
       // Data Store Factory
@@ -92,7 +92,7 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
         appPrefsRepo: _appPreferencesRepo,
       );
     } catch (error) {
-      print('$_tag:$_mapAppLaunchedEventToState -> ${error.runtimeType}');
+      print('$_tag:_mapAppLaunchedEventToState -> ${error.runtimeType}');
       yield ConfigFailure(error: error);
     }
   }

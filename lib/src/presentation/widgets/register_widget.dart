@@ -31,7 +31,7 @@ class _RegisterWidget extends State<RegisterWidget> {
 
   @override
   void dispose() {
-    print('$_tag:$dispose()');
+    print('$_tag:dispose()');
 
 //    myFocusNodeFirstName.dispose();
 //    myFocusNodeLastName.dispose();
@@ -42,7 +42,7 @@ class _RegisterWidget extends State<RegisterWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('$_tag:$build');
+    print('$_tag:build');
     final RegisterBloc _registerBloc = BlocProvider.of<RegisterBloc>(context);
 
     void _registerPressed() {
@@ -59,7 +59,7 @@ class _RegisterWidget extends State<RegisterWidget> {
           Scaffold.of(context).showSnackBar(
             SnackBar(
               backgroundColor: AppStyles.errorColor,
-              content: Text('${state.error.runtimeType}'),
+              content: ErrorRow(error: state.error),
             ),
           );
         }

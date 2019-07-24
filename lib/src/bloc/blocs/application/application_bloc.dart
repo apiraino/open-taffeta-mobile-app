@@ -24,7 +24,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
 
   @override
   Stream<ApplicationState> mapEventToState(ApplicationEvent event) async* {
-    print('$_tag:$mapEventToState($event)');
+    print('$_tag:mapEventToState($event)');
     if (event is AppInitialization) {
       yield* _mapAppInitToState(event);
     } else if (event is AppDarkModeToggled) {
@@ -47,7 +47,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
       final bool darkMode = await appPreferencesRepository.getDarkMode();
       yield AppInitialized(isDarkMode: darkMode);
     } catch (e) {
-      print('$_tag:$_mapAppInitToState -> ${e.runtimeType}');
+      print('$_tag:_mapAppInitToState -> ${e.runtimeType}');
       yield AppFailure(error: e);
     }
   }
@@ -63,7 +63,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
       await appPreferencesRepository.toggleDarkMode(event.darkMode);
       yield AppInitialized(isDarkMode: event.darkMode);
     } catch (e) {
-      print('$_tag:$_mapDarkModeToggleEventToState -> ${e.runtimeType}');
+      print('$_tag:_mapDarkModeToggleEventToState -> ${e.runtimeType}');
       yield AppFailure(error: e);
     }
   }
