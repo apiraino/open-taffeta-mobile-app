@@ -342,3 +342,4 @@ $RECYCLE.BIN/
 # Custom
 .idea/
 config.json
+android/key.properties
